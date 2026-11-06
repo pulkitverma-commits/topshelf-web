@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowRight, Download, Sparkles } from "lucide-react";
+import { ArrowRight, Clock, Download, ScanFace, ShieldCheck, Sparkles } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
 import { DownloadButton } from "@/components/delight/download";
 import { FeatureDemo } from "@/components/site/feature-demo";
-import { BREAKS_PAGE, CELEBRATION_PAGE, featurePages } from "@/lib/pages";
-import { FEATURE_META } from "@/lib/feature-meta";
+import { MacBook } from "@/components/mac/macbook";
+import { BREAKS_PAGE, CELEBRATION_PAGE, SENSE_PAGE, featurePages } from "@/lib/pages";
+import { FEATURE_META, extraPageMeta } from "@/lib/feature-meta";
 import { ALL_STINGERS, shade, tintHex } from "@/lib/stinger";
 
 export function generateStaticParams() {
@@ -37,7 +38,8 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
   if (i < 0) notFound();
   const p = pages[i];
   const related = [pages[(i + 1) % pages.length], pages[(i + 2) % pages.length], pages[(i + 3) % pages.length]];
-  const extra = slug === BREAKS_PAGE.slug ? BREAKS_PAGE.points : slug === CELEBRATION_PAGE.slug ? CELEBRATION_PAGE.points : null;
+  const extra = slug === BREAKS_PAGE.slug ? BREAKS_PAGE.points : slug === CELEBRATION_PAGE.slug ? CELEBRATION_PAGE.points : slug === SENSE_PAGE.slug ? SENSE_PAGE.points : null;
+  const isSense = slug === SENSE_PAGE.slug;
 
   return (
     <Subpage crumbs={[{ name: "Features", path: "/features" }, { name: p.label, path: `/features/${slug}` }]}>
@@ -55,20 +57,50 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
         <div className="flex flex-wrap items-center gap-3">
           <DownloadButton>
             <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
-            Try {p.label} free
+            {p.upcoming ? "Download TopShelf free" : `Try ${p.label} free`}
           </DownloadButton>
           <span className="text-sm text-muted">
+            {p.upcoming ? `${p.label} arrives in the next update. ` : ""}
             Free for {siteConfig.offers.trial.length}, then {siteConfig.offers.lifetime.price} once
           </span>
         </div>
       </PageHead>
 
       {p.experimental && <p className="m-0 mb-4 inline-flex rounded-full bg-lavender px-3 py-1.5 text-[13px] text-accent-deep">Experimental</p>}
+      {p.upcoming && (
+        <p className="m-0 mb-4 inline-flex min-h-7 items-center gap-1.5 rounded-2xl bg-peach px-3 py-1.5 text-[13px] text-[#8A3D12]">
+          <Clock className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
+          Coming in the next update. Not in the build you can download today.
+        </p>
+      )}
 
       {p.id ? (
         <section aria-label={`${p.label} demo`} className="pb-6">
           <p className="m-0 mb-3 font-hand text-2xl">go on, it works. try it ↓</p>
           <FeatureDemo id={p.id} stage={p.stage} />
+        </section>
+      ) : isSense ? (
+        <section aria-label="Sense preview" className="pb-6">
+          {/*
+            TODO(sense): replace this neutral device frame with real Sense screenshots once the build exists.
+            Nothing here depicts actual Sense UI on purpose: the feature is not shipped yet, so we show the
+            generic MacBook frame and a plain label rather than invent an interface.
+          */}
+          <MacBook className="max-w-[760px]">
+            <div className="absolute inset-0 z-30 grid place-items-center">
+              <div className="flex max-w-[70%] flex-col items-center gap-3 rounded-[22px] bg-white/80 px-6 py-5 text-center backdrop-blur-md sm:px-8 sm:py-6">
+                <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#EAF4FB", color: "#245E8C" }}>
+                  <ScanFace className="size-6" strokeWidth={1.8} aria-hidden="true" />
+                </span>
+                <b className="font-display text-[clamp(16px,1.8vw,22px)] font-semibold tracking-[-.02em]">Screenshots arrive with the update</b>
+                <span className="text-[clamp(11px,1.2vw,14px)] text-muted">Sense is still being built. We&apos;ll show the real thing here, not a mock-up.</span>
+              </div>
+            </div>
+          </MacBook>
+          <p className="mt-8 flex max-w-[720px] gap-2.5 rounded-[22px] bg-peach p-5 text-[16px] text-[#5a2a0c]">
+            <Clock className="mt-1 size-4 flex-none" aria-hidden="true" />
+            {SENSE_PAGE.status}
+          </p>
         </section>
       ) : slug === CELEBRATION_PAGE.slug ? (
         <section aria-label="Every headline" className="pb-6">
@@ -109,7 +141,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
       {(extra || p.next) && (
         <section aria-labelledby="details" className="py-12">
           <h2 id="details" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">
-            {extra ? "How it works" : "New in 1.1"}
+            {extra ? (isSense ? "What Sense will do" : "How it works") : "New in 1.1"}
           </h2>
           {extra ? (
             <ul className="m-0 mt-6 grid list-none gap-3 p-0 sm:grid-cols-2">
@@ -129,13 +161,36 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
+      {isSense && (
+        <section aria-labelledby="sense-privacy" className="py-12">
+          <h2 id="sense-privacy" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">
+            Private by design
+          </h2>
+          <p className="m-0 mt-3 max-w-[640px] text-[17px] text-muted">Sense uses the camera, so here is exactly what it does and does not do.</p>
+          <ul className="m-0 mt-6 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
+            {SENSE_PAGE.privacy.map((x) => (
+              <li key={x.h} className="flex gap-3.5 rounded-[22px] bg-[#1C1C1E] p-5 text-white">
+                <ShieldCheck className="mt-0.5 size-[22px] flex-none text-accent-soft" strokeWidth={1.7} aria-hidden="true" />
+                <div>
+                  <b className="block font-display text-lg font-semibold tracking-[-.01em]">{x.h}</b>
+                  <span className="text-[15px] text-white/65">{x.p}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 max-w-[760px] rounded-[22px] bg-sand p-5 text-[15px] text-[#4a4232] shadow-[inset_0_0_0_1px_var(--color-line)]">
+            <b className="font-display font-semibold">Not a medical device.</b> {SENSE_PAGE.disclaimer}
+          </p>
+        </section>
+      )}
+
       <section aria-labelledby="more" className="pb-24 pt-6">
         <h2 id="more" className="m-0 font-display text-[28px] font-semibold tracking-[-.03em]">
           Also in TopShelf
         </h2>
         <ul className="m-0 mt-5 grid list-none gap-3 p-0 sm:grid-cols-3">
           {related.map((r) => {
-            const m = r.id ? FEATURE_META[r.id] : null;
+            const m = r.id ? FEATURE_META[r.id] : extraPageMeta(r.slug);
             return (
               <li key={r.slug}>
                 <a href={`/features/${r.slug}`} className="flex h-full flex-col gap-1.5 rounded-[22px] p-5 transition-transform duration-300 ease-spring hover:-translate-y-1" style={{ background: m?.bg ?? "#ECEBFF" }}>

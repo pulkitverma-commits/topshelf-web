@@ -1,4 +1,4 @@
-import { Calculator, CalendarDays, ClipboardList, Cpu, Droplet, Inbox, LayoutGrid, Music, PartyPopper, Radio, Sparkles, StickyNote, Timer, Trophy, type LucideIcon } from "lucide-react";
+import { Calculator, CalendarDays, ClipboardList, Cpu, Droplet, Inbox, LayoutGrid, Music, PartyPopper, Radio, ScanFace, Sparkles, StickyNote, Timer, Trophy, type LucideIcon } from "lucide-react";
 import type { FeatureId } from "./demo-data";
 
 /** Icon, pastel and page slug for each module, shared by the marquee, cards and feature pages. */
@@ -19,7 +19,15 @@ export const FEATURE_META: Record<FeatureId, { Icon: LucideIcon; bg: string; fg:
   assistant: { Icon: Sparkles, bg: "#EAE8FF", fg: "#5146D9", slug: "assistant", seo: "An experimental assistant: Claude, OpenAI-compatible or Ollama" },
 };
 
-export const EXTRA_PAGES = {
-  breaks: { slug: "break-reminders", Icon: Timer },
-  celebration: { slug: "celebration-alerts", Icon: PartyPopper },
+/** Icon and pastel for the long-form pages that live outside the module playground (see `pages.ts`). */
+export const EXTRA_PAGES: Record<"breaks" | "celebration" | "sense", { slug: string; Icon: LucideIcon; bg: string; fg: string }> = {
+  breaks: { slug: "break-reminders", Icon: Timer, bg: "#E1F3EA", fg: "#1D7F5F" },
+  celebration: { slug: "celebration-alerts", Icon: PartyPopper, bg: "#ECEBFF", fg: "#4357EE" },
+  /** TopShelf Sense: announced for the next update, not in the downloadable build yet. */
+  sense: { slug: "sense", Icon: ScanFace, bg: "#EAF4FB", fg: "#245E8C" },
 };
+
+/** Look up an extra page's icon and pastel by slug. */
+export function extraPageMeta(slug: string) {
+  return Object.values(EXTRA_PAGES).find((e) => e.slug === slug) ?? null;
+}

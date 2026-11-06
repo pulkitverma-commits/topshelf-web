@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
-import { Sparkles } from "lucide-react";
+import { ArrowUpRight, Clock, Sparkles } from "lucide-react";
 import { useDelight } from "@/components/delight/delight-provider";
 import { GuideNote } from "@/components/delight/interactive";
 import { siteConfig } from "@/config/site";
 import { FEATURES, type FeatureId } from "@/lib/demo-data";
+import { EXTRA_PAGES } from "@/lib/feature-meta";
+import { SENSE_PAGE } from "@/lib/pages";
 import { SectionHeading } from "@/components/ui/motion-primitives";
 import { cn, easeOut, spring } from "@/lib/utils";
 import { MusicDemo } from "./core-demos";
@@ -177,7 +179,41 @@ export function Playground() {
             </AnimatePresence>
           </div>
         </div>
+
+        <SenseTeaser />
       </div>
     </section>
+  );
+}
+
+/**
+ * TopShelf Sense is announced for the next update and has no demo yet (it is not in the downloadable
+ * build), so it sits under the playground as a plain teaser rather than a tab.
+ */
+function SenseTeaser() {
+  const m = EXTRA_PAGES.sense;
+  return (
+    <a
+      href={`/features/${m.slug}`}
+      className="group mt-4 flex flex-col gap-4 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)] transition-[transform,box-shadow] duration-300 ease-spring hover:-translate-y-1 hover:shadow-[inset_0_0_0_1px_var(--color-line),0_30px_50px_-30px_rgba(23,23,23,.3)] sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+    >
+      <span className="grid size-12 flex-none place-items-center rounded-2xl transition-transform duration-300 ease-spring group-hover:rotate-[-8deg] group-hover:scale-110" style={{ background: m.bg, color: m.fg }}>
+        <m.Icon className="size-6" strokeWidth={1.8} aria-hidden="true" />
+      </span>
+      <span className="flex min-w-0 flex-1 flex-col gap-1">
+        <span className="inline-flex min-h-7 items-center gap-1.5 self-start rounded-2xl bg-peach px-3 py-1 text-[13px] text-[#8A3D12]">
+          <Clock className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
+          {SENSE_PAGE.kicker} · not in today&apos;s build
+        </span>
+        <span className="font-display text-[22px] font-semibold leading-tight tracking-[-.025em]">
+          {SENSE_PAGE.label}: {SENSE_PAGE.title}
+        </span>
+        <span className="text-[15px] text-muted">{SENSE_PAGE.blurb}. Off by default, processed on your Mac, no video recorded.</span>
+      </span>
+      <span className="inline-flex items-center gap-1.5 text-[15px] underline underline-offset-4">
+        Read about Sense
+        <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+      </span>
+    </a>
   );
 }

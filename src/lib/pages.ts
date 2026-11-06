@@ -37,6 +37,44 @@ export const CELEBRATION_PAGE = {
   ],
 };
 
+/**
+ * TopShelf Sense. Announced for the next update: it is NOT in the downloadable build yet,
+ * so every surface that shows it carries the "Coming in the next update" label. Keep the copy
+ * free of medical or diagnostic claims; pulse tracking is experimental and is not a heart-rate monitor.
+ */
+export const SENSE_PAGE = {
+  slug: "sense",
+  label: "Sense",
+  kicker: "Coming in the next update",
+  /** Short line for the catalogue card and the home page teaser. */
+  blurb: "A privacy-first wellness companion for your screen habits, eye movement and wellness trends",
+  title: "Your Mac, looking out for you.",
+  seo: "Blink awareness, screen-break nudges, head-position insights and wellness trends, processed privately on your Mac",
+  body: "A privacy-first wellness companion that helps you understand screen habits, eye movement patterns and personal wellness trends—right from your Mac.",
+  /** Where the feature stands today. Shown verbatim on the page. */
+  status: "Sense is coming in the next TopShelf update. It is not in the build you can download today, so there is nothing to switch on yet. This page describes what is being built.",
+  points: [
+    { h: "Blink awareness", p: "A gentle sense of how often you blink while you work, so long stares at the screen don't go unnoticed." },
+    { h: "Screen-break reminders", p: "Nudges to look away and rest your eyes, in step with the break reminders TopShelf already has." },
+    { h: "Head-position insights", p: "Notice when you've been leaning in or slumping for a while, and get a quiet prompt to reset." },
+    { h: "Personal wellness check-ins", p: "A short, optional check-in on how you feel, kept alongside your day so you can spot patterns over time." },
+    { h: "Historical charts", p: "Simple charts of your own trends across days and weeks, on your Mac, for your eyes only." },
+    { h: "Experimental pulse tracking", p: "An experimental estimate of rhythm from subtle changes in the camera image. It is not a medical device and not a heart-rate monitor; treat it as a curiosity, not a reading." },
+    { h: "Private local-first storage", p: "Everything Sense notices stays in a local store on your Mac. No account, no cloud, no uploads." },
+    { h: "Complete control over your data", p: "Export it as CSV or JSON, delete some or all of it whenever you like, and choose how long anything is kept." },
+  ],
+  /** Plain statements about what Sense does and does not do. */
+  privacy: [
+    { h: "Off by default", p: "Sense does nothing until you turn it on, and asks for camera access only then. Turn it off and it stops." },
+    { h: "Processed on your Mac", p: "The camera image is analysed on the device, in real time. It is never sent anywhere." },
+    { h: "No video recorded", p: "Sense keeps numbers, not pictures. No frames, clips or photos are saved." },
+    { h: "No face recognition", p: "Sense does not identify who is in front of the Mac, build a face profile or compare faces." },
+    { h: "No uploads", p: "There is no account, no sync and no telemetry. Nothing leaves your Mac." },
+    { h: "Your data, your retention", p: "Export everything as CSV or JSON, delete it at any time, and set how long history is kept." },
+  ],
+  disclaimer: "Sense is a wellness companion, not a medical device. It does not diagnose, treat or monitor any health condition, and the experimental pulse estimate is not a heart-rate monitor. If you have a health concern, talk to a professional.",
+};
+
 export const RELEASES = [
   {
     version: "1.1 preview",
@@ -73,6 +111,8 @@ export interface FeaturePage {
   next?: string;
   stage: string;
   experimental?: boolean;
+  /** Announced but not in the downloadable build yet. */
+  upcoming?: boolean;
 }
 
 export function featurePages(): FeaturePage[] {
@@ -91,6 +131,7 @@ export function featurePages(): FeaturePage[] {
   return [
     { ...BREAKS_PAGE, stage: "bg-mint" },
     { ...CELEBRATION_PAGE, stage: "bg-lavender" },
+    { slug: SENSE_PAGE.slug, label: SENSE_PAGE.label, kicker: SENSE_PAGE.kicker, title: SENSE_PAGE.title, body: SENSE_PAGE.body, seo: SENSE_PAGE.seo, stage: "bg-[#EAF4FB]", upcoming: true },
     ...modules,
   ];
 }
