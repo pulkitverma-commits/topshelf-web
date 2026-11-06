@@ -9,6 +9,10 @@ import { Story } from "@/components/sections/story";
 import { BuiltForMac } from "@/components/sections/built-for-mac";
 import { Details } from "@/components/sections/details";
 import { Customiser } from "@/components/sections/customiser";
+import { Breaks } from "@/components/sections/breaks";
+import { NewIn11 } from "@/components/sections/new-in-11";
+import { Privacy } from "@/components/sections/privacy";
+import { AppProvider } from "@/components/app-provider";
 import { Pricing } from "@/components/sections/pricing";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta, Footer } from "@/components/sections/final-cta";
@@ -41,21 +45,26 @@ export default function HomePage() {
   return (
     <MotionProvider>
       <DemoProvider>
+        <AppProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Nav />
         <main id="main">
           <Hero />
           <Concept />
           <Playground />
+          <Breaks />
+          <NewIn11 />
           <Story />
           <BuiltForMac />
           <Details />
           <Customiser />
+          <Privacy />
           <Pricing />
           <Faq />
           <FinalCta />
         </main>
         <Footer />
+        </AppProvider>
       </DemoProvider>
     </MotionProvider>
   );

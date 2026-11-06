@@ -117,7 +117,7 @@ export function Story() {
               <MacBook className="w-full max-w-[680px]" screenClassName="max-sm:aspect-auto max-sm:h-[250px]">
                 <MenuBar size="sm" app={step.app} clock={step.clock} />
                 {scene === 1 && <DesktopWindow animated className="left-[10%] top-[22%] h-[56%] w-[46%]" />}
-                <StoryNotch scene={scene} />
+                <StoryBar scene={scene} />
               </MacBook>
               <AnimatePresence>
                 {scene === 0 && (
@@ -150,7 +150,7 @@ export function Story() {
   );
 }
 
-function StoryNotch({ scene }: { scene: number }) {
+function StoryBar({ scene }: { scene: number }) {
   const [ref, width] = useElementWidth<HTMLDivElement>();
   const base = width * 0.16;
   const size =

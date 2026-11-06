@@ -2,31 +2,60 @@
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { CalendarDays, ChevronUp, Inbox, Music, Timer } from "lucide-react";
+import { CalendarDays, ChevronUp, Eye, Inbox, Music, Timer } from "lucide-react";
+import { WORK, useApp } from "@/components/app-provider";
 import { useDemo } from "@/components/demo-provider";
 import { useElementWidth } from "@/hooks/use-element-width";
 import { clamp, cn, easeOut, formatTime, spring } from "@/lib/utils";
 import { AlbumArt, Equalizer } from "./bits";
 import { CalendarWidget, FocusWidget, MusicWidget, ShelfWidget } from "./widgets";
 
-export type NotchTab = "music" | "shelf" | "calendar" | "focus";
+export type BarTab = "shelf" | "music" | "calendar" | "focus" | "breaks";
 
-const TABS: { id: NotchTab; label: string; heading: string; Icon: typeof Music }[] = [
-  { id: "music", label: "Music", heading: "Now playing", Icon: Music },
+const TABS: { id: BarTab; label: string; heading: string; Icon: typeof Music }[] = [
   { id: "shelf", label: "Shelf", heading: "Shelf", Icon: Inbox },
+  { id: "music", label: "Music", heading: "Now playing", Icon: Music },
   { id: "calendar", label: "Calendar", heading: "Up next", Icon: CalendarDays },
   { id: "focus", label: "Focus timer", heading: "Focus", Icon: Timer },
+  { id: "breaks", label: "Breaks", heading: "Next break", Icon: Eye },
 ];
 
-/** Open/close state for the interactive notch, shared with the surrounding desktop. */
-export function useNotchController() {
+function BreaksWidget() {
+  const app = useApp();
+  const c = 2 * Math.PI * 34;
+  return (
+    <div className="flex flex-1 items-center gap-4 rounded-[18px] bg-white/[.07] px-4 py-3">
+      <div className="relative size-[84px] flex-none">
+        <svg viewBox="0 0 80 80" className="size-full -rotate-90" aria-hidden="true">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="6" />
+          <circle cx="40" cy="40" r="34" fill="none" stroke="#2FBF9B" strokeWidth="6" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - app.left / WORK)} />
+        </svg>
+        <span className="absolute inset-0 grid place-items-center font-display text-lg font-semibold tabular-nums">{app.onCall ? "–" : formatTime(app.left)}</span>
+      </div>
+      <div className="flex min-w-0 flex-col gap-2">
+        <span className="text-[13px] text-white/60">{app.onCall ? "Smart Pause · on a call" : "20 min work → 20 s break"}</span>
+        <span className="flex flex-wrap gap-2">
+          <button type="button" onClick={(e) => app.startBreak("short", e.currentTarget)} className="h-9 rounded-full bg-[#2FBF9B] px-4 text-[13px] font-medium text-[#04241b]">
+            Break now
+          </button>
+          <a href="#breaks" className="inline-flex h-9 items-center rounded-full px-3 text-[13px] text-white/80 shadow-[inset_0_0_0_1px_rgba(255,255,255,.2)]">
+            More
+          </a>
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** Open/close state for the interactive bar, shared with the surrounding desktop. */
+export function useBarController() {
   const [open, setOpen] = useState(false);
   const [pinned, setPinned] = useState(false);
-  const [tab, setTab] = useState<NotchTab>("music");
+  const [tab, setTab] = useState<BarTab>("shelf");
   const closeTimer = useRef<number | undefined>(undefined);
 
   const cancelClose = () => window.clearTimeout(closeTimer.current);
-  const show = useCallback((nextTab?: NotchTab, pin = false) => {
+  const show = useCallback((nextTab?: BarTab, pin = false) => {
     window.clearTimeout(closeTimer.current);
     setOpen(true);
     if (pin) setPinned(true);
@@ -47,25 +76,25 @@ export function useNotchController() {
   return { open, pinned, tab, setTab, show, scheduleClose, collapse, cancelClose };
 }
 
-type Controller = ReturnType<typeof useNotchController>;
+type Controller = ReturnType<typeof useBarController>;
 
 /**
- * The hero's working notch. Hover (mouse) or tap/click to expand; it collapses on
+ * The hero's working TopShelf. Hover (mouse) or tap/click to expand; it collapses on
  * pointer leave unless it was clicked open, or via the collapse button / Escape.
  */
-export function HeroNotch({ controller }: { controller: Controller }) {
+export function HeroBar({ controller }: { controller: Controller }) {
   const { open, pinned, tab, setTab, show, scheduleClose, collapse, cancelClose } = controller;
   const demo = useDemo();
   const [zoneRef, width] = useElementWidth<HTMLDivElement>();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const notchRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
   const panelId = "topshelf-hero-panel";
 
   // Interacting with the open panel pins it; a press anywhere else closes it.
   useEffect(() => {
     if (!open) return;
     const onDown = (e: PointerEvent) => {
-      if (notchRef.current && !notchRef.current.contains(e.target as Node)) collapse();
+      if (barRef.current && !barRef.current.contains(e.target as Node)) collapse();
     };
     document.addEventListener("pointerdown", onDown);
     return () => document.removeEventListener("pointerdown", onDown);
@@ -93,7 +122,7 @@ export function HeroNotch({ controller }: { controller: Controller }) {
     <div ref={zoneRef} className="pointer-events-none absolute inset-x-0 top-0 z-30 flex justify-center">
       {width > 0 && (
         <motion.div
-          ref={notchRef}
+          ref={barRef}
           initial={false}
           animate={{
             width: size.width,
@@ -117,7 +146,7 @@ export function HeroNotch({ controller }: { controller: Controller }) {
           }}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
-            // Dropping anywhere on the notch puts the file on the Shelf.
+            // Dropping anywhere on TopShelf puts the file on the Shelf.
             e.preventDefault();
             e.stopPropagation();
             const id = demo.takeDraggedFile(e);
@@ -210,6 +239,7 @@ export function HeroNotch({ controller }: { controller: Controller }) {
                     {tab === "shelf" && <ShelfWidget />}
                     {tab === "calendar" && <CalendarWidget compact={small} />}
                     {tab === "focus" && <FocusWidget compact={small} />}
+                    {tab === "breaks" && <BreaksWidget />}
                   </motion.div>
                 </AnimatePresence>
               </motion.div>

@@ -9,7 +9,7 @@ export function FinalCta() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-8">
         <Reveal>
           <h2 id="download-title" className="m-0 mx-auto max-w-[900px] text-balance font-display text-[clamp(34px,4.8vw,64px)] font-medium leading-[1.03] tracking-[-.04em]">
-            Your favourite part of your Mac is <b className="font-bold">about to change.</b>
+            Give the top of your screen <b className="font-bold">something to do.</b>
           </h2>
         </Reveal>
         <div aria-hidden="true" className="relative mx-auto mt-14 h-[250px] w-[min(640px,100%)]">
@@ -20,10 +20,17 @@ export function FinalCta() {
             <i className="loop-final-in block size-[70px] flex-none rounded-full shadow-[inset_0_0_0_6px_rgba(255,255,255,.2)]" />
           </div>
         </div>
-        <ButtonLink href={siteConfig.links.download} size="lg">
+        <ButtonLink href={siteConfig.links.dmg} download size="lg">
           <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
-          Download TopShelf for Mac
+          Download the TopShelf 1.1 preview
         </ButtonLink>
+        <p className="mb-0 mt-4 text-sm text-muted">macOS 14 Sonoma or later · Apple silicon &amp; Intel · 3.8 MB disk image</p>
+        <p className="mb-0 mt-1 text-sm text-muted">
+          Includes Celebration alerts and everything new in 1.1. Prefer the earlier release?{" "}
+          <a href={siteConfig.links.dmgStable} download className="underline underline-offset-4 hover:text-ink">
+            Download 1.0.0 (2.9 MB)
+          </a>
+        </p>
         <p className="mb-0 mt-[22px] font-hand text-[22px]">Made for the little space that does a lot.</p>
       </div>
     </section>
@@ -32,8 +39,8 @@ export function FinalCta() {
 
 export function Footer() {
   const cols = [
-    { title: "Product", links: [{ href: "#features", label: "Features" }, { href: "#pricing", label: "Pricing" }, { href: siteConfig.links.download, label: "Download" }] },
-    { title: "Help", links: [{ href: siteConfig.links.support, label: "Support" }, { href: "#faq", label: "FAQs" }] },
+    { title: "Product", links: [{ href: "#features", label: "Features" }, { href: "#breaks", label: "Breaks" }, { href: "#new", label: "New in 1.1" }, { href: "#pricing", label: "Pricing" }, { href: siteConfig.links.download, label: "Download" }] },
+    { title: "Help", links: [{ href: siteConfig.links.support, label: "Support" }, { href: "#faq", label: "FAQs" }, { href: "#privacy", label: "Privacy promises" }] },
     { title: "Legal", links: [{ href: siteConfig.links.privacy, label: "Privacy" }, { href: siteConfig.links.terms, label: "Terms" }] },
   ];
   return (

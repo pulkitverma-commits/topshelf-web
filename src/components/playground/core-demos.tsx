@@ -10,7 +10,7 @@ import { JoinButton, ProgressRing, TimerPresets, useTimerLabels } from "@/compon
 import { Button, Scribble } from "@/components/ui/primitives";
 import { cn, formatTime } from "@/lib/utils";
 
-const notch = "absolute left-1/2 top-0 -translate-x-1/2 bg-black text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.55)]";
+const bar = "absolute left-1/2 top-0 -translate-x-1/2 bg-black text-white shadow-[0_30px_60px_-30px_rgba(0,0,0,.55)]";
 
 export function MusicDemo() {
   const { track, playing, nextTrack, togglePlay } = useDemo();
@@ -25,7 +25,7 @@ export function MusicDemo() {
         <circle cx="100" cy="100" r="4" fill="#ECEBFF" />
         <path d="M60 40a70 70 0 0 1 40-14" stroke="#fff" strokeOpacity=".18" strokeWidth="3" fill="none" strokeLinecap="round" />
       </svg>
-      <div className={cn(notch, "flex w-[min(460px,92%)] flex-col gap-3 rounded-b-[30px] px-6 pb-5 pt-[22px]")}>
+      <div className={cn(bar, "flex w-[min(460px,92%)] flex-col gap-3 rounded-b-[30px] px-6 pb-5 pt-[22px]")}>
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -59,7 +59,7 @@ export function ShelfDemo() {
   const onDesk = files.filter((f) => !f.inTray);
   return (
     <div className="absolute inset-0" onDragOver={drop.onDragOver} onDrop={drop.onDrop}>
-      <div className={cn(notch, "flex h-[220px] w-[min(470px,92%)] flex-col gap-2.5 rounded-b-[30px] px-[18px] pb-[18px] pt-4")}>
+      <div className={cn(bar, "flex h-[220px] w-[min(470px,92%)] flex-col gap-2.5 rounded-b-[30px] px-[18px] pb-[18px] pt-4")}>
         <h4 className="m-0 flex justify-between font-display text-sm font-semibold text-white/85">
           Shelf <span className="font-normal text-white/50">{inTray} {inTray === 1 ? "file" : "files"}</span>
         </h4>
@@ -83,7 +83,7 @@ export function ShelfDemo() {
 export function CalendarDemo() {
   return (
     <div className="absolute inset-0">
-      <div className={cn(notch, "flex w-[min(470px,92%)] items-center gap-3.5 rounded-b-[28px] px-[18px] py-4")}>
+      <div className={cn(bar, "flex w-[min(470px,92%)] items-center gap-3.5 rounded-b-[28px] px-[18px] py-4")}>
         <span className="grid size-11 flex-none place-items-center rounded-[14px] bg-accent-deep">
           <CalendarDays className="size-5" strokeWidth={1.8} aria-hidden="true" />
         </span>
@@ -119,7 +119,7 @@ export function NotesDemo() {
   const [note, setNote] = useState("Ask Priya about the launch date\nBook the studio for Friday");
   return (
     <div className="absolute inset-0">
-      <div className={cn(notch, "flex h-11 w-[min(300px,80%)] items-center justify-center gap-2 rounded-b-[22px] text-[13px] text-white/80")}>
+      <div className={cn(bar, "flex h-11 w-[min(300px,80%)] items-center justify-center gap-2 rounded-b-[22px] text-[13px] text-white/80")}>
         <PenLine className="size-4" strokeWidth={1.8} aria-hidden="true" />
         Quick note
       </div>
@@ -155,7 +155,7 @@ export function FocusDemo() {
   const { action, status } = useTimerLabels();
   return (
     <div className="absolute inset-0">
-      <div className={cn(notch, "flex h-10 w-[220px] items-center justify-center gap-2 rounded-b-[20px] text-[13px] tabular-nums")}>
+      <div className={cn(bar, "flex h-10 w-[220px] items-center justify-center gap-2 rounded-b-[20px] text-[13px] tabular-nums")}>
         <Timer className="size-[15px] text-accent-soft" strokeWidth={1.8} aria-hidden="true" />
         {formatTime(timerLeft)}
       </div>

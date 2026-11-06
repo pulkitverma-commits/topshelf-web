@@ -7,7 +7,7 @@ import { cn, formatTime } from "@/lib/utils";
 import { AlbumArt, Scrubber, TrackMeta, TransportControls } from "./bits";
 import { ShelfTray } from "./shelf";
 
-/** Music widget as it appears inside the expanded notch. */
+/** Music widget as it appears inside the open TopShelf. */
 export function MusicWidget({ compact }: { compact: boolean }) {
   const { track, trackIndex, nextTrack, selectTrack, playing, togglePlay } = useDemo();
   return (

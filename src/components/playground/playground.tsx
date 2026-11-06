@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
 import { Sparkles } from "lucide-react";
@@ -19,6 +19,8 @@ const lazy = <T extends keyof typeof import("./core-demos")>(name: T) =>
   dynamic(() => import("./core-demos").then((m) => m[name]), { ssr: false, loading: StageSkeleton });
 const lazyExtra = <T extends keyof typeof import("./extra-demos")>(name: T) =>
   dynamic(() => import("./extra-demos").then((m) => m[name]), { ssr: false, loading: StageSkeleton });
+const lazyModule = <T extends keyof typeof import("./module-demos")>(name: T) =>
+  dynamic(() => import("./module-demos").then((m) => m[name]), { ssr: false, loading: StageSkeleton });
 
 const DEMOS: Record<FeatureId, React.ComponentType> = {
   music: MusicDemo,
@@ -27,8 +29,14 @@ const DEMOS: Record<FeatureId, React.ComponentType> = {
   notes: lazy("NotesDemo"),
   focus: lazy("FocusDemo"),
   live: lazyExtra("LiveDemo"),
-  shortcuts: lazyExtra("ShortcutsDemo"),
-  ai: lazyExtra("AiDemo"),
+  wellness: lazyModule("WellnessDemo"),
+  calc: lazyModule("CalcDemo"),
+  inbox: lazyModule("InboxDemo"),
+  scores: lazyModule("ScoresDemo"),
+  clipboard: lazyModule("ClipboardDemo"),
+  system: lazyModule("SystemDemo"),
+  all: lazyModule("AllDemo"),
+  assistant: lazyModule("AssistantDemo"),
 };
 
 export function Playground() {
@@ -37,6 +45,16 @@ export function Playground() {
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const feature = features.find((f) => f.id === active) ?? features[0];
   const Demo = DEMOS[feature.id];
+
+  // Other sections can open a tab here ("Try it in the playground").
+  useEffect(() => {
+    const onPick = (e: Event) => {
+      const id = (e as CustomEvent<FeatureId>).detail;
+      if (features.some((f) => f.id === id)) setActive(id);
+    };
+    window.addEventListener("topshelf:feature", onPick);
+    return () => window.removeEventListener("topshelf:feature", onPick);
+  }, [features]);
 
   const onKey = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
     const keys: Record<string, number> = { ArrowRight: 1, ArrowLeft: -1 };
@@ -57,7 +75,7 @@ export function Playground() {
   return (
     <section id="features" aria-labelledby="features-title" className="py-24 sm:pb-[140px] sm:pt-20">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-8">
-        <SectionHeading id="features-title" kicker="Feature playground">
+        <SectionHeading id="features-title" kicker="Feature playground · 14 modules">
           Everything you need. <b>Right where you need it.</b>
         </SectionHeading>
 
@@ -109,6 +127,12 @@ export function Playground() {
               <p className="m-0 text-[13px] uppercase tracking-[.08em] text-muted">{feature.kicker}</p>
               <h3 className="m-0 text-balance font-display text-[clamp(26px,2.5vw,34px)] font-semibold leading-[1.1] tracking-[-.03em]">{feature.title}</h3>
               <p className="m-0 text-pretty text-[17px] text-muted">{feature.body}</p>
+              {feature.next && (
+                <p className="m-0 rounded-2xl bg-lavender px-4 py-3 text-[15px] text-[#2b2f6b]">
+                  <b className="mr-1.5 font-display font-semibold">New in 1.1.</b>
+                  {feature.next}
+                </p>
+              )}
               {feature.experimental && (
                 <span className="inline-flex min-h-7 items-center gap-1.5 self-start rounded-2xl bg-peach px-3 py-1 text-[13px] text-[#8A3D12]">
                   <Sparkles className="size-3.5" strokeWidth={1.8} aria-hidden="true" />

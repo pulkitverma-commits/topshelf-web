@@ -18,7 +18,7 @@ export default function OpengraphImage() {
           </div>
         </div>
         <div style={{ fontSize: 76, fontWeight: 700, letterSpacing: -3, marginTop: 50 }}>Your Mac has a new favourite spot.</div>
-        <div style={{ fontSize: 30, color: "#6B6B6B", marginTop: 14 }}>TopShelf — the notch, made useful.</div>
+        <div style={{ fontSize: 30, color: "#6B6B6B", marginTop: 14 }}>TopShelf — a calm shelf at the top of your Mac.</div>
       </div>
     ),
     size,

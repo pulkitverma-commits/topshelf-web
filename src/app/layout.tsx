@@ -1,21 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Instrument_Sans, Questrial } from "next/font/google";
+import { Barlow_Condensed, Caveat, Instrument_Sans, Questrial } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const questrial = Questrial({ subsets: ["latin"], weight: "400", variable: "--font-questrial", display: "swap" });
 const instrument = Instrument_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-instrument", display: "swap" });
+const barlow = Barlow_Condensed({ subsets: ["latin"], weight: "800", style: ["normal", "italic"], variable: "--font-barlow", display: "swap" });
 const caveat = Caveat({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-caveat", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — The notch, made useful`,
+    default: `${siteConfig.name} — A calm shelf at the top of your Mac`,
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
-  keywords: ["Mac notch app", "MacBook notch", "macOS productivity", "menu bar", "TopShelf"],
+  keywords: ["Mac menu bar app", "MacBook camera housing", "break reminders", "macOS productivity", "TopShelf"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -40,7 +41,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${questrial.variable} ${instrument.variable} ${caveat.variable}`}>
+    <html lang="en-GB" className={`${questrial.variable} ${instrument.variable} ${caveat.variable} ${barlow.variable}`}>
       <body>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white">
           Skip to content

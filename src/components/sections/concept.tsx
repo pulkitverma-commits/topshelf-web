@@ -9,7 +9,7 @@ import { Reveal, SectionHeading } from "@/components/ui/motion-primitives";
 import { Scribble } from "@/components/ui/primitives";
 
 /**
- * Everyday objects float around a friendly notch, then converge into it as the
+ * Everyday objects float around TopShelf, then converge into it as the
  * section scrolls through the viewport.
  */
 export function Concept() {
@@ -22,9 +22,9 @@ export function Concept() {
   const p = reduce ? still : scrolled;
 
   const k = small ? 0.36 : 1;
-  const notchW = useTransform(p, [0, 1], [156, 356]);
-  const notchH = useTransform(p, [0, 1], [36, 84]);
-  const notchR = useTransform(p, [0, 1], [18, 30]);
+  const barW = useTransform(p, [0, 1], [156, 356]);
+  const barH = useTransform(p, [0, 1], [36, 84]);
+  const barR = useTransform(p, [0, 1], [18, 30]);
 
   return (
     <section ref={ref} id="concept" aria-labelledby="concept-title" className="relative overflow-x-clip pb-[120px] pt-24 sm:pt-[150px]">
@@ -36,7 +36,7 @@ export function Concept() {
         <div aria-hidden="true" className="relative mt-10 h-[450px] sm:h-[580px]">
           <div className="absolute left-1/2 top-10 h-[150px] w-[min(820px,100%)] -translate-x-1/2 rounded-t-[30px] border-[1.5px] border-b-0 border-ink [mask-image:linear-gradient(#000_30%,transparent)]" />
           <motion.div
-            style={{ width: notchW, height: notchH, borderBottomLeftRadius: notchR, borderBottomRightRadius: notchR }}
+            style={{ width: barW, height: barH, borderBottomLeftRadius: barR, borderBottomRightRadius: barR }}
             className="absolute left-1/2 top-10 z-[2] flex -translate-x-1/2 items-center justify-center gap-4 bg-ink"
           >
             <span className="size-1.5 animate-blink rounded-full bg-white" />

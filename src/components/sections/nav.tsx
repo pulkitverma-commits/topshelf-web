@@ -9,7 +9,9 @@ import { cn, easeOut } from "@/lib/utils";
 
 const LINKS = [
   { href: "#features", label: "Features" },
-  { href: "#how-it-works", label: "How it works" },
+  { href: "#breaks", label: "Breaks" },
+  { href: "#new", label: "New in 1.1" },
+  { href: "#privacy", label: "Privacy" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQs" },
 ];
@@ -31,7 +33,7 @@ export function Nav() {
         <a href="#top" aria-label="TopShelf home" className="text-ink">
           <Logo />
         </a>
-        <nav aria-label="Primary" className="hidden gap-8 text-[15px] text-[#3a3a3a] min-[821px]:flex">
+        <nav aria-label="Primary" className="hidden gap-6 text-[15px] text-[#3a3a3a] min-[1000px]:flex">
           {LINKS.map((l) => (
             <a
               key={l.href}
@@ -50,7 +52,7 @@ export function Nav() {
           </ButtonLink>
           <button
             type="button"
-            className="grid size-11 place-items-center rounded-full min-[821px]:hidden"
+            className="grid size-11 place-items-center rounded-full min-[1000px]:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -69,7 +71,7 @@ export function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: easeOut }}
-            className="overflow-hidden min-[821px]:hidden"
+            className="overflow-hidden min-[1000px]:hidden"
           >
             <ul className="m-0 flex list-none flex-col px-4 pb-4 pt-1">
               {LINKS.map((l) => (

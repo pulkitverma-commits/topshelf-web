@@ -9,14 +9,16 @@
 export const siteConfig = {
   name: "TopShelf",
   /** Production origin, used for canonical URLs, Open Graph and the sitemap. */
-  url: "https://topshelf.example",
+  url: "https://topshelf-web-eight.vercel.app",
   company: "[COMPANY NAME]",
   tagline: "A little space. A lot more magic.",
   description:
-    "TopShelf turns your Mac's notch into a beautiful workspace for music, files, meetings, timers and shortcuts.",
+    "TopShelf turns the top of your Mac's screen into a calm home for music, files, meetings and timers, with healthy break reminders, wellness nudges, themes and a calculator with a tiny friend. Native and private.",
 
   links: {
     download: "#download",
+    dmg: "/downloads/TopShelf-1.1-preview-93c9bdf.dmg",
+    dmgStable: "/downloads/TopShelf-1.0.0.dmg",
     buy: "#pricing",
     support: "#faq",
     privacy: "/privacy",
@@ -24,8 +26,8 @@ export const siteConfig = {
   },
 
   requirements: {
-    minMacOS: "[macOS VERSION]",
-    systemRequirementsLabel: "[system requirements]",
+    minMacOS: "14 Sonoma",
+    systemRequirementsLabel: "macOS 14 Sonoma or later · Apple silicon & Intel",
   },
 
   /** Purchase options. Disable any that are not offered; the UI adapts. */

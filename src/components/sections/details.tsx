@@ -42,7 +42,7 @@ export function Details() {
             </div>
           </Card>
 
-          <Card n="02" title="Music in a glance." body="The track and a tiny visualiser live in the notch while you work." className="col-span-12 bg-lavender min-[901px]:col-span-5">
+          <Card n="02" title="Music in a glance." body="The track and a tiny visualiser sit at the top of your screen while you work." className="col-span-12 bg-lavender min-[901px]:col-span-5">
             <div aria-hidden="true">
               <span className="absolute left-1/2 top-0 flex h-10 w-[250px] max-w-full -translate-x-1/2 items-center justify-between rounded-b-[20px] bg-[#111] px-3.5">
                 <AlbumArt art="a1" className="size-6 rounded-md" />
@@ -58,7 +58,7 @@ export function Details() {
             </span>
           </Card>
 
-          <Card n="04" title="Transitions that make sense." body="Every widget grows out of the notch and returns to it, so you always know where things went." className="col-span-12 bg-mint min-[901px]:col-span-4">
+          <Card n="04" title="Transitions that make sense." body="Every module grows out of the top of your screen and returns to it, on springs that respect Reduce Motion." className="col-span-12 bg-mint min-[901px]:col-span-4">
             <span aria-hidden="true" className="loop-morph absolute left-1/2 top-2.5 -translate-x-1/2 bg-[#111]" />
           </Card>
 

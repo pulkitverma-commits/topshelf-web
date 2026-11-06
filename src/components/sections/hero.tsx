@@ -5,13 +5,13 @@ import { Download, Sparkles } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useDemo } from "@/components/demo-provider";
 import { DesktopWindow, Dock, MacBook, MenuBar } from "@/components/mac/macbook";
-import { HeroNotch, useNotchController } from "@/components/topshelf/hero-notch";
+import { HeroBar, useBarController } from "@/components/topshelf/hero-bar";
 import { DeskFile, useDesktopDrop } from "@/components/topshelf/shelf";
 import { ButtonLink, Value } from "@/components/ui/primitives";
 import { easeOut } from "@/lib/utils";
 
 export function Hero() {
-  const controller = useNotchController();
+  const controller = useBarController();
   const { files } = useDemo();
   const desktopDrop = useDesktopDrop();
   const deskFiles = files.filter((f) => !f.inTray);
@@ -54,7 +54,7 @@ export function Hero() {
           transition={{ duration: 0.8, ease: easeOut, delay: 0.12 }}
           className="m-0 max-w-[560px] text-pretty text-[clamp(18px,1.5vw,21px)] text-muted"
         >
-          Music, files, meetings, shortcuts and everything in between. Beautifully tucked into the top of your Mac.
+          Music, files, meetings, timers and healthy breaks, beautifully tucked into the top of your Mac. There the moment you reach for it, invisible when you don't.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -121,7 +121,7 @@ export function Hero() {
               </svg>
               <span className="-mt-2 -rotate-[4deg] font-hand text-[22px] leading-none sm:whitespace-nowrap sm:text-[27px]">
                 Go ahead. <br className="sm:hidden" />
-                Try the notch.
+                Try TopShelf.
               </span>
             </motion.div>
           )}
@@ -138,7 +138,7 @@ export function Hero() {
             </AnimatePresence>
           </div>
           <Dock />
-          <HeroNotch controller={controller} />
+          <HeroBar controller={controller} />
         </MacBook>
       </motion.div>
     </section>

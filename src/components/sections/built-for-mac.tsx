@@ -2,17 +2,16 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { siteConfig } from "@/config/site";
 import { MAC_HIGHLIGHTS } from "@/lib/demo-data";
 import { Reveal, SectionHeading, Segmented } from "@/components/ui/motion-primitives";
-import { Scribble, Value } from "@/components/ui/primitives";
+import {Scribble } from "@/components/ui/primitives";
 import { spring } from "@/lib/utils";
 
-type Display = "notch" | "flat";
+type Display = "housing" | "flat";
 
 export function BuiltForMac() {
-  const [display, setDisplay] = useState<Display>("notch");
-  const notch = display === "notch";
+  const [display, setDisplay] = useState<Display>("housing");
+  const housing = display === "housing";
 
   return (
     <section id="built-for-mac" aria-labelledby="mac-title" className="py-24 sm:py-[140px]">
@@ -28,8 +27,8 @@ export function BuiltForMac() {
               value={display}
               onChange={setDisplay}
               options={[
-                { value: "notch", label: "With notch" },
-                { value: "flat", label: "Without notch" },
+                { value: "housing", label: "MacBook" },
+                { value: "flat", label: "iMac or display" },
               ]}
             />
             <div aria-hidden="true" className="relative aspect-video w-full overflow-hidden rounded-t-[22px] border-[1.5px] border-b-0 border-ink bg-white [mask-image:linear-gradient(#000_70%,transparent)]">
@@ -46,13 +45,13 @@ export function BuiltForMac() {
               </div>
               <motion.div
                 className="absolute left-[42%] top-0 z-[2] h-7 w-[16%] rounded-b-xl bg-ink"
-                animate={{ y: notch ? 0 : "-100%", opacity: notch ? 1 : 0 }}
+                animate={{ y: housing ? 0 : "-100%", opacity: housing ? 1 : 0 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               />
               <motion.div
                 className="absolute left-1/2 z-[1] flex -translate-x-1/2 gap-2.5 bg-ink px-4 pb-4"
                 animate={
-                  notch
+                  housing
                     ? { top: 0, width: "52%", height: "46%", paddingTop: 44, borderRadius: "0px 0px 26px 26px" }
                     : { top: 40, width: "46%", height: "40%", paddingTop: 16, borderRadius: "22px 22px 22px 22px" }
                 }
@@ -63,34 +62,29 @@ export function BuiltForMac() {
                 <i className="block aspect-square w-[22%] self-center rounded-full shadow-[inset_0_0_0_5px_rgba(255,255,255,.18)]" />
               </motion.div>
               <AnimatePresence mode="wait">
-                {notch ? (
+                {housing ? (
                   <motion.div key="a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute left-[4%] top-[30%] max-md:hidden">
                     <Scribble arrow="up-right" className="text-[22px]">
-                      grows out of
+                      grows around
                       <br />
-                      the notch
+                      the camera
                     </Scribble>
                   </motion.div>
                 ) : (
                   <motion.div key="b" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute right-[3%] top-[52%] max-md:hidden">
                     <Scribble arrow="up-left" arrowFirst className="text-[22px]">
-                      drops from
+                      draws its own
                       <br />
-                      the top edge
+                      at the top
                     </Scribble>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
             <p className="m-0 min-h-[50px] max-w-[520px] text-muted" aria-live="polite">
-              {notch ? (
-                "On MacBooks with a notch, TopShelf grows out of the notch itself and folds back into it."
-              ) : (
-                <>
-                  On displays without a notch, TopShelf sits as a slim tab at the top centre of the screen and opens the same way.{" "}
-                  <span className="ph">[Confirm behaviour before launch]</span>
-                </>
-              )}
+              {housing
+                ? "On MacBooks with a camera housing, TopShelf lines up with it exactly and folds back into it."
+                : "On an iMac, Mac mini or external display, TopShelf draws its own bar at the top centre of the menu bar and opens the same way."}
             </p>
           </Reveal>
 
@@ -101,13 +95,7 @@ export function BuiltForMac() {
                 <div>
                   <b className="block font-display text-lg font-semibold tracking-[-.01em]">{h.title}</b>
                   <span className="text-[15px] text-muted">
-                    {i === MAC_HIGHLIGHTS.length - 1 ? (
-                      <>
-                        See <Value>{siteConfig.requirements.systemRequirementsLabel}</Value> for the full list.
-                      </>
-                    ) : (
-                      h.body
-                    )}
+                    {h.body}
                   </span>
                 </div>
               </Reveal>
