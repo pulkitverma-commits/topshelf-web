@@ -259,9 +259,7 @@ export function Footer() {
           <span>
             © {new Date().getFullYear()} {siteConfig.company}. All rights reserved.
           </span>
-          <a href={`mailto:${siteConfig.email}`} className="hover:text-ink">
-            {siteConfig.email}
-          </a>
+          <span>Made for Mac.</span>
         </div>
       </div>
     </footer>
