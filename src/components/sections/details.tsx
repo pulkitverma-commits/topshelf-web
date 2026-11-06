@@ -9,6 +9,7 @@ import { Reveal, SectionHeading } from "@/components/ui/motion-primitives";
 import { Button } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils";
 import { Tilt } from "@/components/delight/interactive";
+import { ShortcutKeys } from "@/components/topshelf/shortcut-keys";
 
 function Card({ n, title, body, className, children }: { n: string; title: string; body: ReactNode; className?: string; children: ReactNode }) {
   return (
@@ -87,23 +88,9 @@ export function Details() {
             <div className="flex max-w-[420px] flex-col gap-2.5">
               <span className="text-xs tabular-nums tracking-[.06em] text-white/60">06</span>
               <h3 className="m-0 font-display text-2xl font-semibold tracking-[-.025em]">Keys for everything.</h3>
-              <p className="m-0 text-[15.5px] text-white/70">Open TopShelf and jump between widgets without touching the trackpad.</p>
+              <p className="m-0 text-[15.5px] text-white/70">Open TopShelf, your clipboard history or a new note without touching the trackpad. These are the defaults; change any of them in Settings.</p>
             </div>
-            <div className="flex flex-col items-start gap-3.5">
-              <div className="flex flex-wrap items-center gap-2.5" role="img" aria-label={`Example shortcut: ${siteConfig.exampleShortcut.join(" plus ")}`}>
-                {siteConfig.exampleShortcut.map((k, i) => (
-                  <span key={k} className="flex items-center gap-2.5">
-                    {i > 0 && <em className="text-xl not-italic text-white/50">+</em>}
-                    <span className="loop-press grid h-16 min-w-16 place-items-center rounded-[14px] bg-white px-[18px] font-display text-[22px] font-medium text-ink" style={{ animationDelay: `${i * 0.15}s` }}>
-                      {k}
-                    </span>
-                  </span>
-                ))}
-              </div>
-              <span className="font-hand text-[22px] text-white/80">
-                example shortcut{!siteConfig.exampleShortcutConfirmed && <> · <span className="ph">[confirm default]</span></>}
-              </span>
-            </div>
+            <ShortcutKeys />
           </Reveal>
         </div>
       </div>

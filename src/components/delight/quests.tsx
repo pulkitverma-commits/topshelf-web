@@ -9,6 +9,7 @@ import type { BarTab } from "@/components/topshelf/hero-bar";
 import { siteConfig } from "@/config/site";
 import { cn, easeOut, spring } from "@/lib/utils";
 import { Magnetic } from "./interactive";
+import { DownloadButton } from "./download";
 import { QUESTS, useDelight } from "./delight-provider";
 
 const TAB_FOR: Record<(typeof QUESTS)[number]["id"], BarTab> = {
@@ -74,9 +75,9 @@ export function HeroQuests({ open, show, stage }: { open: boolean; show: (tab?: 
           <motion.div key="all" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-4 flex flex-wrap items-center gap-4 px-1 pb-1">
             <span className="-rotate-2 font-hand text-[26px] leading-none">that&apos;s the whole idea. calm, and right there.</span>
             <Magnetic className="ml-auto">
-              <a href={siteConfig.links.download} className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-[15px] text-white transition-transform active:scale-95">
-                <Download className="size-4" aria-hidden="true" /> Get TopShelf
-              </a>
+              <DownloadButton size="sm">
+                <Download className="size-4" aria-hidden="true" /> Get it free for {siteConfig.offers.trial.length}
+              </DownloadButton>
             </Magnetic>
           </motion.div>
         ) : (

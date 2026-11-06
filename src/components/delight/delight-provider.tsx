@@ -6,6 +6,7 @@ import { Check, Sparkles, Volume2, VolumeX, X } from "lucide-react";
 import { FEATURES } from "@/lib/demo-data";
 import { pop, sparkle } from "@/lib/audio";
 import { cn, easeOut, spring } from "@/lib/utils";
+import { InstallSheet } from "./download";
 
 /**
  * Website-only "delight" layer: remembers which things a visitor has tried on the page,
@@ -204,6 +205,14 @@ export function DelightProvider({ children }: { children: ReactNode }) {
     return () => window.clearTimeout(id);
   }, [toast]);
 
+  const onDownload = useCallback(
+    (el: HTMLElement | null) => {
+      if (soundRef.current) sparkle();
+      burst(el, "big");
+    },
+    [burst],
+  );
+
   const value = useMemo<DelightValue>(() => ({ tried, mark, burst, sound, setSound, feedback }), [tried, mark, burst, sound, feedback]);
 
   return (
@@ -211,6 +220,7 @@ export function DelightProvider({ children }: { children: ReactNode }) {
       {children}
       <canvas ref={canvas} aria-hidden="true" className="pointer-events-none fixed inset-0 z-[95] size-full" />
       <DiscoveryChip toast={toast} />
+      <InstallSheet onStart={onDownload} />
     </Ctx.Provider>
   );
 }

@@ -8,7 +8,8 @@ import { useDemo } from "@/components/demo-provider";
 import { DesktopWindow, Dock, MacBook, MenuBar } from "@/components/mac/macbook";
 import { HeroBar, useBarController } from "@/components/topshelf/hero-bar";
 import { DeskFile, useDesktopDrop } from "@/components/topshelf/shelf";
-import { ButtonLink, Value } from "@/components/ui/primitives";
+import { ButtonLink } from "@/components/ui/primitives";
+import { DownloadButton } from "@/components/delight/download";
 import { Magnetic } from "@/components/delight/interactive";
 import { HeroQuests } from "@/components/delight/quests";
 import { easeOut } from "@/lib/utils";
@@ -44,7 +45,12 @@ export function Hero() {
   };
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="pb-20 pt-10 text-center sm:pb-[120px] sm:pt-16">
+    <section id="top" aria-labelledby="hero-title" className="relative isolate overflow-x-clip pb-20 pt-10 text-center sm:pb-[120px] sm:pt-16">
+      <div aria-hidden="true" className="aurora pointer-events-none absolute inset-x-0 top-0 -z-10 h-[760px] opacity-80">
+        <i className="left-[6%] top-[-6%] size-[380px] bg-[#D9D5FF]" />
+        <i className="right-[4%] top-[4%] size-[340px] bg-[#CDEFE0]" />
+        <i className="left-[38%] top-[26%] size-[300px] bg-[#FFE0CC]" />
+      </div>
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-6 px-4 sm:px-8">
         <motion.span
           initial={{ opacity: 0, y: 12 }}
@@ -89,23 +95,17 @@ export function Hero() {
           className="mt-1.5 flex flex-wrap justify-center gap-3"
         >
           <Magnetic>
-            <ButtonLink href={siteConfig.links.download}>
+            <DownloadButton>
               <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
-              Download for macOS
-            </ButtonLink>
+              Download free for Mac
+            </DownloadButton>
           </Magnetic>
           <ButtonLink href="#features" variant="ghost">
             See how it works
           </ButtonLink>
         </motion.div>
         <p className="m-0 text-sm text-muted">
-          Requires macOS <Value>{siteConfig.requirements.minMacOS}</Value> or later
-          {siteConfig.offers.trial.enabled && (
-            <>
-              {" · "}
-              <Value>{siteConfig.offers.trial.length}</Value> free trial
-            </>
-          )}
+          Free for {siteConfig.offers.trial.length}, then {siteConfig.offers.lifetime.price} once · macOS {siteConfig.requirements.minMacOS} or later · {siteConfig.release.size}
         </p>
       </div>
 

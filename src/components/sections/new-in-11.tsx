@@ -30,6 +30,8 @@ function Celebration() {
   const [phase, setPhase] = useState<"idle" | "drop" | "pill">("idle");
   const [flash, setFlash] = useState(0);
   const [live, setLive] = useState("");
+  const [playing, setPlaying] = useState<string | null>(null);
+  const playTimer = useRef<number | undefined>(undefined);
   const timers = useRef<number[]>([]);
   const barW = Math.min(480, (stageW || 480) - 20);
 
@@ -153,32 +155,54 @@ function Celebration() {
           Every headline <span className="normal-case tracking-normal">· tap one to play it</span>
         </p>
         <ul className="m-0 mt-3 grid list-none grid-cols-2 gap-2 p-0 sm:grid-cols-[repeat(auto-fill,minmax(170px,1fr))]">
-          {ALL_STINGERS.map((s) => {
+          {ALL_STINGERS.map((s, idx) => {
             const c = tintHex(s.tint);
+            const deep = shade(c, s.tint === "yellow" ? -0.62 : -0.5);
+            const TileIcon = STINGER_ICONS[s.icon];
+            const on = playing === s.name;
             return (
-              <li key={s.name}>
+              <motion.li
+                key={s.name}
+                initial={{ opacity: 0, y: 14, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+                transition={{ delay: (idx % 5) * 0.05 + Math.floor(idx / 5) * 0.06, type: "spring", stiffness: 380, damping: 26 }}
+              >
                 <button
                   type="button"
                   onClick={() => {
                     const r = document.getElementById("celebration-stage")?.getBoundingClientRect();
                     if (r && (r.top < 70 || r.bottom > window.innerHeight)) document.getElementById("celebration-stage")?.scrollIntoView({ block: "center" });
                     play(s);
+                    setPlaying(s.name);
+                    window.clearTimeout(playTimer.current);
+                    playTimer.current = window.setTimeout(() => setPlaying(null), 1900);
                   }}
                   aria-label={`Play ${s.name}: ${s.h}${s.v ? `, ${s.v}` : ""}`}
-                  className="flex min-h-[46px] w-full items-center justify-between gap-2 rounded-xl px-3 py-1.5 text-left text-white transition-[transform,filter] duration-300 ease-spring hover:-translate-y-0.5 hover:brightness-105"
-                  style={{ background: `linear-gradient(90deg, ${shade(c, -0.5)}, ${shade(c, -0.05)} 55%, ${shade(c, 0.3)})` }}
+                  className="group relative flex min-h-[58px] w-full items-center gap-2.5 overflow-hidden rounded-2xl px-2.5 py-2 text-left transition-[transform,box-shadow] duration-300 ease-spring hover:-translate-y-0.5 hover:rotate-[-.6deg] active:scale-[.97]"
+                  style={{ background: shade(c, 0.86), boxShadow: on ? `inset 0 0 0 2px ${deep}, 0 12px 24px -14px ${shade(c, 0, 0.8)}` : `inset 0 0 0 1px ${shade(c, 0.55)}` }}
                 >
-                  <span className="min-w-0">
-                    <span className="condensed block truncate text-[15px] sm:text-[17px] font-extrabold italic leading-none tracking-[.4px] [text-shadow:0_1px_2px_rgba(0,0,0,.25)]">{s.h}</span>
-                    <small className="mt-1 block text-[11px] leading-tight text-white/80">{s.name}</small>
+                  <span
+                    aria-hidden="true"
+                    className={cn("pointer-events-none absolute inset-0 origin-left", on ? "tile-wipe" : "scale-x-0")}
+                    style={{ background: `linear-gradient(90deg, ${shade(c, 0.35, 0.9)}, ${shade(c, 0.7, 0.5)})` }}
+                  />
+                  <span className="relative grid size-9 flex-none place-items-center rounded-xl bg-white shadow-[0_2px_6px_-2px_rgba(0,0,0,.12)] transition-transform duration-300 ease-spring group-hover:scale-110 group-hover:rotate-[-8deg]" style={{ color: deep }}>
+                    <TileIcon className="size-[18px]" strokeWidth={2} aria-hidden="true" />
+                  </span>
+                  <span className="relative min-w-0 flex-1">
+                    <span className="condensed block truncate text-[16px] font-extrabold italic leading-none tracking-[.4px] sm:text-[17px]" style={{ color: deep }}>
+                      {s.h}
+                    </span>
+                    <small className="mt-1 block truncate text-[11.5px] leading-tight text-ink/60">{s.name}</small>
                   </span>
                   {s.v && (
-                    <span className="condensed flex-none rounded-[5px] bg-white px-1.5 py-[3px] text-[13px] font-extrabold leading-none" style={{ color: shade(c, -0.6) }}>
+                    <span className="condensed relative flex-none rounded-md px-1.5 py-[3px] text-[13px] font-extrabold leading-none text-white" style={{ background: deep }}>
                       {s.v}
                     </span>
                   )}
                 </button>
-              </li>
+              </motion.li>
             );
           })}
         </ul>

@@ -24,7 +24,7 @@ const lazyExtra = <T extends keyof typeof import("./extra-demos")>(name: T) =>
 const lazyModule = <T extends keyof typeof import("./module-demos")>(name: T) =>
   dynamic(() => import("./module-demos").then((m) => m[name]), { ssr: false, loading: StageSkeleton });
 
-const DEMOS: Record<FeatureId, React.ComponentType> = {
+export const DEMOS: Record<FeatureId, React.ComponentType> = {
   music: MusicDemo,
   shelf: lazy("ShelfDemo"),
   calendar: lazy("CalendarDemo"),

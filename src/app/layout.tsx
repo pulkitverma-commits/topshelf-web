@@ -16,12 +16,18 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
-  keywords: ["Mac menu bar app", "MacBook camera housing", "break reminders", "macOS productivity", "TopShelf"],
+  keywords: ["TopShelf", "Mac app", "MacBook top of screen app", "break reminders for Mac", "20-20-20 eye rest Mac", "now playing Mac", "file shelf Mac", "clipboard history Mac", "Pomodoro timer Mac", "macOS productivity"],
+  authors: [{ name: siteConfig.company }],
+  creator: siteConfig.company,
+  publisher: siteConfig.company,
+  category: "productivity",
+  formatDetection: { telephone: false },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: "/",
     siteName: siteConfig.name,
+    locale: "en_GB",
     title: `${siteConfig.name} — Your Mac has a new favourite spot`,
     description: siteConfig.description,
   },
@@ -30,7 +36,7 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} — Your Mac has a new favourite spot`,
     description: siteConfig.description,
   },
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
 };
 
 export const viewport: Viewport = {

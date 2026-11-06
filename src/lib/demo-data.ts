@@ -257,9 +257,28 @@ export const FAQS: Faq[] = [
     a: "From 1.1, TopShelf starts at login by default. Turn it off in Settings › General (or System Settings › Login Items) and it stays off.",
   },
   {
+    q: "How much does TopShelf cost?",
+    a: `${siteConfig.offers.lifetime.price} (US dollars), once. There's no subscription: one lifetime licence covers ${siteConfig.offers.licenceDevices} and includes ${siteConfig.offers.updateTerms}.`,
+  },
+  {
     q: "Is there a free trial?",
-    a: `Yes. You can try TopShelf free for ${siteConfig.offers.trial.length} before buying a licence.`,
-    toConfirm: true,
+    a: `Yes. Try every feature free for ${siteConfig.offers.trial.length}, with no card and no sign-up. Keep it afterwards for ${siteConfig.offers.lifetime.price}, once.`,
+  },
+  {
+    q: "How many Macs can I use it on?",
+    a: `One licence covers ${siteConfig.offers.licenceDevices}.`,
+  },
+  {
+    q: "Are updates included?",
+    a: "Yes: every 1.x update is free with your licence.",
+  },
+  {
+    q: "What's the keyboard shortcut to open TopShelf?",
+    a: "Control-Option-N (⌃⌥N) opens and closes it. ⌃⌥V opens clipboard history, ⌃⌥T starts a quick note and ⌃⌥D opens the dashboard. You can change any of them in Settings.",
+  },
+  {
+    q: "How do I install it?",
+    a: "Download the disk image, open it and drag TopShelf into Applications. Then open TopShelf and move your pointer to the top of the screen.",
   },
 ];
 

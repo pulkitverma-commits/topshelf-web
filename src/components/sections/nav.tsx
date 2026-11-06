@@ -4,17 +4,18 @@ import { useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { Download, Menu, X } from "lucide-react";
 import { siteConfig } from "@/config/site";
-import { ButtonLink, Logo } from "@/components/ui/primitives";
+import { Logo } from "@/components/ui/primitives";
+import { DownloadButton } from "@/components/delight/download";
 import { cn, easeOut } from "@/lib/utils";
 
 const LINKS = [
-  { href: "#tour", label: "Tour" },
-  { href: "#features", label: "Features" },
-  { href: "#breaks", label: "Breaks" },
-  { href: "#new", label: "New in 1.1" },
-  { href: "#privacy", label: "Privacy" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQs" },
+  { href: "/#tour", label: "Tour" },
+  { href: "/#features", label: "Features" },
+  { href: "/#breaks", label: "Breaks" },
+  { href: "/#new", label: "New in 1.1" },
+  { href: "/#privacy", label: "Privacy" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#faq", label: "FAQs" },
 ];
 
 export function Nav() {
@@ -36,7 +37,7 @@ export function Nav() {
         className={cn("absolute inset-x-0 bottom-0 h-[2px] origin-left bg-accent transition-opacity duration-300", scrolled ? "opacity-100" : "opacity-0")}
       />
       <div className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between gap-6 px-4 sm:px-8">
-        <a href="#top" aria-label="TopShelf home" className="text-ink">
+        <a href="/" aria-label="TopShelf home" className="text-ink">
           <Logo />
         </a>
         <nav aria-label="Primary" className="hidden gap-6 text-[15px] text-[#3a3a3a] min-[1000px]:flex">
@@ -51,11 +52,11 @@ export function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-1.5">
-          <ButtonLink href={siteConfig.links.download} size="sm">
+          <DownloadButton size="sm">
             <Download className="size-4" strokeWidth={1.8} aria-hidden="true" />
             <span className="hidden min-[380px]:inline">Download for Mac</span>
             <span className="min-[380px]:hidden">Download</span>
-          </ButtonLink>
+          </DownloadButton>
           <button
             type="button"
             className="grid size-11 place-items-center rounded-full min-[1000px]:hidden"

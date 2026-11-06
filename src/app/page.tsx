@@ -4,6 +4,8 @@ import { MotionProvider } from "@/components/ui/motion-primitives";
 import { Nav } from "@/components/sections/nav";
 import { Hero } from "@/components/sections/hero";
 import { Concept } from "@/components/sections/concept";
+import { ModuleMarquee } from "@/components/sections/module-marquee";
+import { StickyDownload } from "@/components/delight/sticky-download";
 import { Playground } from "@/components/playground/playground";
 import { Tour } from "@/components/sections/tour";
 import { DelightProvider } from "@/components/delight/delight-provider";
@@ -17,28 +19,14 @@ import { AppProvider } from "@/components/app-provider";
 import { Pricing } from "@/components/sections/pricing";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta, Footer } from "@/components/sections/final-cta";
-import { FAQS } from "@/lib/demo-data";
+import { organization, softwareApplication } from "@/lib/schema";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      name: siteConfig.name,
-      applicationCategory: "ProductivityApplication",
-      operatingSystem: "macOS",
-      description: siteConfig.description,
-      url: siteConfig.url,
-    },
-    {
-      "@type": "FAQPage",
-      // Only answers confirmed against the shipped product are published as structured data.
-      mainEntity: FAQS.filter((f) => !f.toConfirm).map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
-    },
+    organization(),
+    { "@type": "WebSite", "@id": `${siteConfig.url}/#site`, name: siteConfig.name, url: siteConfig.url, publisher: { "@id": `${siteConfig.url}/#org` }, inLanguage: "en-GB" },
+    (({ "@context": _c, ...app }) => app)(softwareApplication()),
   ],
 };
 
@@ -52,6 +40,7 @@ export default function HomePage() {
         <Nav />
         <main id="main">
           <Hero />
+          <ModuleMarquee />
           <Concept />
           <Tour />
           <Playground />
@@ -66,6 +55,7 @@ export default function HomePage() {
           <FinalCta />
         </main>
         <Footer />
+        <StickyDownload />
         </DelightProvider>
         </AppProvider>
       </DemoProvider>
