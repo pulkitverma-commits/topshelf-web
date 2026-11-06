@@ -1,7 +1,7 @@
 "use client";
 
 import { MotionConfig, motion } from "motion/react";
-import type { ReactNode } from "react";
+import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
 import { cn, easeOut } from "@/lib/utils";
 
 /** Respects the visitor's reduced-motion setting for every Motion animation. */
@@ -34,6 +34,34 @@ export function Reveal({
   );
 }
 
+/** Splits heading text into words that rise in one after another (keeps <b> etc. intact). */
+function splitWords(node: ReactNode, counter: { i: number }): ReactNode {
+  return Children.map(node, (child) => {
+    if (typeof child === "string") {
+      return child.split(/(\s+)/).map((part, k) => {
+        if (!part) return null;
+        if (/^\s+$/.test(part)) return part;
+        const i = counter.i++;
+        return (
+          <span key={`${i}-${k}`} className="inline-block overflow-hidden pb-[.08em] align-bottom">
+            <motion.span
+              className="inline-block"
+              variants={{ hidden: { y: "105%", opacity: 0 }, shown: { y: "0%", opacity: 1, transition: { duration: 0.7, ease: easeOut, delay: i * 0.045 } } }}
+            >
+              {part}
+            </motion.span>
+          </span>
+        );
+      });
+    }
+    if (isValidElement(child)) {
+      const el = child as ReactElement<{ children?: ReactNode }>;
+      return cloneElement(el, undefined, splitWords(el.props.children, counter));
+    }
+    return child;
+  });
+}
+
 export function SectionHeading({
   kicker,
   children,
@@ -50,9 +78,16 @@ export function SectionHeading({
   return (
     <Reveal className={cn("flex flex-col gap-[18px]", center && "items-center text-center", className)}>
       <p className="m-0 text-[13px] uppercase tracking-[.08em] text-muted">{kicker}</p>
-      <h2 id={id} className="m-0 max-w-[900px] text-balance font-display text-[clamp(34px,4.8vw,64px)] font-medium leading-[1.03] tracking-[-.04em] [&_b]:font-bold">
-        {children}
-      </h2>
+      <motion.h2
+        id={id}
+        initial="hidden"
+        whileInView="shown"
+        viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+        className="m-0 max-w-[900px] text-balance font-display text-[clamp(34px,4.8vw,64px)] font-medium leading-[1.03] tracking-[-.04em] [&_b]:font-bold"
+      >
+        <span className="sr-only">{children}</span>
+        <span aria-hidden="true">{splitWords(children, { i: 0 })}</span>
+      </motion.h2>
     </Reveal>
   );
 }

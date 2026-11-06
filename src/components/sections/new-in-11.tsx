@@ -1,5 +1,8 @@
 "use client";
 
+import { useDelight } from "@/components/delight/delight-provider";
+import { GuideNote, Tilt } from "@/components/delight/interactive";
+
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowUpRight, Bell, Command, Download, MousePointer2, Timer } from "lucide-react";
@@ -32,7 +35,9 @@ function Celebration() {
 
   useEffect(() => () => timers.current.forEach(window.clearTimeout), []);
 
+  const { mark } = useDelight();
   const play = (s: StingerSpec) => {
+    mark("x-celebration", stageRef.current);
     timers.current.forEach(window.clearTimeout);
     timers.current = [];
     setSpec(s);
@@ -91,6 +96,11 @@ function Celebration() {
           <p className="sr-only" aria-live="polite">
             {live}
           </p>
+        </div>
+        <div className="relative h-0">
+          <GuideNote arrow="down-left" rotate={4} className="absolute -top-2 right-0 hidden lg:flex">
+            tap one!
+          </GuideNote>
         </div>
         <div className="flex flex-wrap gap-2" role="group" aria-label="Play a celebration alert">
           {(Object.keys(MAIN_STINGERS) as (keyof typeof MAIN_STINGERS)[]).map((k) => {
@@ -188,7 +198,7 @@ function FlyCard() {
     timers.current = [window.setTimeout(() => setPhase("landed"), 850), window.setTimeout(() => setPhase("idle"), 3400)];
   };
   return (
-    <Reveal className="flex flex-col gap-3 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
+    <Tilt reveal max={4} className="flex flex-col gap-3 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
       <div className="relative h-[140px] overflow-hidden rounded-2xl bg-mint" aria-hidden="true">
         <motion.div
           initial={false}
@@ -222,13 +232,13 @@ function FlyCard() {
           Drag a file with ⌘
         </Button>
       </div>
-    </Reveal>
+    </Tilt>
   );
 }
 
 function GraceCard() {
   return (
-    <Reveal delay={0.05} className="flex flex-col gap-3 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
+    <Tilt reveal max={4} delay={0.05} className="flex flex-col gap-3 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
       <div className="relative h-[140px] overflow-hidden rounded-2xl bg-lavender" aria-hidden="true">
         <div className="absolute left-1/2 top-0 h-[84px] w-[200px] -translate-x-1/2 overflow-hidden rounded-b-[22px] bg-black px-4 pt-7">
           <i className="block h-2 rounded bg-white/15" />
@@ -239,13 +249,13 @@ function GraceCard() {
       </div>
       <h3 className="m-0 font-display text-[22px] font-semibold tracking-[-.025em]">Stays open while you use it</h3>
       <p className="m-0 text-[15px] text-muted">If you&apos;ve clicked, scrolled or dragged in TopShelf and the pointer slips out, it waits a moment (3 seconds by default, adjustable from 0 to 10) with a thin line draining along the bottom. Come back and it stays.</p>
-    </Reveal>
+    </Tilt>
   );
 }
 
 function InstallCard() {
   return (
-    <Reveal delay={0.1} className="flex flex-col gap-3 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
+    <Tilt reveal max={4} delay={0.1} className="flex flex-col gap-3 rounded-[26px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
       <div className="relative grid h-[140px] place-items-center overflow-hidden rounded-2xl bg-peach" aria-hidden="true">
         <div className="flex w-[min(250px,88%)] flex-col gap-2">
           <div className="grid grid-cols-[30px_1fr] items-center gap-x-2.5 gap-y-1.5 rounded-[14px] bg-white p-3 shadow-[0_16px_30px_-16px_rgba(0,0,0,.35)]">
@@ -264,13 +274,13 @@ function InstallCard() {
       </div>
       <h3 className="m-0 font-display text-[22px] font-semibold tracking-[-.025em]">Install & start at login</h3>
       <p className="m-0 text-[15px] text-muted">Opened from a download or the disk image, TopShelf offers to move itself into Applications. It starts at login by default; turn that off in Settings › General or System Settings › Login Items, and it stays off.</p>
-    </Reveal>
+    </Tilt>
   );
 }
 
 function ClipboardCard() {
   return (
-    <Reveal delay={0.15} className="flex flex-col gap-3 rounded-[26px] bg-[#1C1C1E] p-5 text-white">
+    <Tilt reveal max={4} delay={0.15} className="flex flex-col gap-3 rounded-[26px] bg-[#1C1C1E] p-5 text-white">
       <div className="flex h-[140px] flex-col justify-center gap-1.5 rounded-2xl bg-white/[.06] p-3 text-[12.5px]" aria-hidden="true">
         <span className="flex items-center gap-2 rounded-lg bg-white/[.07] px-2.5 py-1.5"><span className="text-accent-soft">★</span>Shipping address · Studio, 2nd floor</span>
         <span className="flex items-center gap-2 rounded-lg bg-white/[.07] px-2.5 py-1.5"><Timer className="size-3.5 text-[#ffb4a3]" />Code 482 913<small className="ml-auto text-[#ffb4a3]">deletes in 2 min</small></span>
@@ -288,7 +298,7 @@ function ClipboardCard() {
           <ArrowUpRight className="size-4" aria-hidden="true" />
         </a>
       </div>
-    </Reveal>
+    </Tilt>
   );
 }
 

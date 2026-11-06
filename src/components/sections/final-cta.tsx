@@ -2,6 +2,7 @@ import { Download } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Reveal } from "@/components/ui/motion-primitives";
 import { ButtonLink, Logo, Value } from "@/components/ui/primitives";
+import { Magnetic } from "@/components/delight/interactive";
 
 export function FinalCta() {
   return (
@@ -20,10 +21,12 @@ export function FinalCta() {
             <i className="loop-final-in block size-[70px] flex-none rounded-full shadow-[inset_0_0_0_6px_rgba(255,255,255,.2)]" />
           </div>
         </div>
+        <Magnetic strength={0.22}>
         <ButtonLink href={siteConfig.links.dmg} download size="lg">
           <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
           Download the TopShelf 1.1 preview
         </ButtonLink>
+        </Magnetic>
         <p className="mb-0 mt-4 text-sm text-muted">macOS 14 Sonoma or later · Apple silicon &amp; Intel · 3.8 MB disk image</p>
         <p className="mb-0 mt-1 text-sm text-muted">
           Includes Celebration alerts and everything new in 1.1. Prefer the earlier release?{" "}

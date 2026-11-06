@@ -8,15 +8,16 @@ import { AlbumArt, Equalizer, FileIcon } from "@/components/topshelf/bits";
 import { Reveal, SectionHeading } from "@/components/ui/motion-primitives";
 import { Button } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils";
+import { Tilt } from "@/components/delight/interactive";
 
 function Card({ n, title, body, className, children }: { n: string; title: string; body: ReactNode; className?: string; children: ReactNode }) {
   return (
-    <Reveal className={cn("relative flex min-h-[340px] flex-col gap-2.5 overflow-hidden rounded-[28px] p-[26px]", className)}>
+    <Tilt reveal max={4} className={cn("relative flex min-h-[340px] flex-col gap-2.5 overflow-hidden rounded-[28px] p-[26px]", className)}>
       <span className="text-xs tabular-nums tracking-[.06em] text-muted">{n}</span>
       <h3 className="m-0 font-display text-2xl font-semibold leading-[1.15] tracking-[-.025em]">{title}</h3>
       <p className="m-0 max-w-[360px] text-[15.5px] text-muted">{body}</p>
       <div className="relative min-h-40 flex-1">{children}</div>
-    </Reveal>
+    </Tilt>
   );
 }
 

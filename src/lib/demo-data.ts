@@ -181,33 +181,6 @@ export const FEATURES: Feature[] = [
   },
 ];
 
-export const STORY_STEPS = [
-  {
-    kicker: "Morning · 9:00",
-    title: "Get organised",
-    body: "Your first meeting is already waiting up top. One glance and you know what's next.",
-    app: "Calendar",
-    clock: "Wed 9:20",
-    caption: "good morning",
-  },
-  {
-    kicker: "Afternoon · 14:00",
-    title: "Stay in the zone",
-    body: "Music plays, the focus timer runs, and a short break arrives right on time.",
-    app: "Pages",
-    clock: "Wed 14:06",
-    caption: "heads down",
-  },
-  {
-    kicker: "Evening · 18:30",
-    title: "Wrap things up",
-    body: "Collect today's files on the Shelf, tick off the last task and close the lid.",
-    app: "Finder",
-    clock: "Wed 18:30",
-    caption: "done for the day",
-  },
-] as const;
-
 export const MAC_HIGHLIGHTS = [
   { title: "100% Swift, SwiftUI & AppKit", body: "Native to the Mac, with zero third-party dependencies." },
   { title: "Lines up with the camera", body: "Sits exactly around the camera housing on MacBooks." },

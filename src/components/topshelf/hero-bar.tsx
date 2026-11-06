@@ -82,7 +82,7 @@ type Controller = ReturnType<typeof useBarController>;
  * The hero's working TopShelf. Hover (mouse) or tap/click to expand; it collapses on
  * pointer leave unless it was clicked open, or via the collapse button / Escape.
  */
-export function HeroBar({ controller }: { controller: Controller }) {
+export function HeroBar({ controller, near = false }: { controller: Controller; near?: boolean }) {
   const { open, pinned, tab, setTab, show, scheduleClose, collapse, cancelClose } = controller;
   const demo = useDemo();
   const [zoneRef, width] = useElementWidth<HTMLDivElement>();
@@ -106,7 +106,7 @@ export function HeroBar({ controller }: { controller: Controller }) {
   const wide = demo.playing || demo.timerRunning;
   const size = open
     ? { width: Math.min(620, width * 0.94), height: small ? 276 : 258, radius: small ? 26 : 32 }
-    : { width: base + (wide ? (small ? 64 : 104) : 0), height: collapsedH, radius: small ? 12 : 16 };
+    : { width: base + (wide ? (small ? 64 : 104) : 0) + (near ? 22 : 0), height: collapsedH + (near ? 5 : 0), radius: small ? 12 : 16 };
 
   const onTabKey = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;

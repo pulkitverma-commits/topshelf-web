@@ -71,3 +71,40 @@ export function alertSound(mode: SoundMode) {
   tickTick();
   if (mode === "both") chime(0.38);
 }
+
+/** A soft rising "pop" for small website feedback (never used for app alerts). */
+export function pop(gain = 0.07) {
+  const ac = audio();
+  if (!ac) return;
+  const t = ac.currentTime;
+  const o = ac.createOscillator();
+  o.type = "sine";
+  o.frequency.setValueAtTime(520, t);
+  o.frequency.exponentialRampToValueAtTime(1180, t + 0.09);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(gain, t + 0.012);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+  o.connect(g).connect(ac.destination);
+  o.start(t);
+  o.stop(t + 0.2);
+}
+
+/** Three quiet ascending notes for finishing a set of things on the website. */
+export function sparkle() {
+  const ac = audio();
+  if (!ac) return;
+  [659.25, 880, 1318.5].forEach((f, i) => {
+    const t = ac.currentTime + i * 0.09;
+    const o = ac.createOscillator();
+    o.type = "triangle";
+    o.frequency.value = f;
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.06, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
+    o.connect(g).connect(ac.destination);
+    o.start(t);
+    o.stop(t + 0.55);
+  });
+}

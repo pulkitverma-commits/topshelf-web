@@ -8,6 +8,7 @@ import { ButtonLink, Logo } from "@/components/ui/primitives";
 import { cn, easeOut } from "@/lib/utils";
 
 const LINKS = [
+  { href: "#tour", label: "Tour" },
   { href: "#features", label: "Features" },
   { href: "#breaks", label: "Breaks" },
   { href: "#new", label: "New in 1.1" },
@@ -17,7 +18,7 @@ const LINKS = [
 ];
 
 export function Nav() {
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 12));
@@ -29,6 +30,11 @@ export function Nav() {
         (scrolled || menuOpen) && "bg-canvas/80 shadow-[0_1px_0_var(--color-line)] backdrop-blur-xl backdrop-saturate-150",
       )}
     >
+      <motion.span
+        aria-hidden="true"
+        style={{ scaleX: scrollYProgress }}
+        className={cn("absolute inset-x-0 bottom-0 h-[2px] origin-left bg-accent transition-opacity duration-300", scrolled ? "opacity-100" : "opacity-0")}
+      />
       <div className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between gap-6 px-4 sm:px-8">
         <a href="#top" aria-label="TopShelf home" className="text-ink">
           <Logo />

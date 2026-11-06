@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useDelight } from "@/components/delight/delight-provider";
+import { GuideNote } from "@/components/delight/interactive";
 import { motion } from "motion/react";
 import { RotateCcw } from "lucide-react";
 import { MenuBar, Wallpaper } from "@/components/mac/macbook";
@@ -41,6 +43,7 @@ function Slider({ label, value, min, max, step, format, onChange, tag }: { label
 /** The real appearance and size controls from TopShelf's settings, previewed live. */
 export function Customiser() {
   const [p, setP] = useState(DEFAULTS);
+  const { mark } = useDelight();
   const set = <K extends keyof typeof DEFAULTS>(k: K) => (v: (typeof DEFAULTS)[K]) => setP((x) => ({ ...x, [k]: v }));
   const accent = TINT[p.accent];
   const theme = THEMES.find((t) => t.id === p.theme)!;
@@ -54,14 +57,22 @@ export function Customiser() {
         <div className="mt-14 grid items-start gap-[clamp(28px,4vw,56px)] min-[901px]:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]">
           <Reveal className="flex flex-col gap-[22px]">
             <fieldset className="m-0 border-0 p-0">
-              <legend className="mb-2.5 p-0 text-[13px] uppercase tracking-[.08em] text-muted">Theme</legend>
+              <legend className="relative mb-2.5 w-full p-0 text-[13px] uppercase tracking-[.08em] text-muted">
+                Theme
+                <GuideNote arrow="down-right" arrowFirst={false} rotate={3} className="absolute -top-9 right-0 hidden normal-case tracking-normal lg:flex">
+                  try Neon
+                </GuideNote>
+              </legend>
               <div className="flex flex-wrap gap-1.5">
                 {THEMES.map((t) => (
                   <button
                     key={t.id}
                     type="button"
                     aria-pressed={p.theme === t.id}
-                    onClick={() => set("theme")(t.id)}
+                    onClick={(e) => {
+                      set("theme")(t.id);
+                      if (t.id !== DEFAULTS.theme) mark("x-theme", e.currentTarget);
+                    }}
                     className={cn("inline-flex h-11 items-center gap-2 rounded-full pl-2 pr-4 text-sm transition-[background-color,color] duration-300", p.theme === t.id ? "bg-ink text-white" : "bg-white shadow-[inset_0_0_0_1px_var(--color-line-strong)] hover:bg-[#fafafa]")}
                   >
                     <i

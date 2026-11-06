@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { AnimatePresence, motion, useReducedMotion, useSpring } from "motion/react";
 import { Download, Sparkles } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { useDemo } from "@/components/demo-provider";
@@ -8,6 +9,8 @@ import { DesktopWindow, Dock, MacBook, MenuBar } from "@/components/mac/macbook"
 import { HeroBar, useBarController } from "@/components/topshelf/hero-bar";
 import { DeskFile, useDesktopDrop } from "@/components/topshelf/shelf";
 import { ButtonLink, Value } from "@/components/ui/primitives";
+import { Magnetic } from "@/components/delight/interactive";
+import { HeroQuests } from "@/components/delight/quests";
 import { easeOut } from "@/lib/utils";
 
 export function Hero() {
@@ -16,6 +19,29 @@ export function Hero() {
   const desktopDrop = useDesktopDrop();
   const deskFiles = files.filter((f) => !f.inTray);
   const uptop = siteConfig.flags.heroVariant === "uptop";
+  const reduce = useReducedMotion();
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [near, setNear] = useState(false);
+  const rx = useSpring(0, { stiffness: 120, damping: 20 });
+  const ry = useSpring(0, { stiffness: 120, damping: 20 });
+
+  // The Mac leans a touch toward the pointer, and the bar perks up when the pointer nears it.
+  const onStageMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const fx = (e.clientX - r.left) / r.width - 0.5;
+    const fy = (e.clientY - r.top) / r.height - 0.5;
+    if (!reduce) {
+      ry.set(fx * 4);
+      rx.set(-fy * 3);
+    }
+    setNear(Math.abs(fx) < 0.22 && (e.clientY - r.top) / r.height < 0.2);
+  };
+  const onStageLeave = () => {
+    rx.set(0);
+    ry.set(0);
+    setNear(false);
+  };
 
   return (
     <section id="top" aria-labelledby="hero-title" className="pb-20 pt-10 text-center sm:pb-[120px] sm:pt-16">
@@ -62,10 +88,12 @@ export function Hero() {
           transition={{ duration: 0.8, ease: easeOut, delay: 0.18 }}
           className="mt-1.5 flex flex-wrap justify-center gap-3"
         >
-          <ButtonLink href={siteConfig.links.download}>
-            <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
-            Download for macOS
-          </ButtonLink>
+          <Magnetic>
+            <ButtonLink href={siteConfig.links.download}>
+              <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />
+              Download for macOS
+            </ButtonLink>
+          </Magnetic>
           <ButtonLink href="#features" variant="ghost">
             See how it works
           </ButtonLink>
@@ -87,6 +115,7 @@ export function Hero() {
         transition={{ duration: 1, ease: easeOut, delay: 0.25 }}
         className="relative mx-auto mt-24 max-w-[1200px] px-4 sm:mt-[120px] sm:px-8"
       >
+        <div ref={stageRef} onPointerMove={onStageMove} onPointerLeave={onStageLeave} className="relative">
         <AnimatePresence>
           {!controller.open && (
             <motion.div
@@ -119,14 +148,33 @@ export function Hero() {
                   transition={{ duration: 0.35, delay: 1.8 }}
                 />
               </svg>
-              <span className="-mt-2 -rotate-[4deg] font-hand text-[22px] leading-none sm:whitespace-nowrap sm:text-[27px]">
-                Go ahead. <br className="sm:hidden" />
-                Try TopShelf.
-              </span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={near ? "near" : "far"}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="-mt-2 -rotate-[4deg] font-hand text-[22px] leading-none sm:whitespace-nowrap sm:text-[27px]"
+                >
+                  {near ? (
+                    <>
+                      Yes, right there! <br className="sm:hidden" />
+                      Now hover it.
+                    </>
+                  ) : (
+                    <>
+                      Go ahead. <br className="sm:hidden" />
+                      Try TopShelf.
+                    </>
+                  )}
+                </motion.span>
+              </AnimatePresence>
             </motion.div>
           )}
         </AnimatePresence>
 
+        <motion.div style={{ rotateX: rx, rotateY: ry, transformPerspective: 1600 }}>
         <MacBook className="w-[94%] sm:w-[min(1040px,88%)]" screenClassName="max-sm:aspect-auto max-sm:h-[310px]" onScreenDragOver={desktopDrop.onDragOver} onScreenDrop={desktopDrop.onDrop}>
           <MenuBar />
           <DesktopWindow className="left-[7%] top-[18%] h-[46%] w-[52%] sm:top-[15%] sm:h-[56%] sm:w-[40%]" />
@@ -138,8 +186,11 @@ export function Hero() {
             </AnimatePresence>
           </div>
           <Dock />
-          <HeroBar controller={controller} />
+          <HeroBar controller={controller} near={near} />
         </MacBook>
+        </motion.div>
+        </div>
+        <HeroQuests open={controller.open} show={controller.show} stage={stageRef} />
       </motion.div>
     </section>
   );

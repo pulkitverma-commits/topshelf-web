@@ -4,6 +4,8 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
 import { Sparkles } from "lucide-react";
+import { useDelight } from "@/components/delight/delight-provider";
+import { GuideNote } from "@/components/delight/interactive";
 import { siteConfig } from "@/config/site";
 import { FEATURES, type FeatureId } from "@/lib/demo-data";
 import { SectionHeading } from "@/components/ui/motion-primitives";
@@ -45,6 +47,18 @@ export function Playground() {
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const feature = features.find((f) => f.id === active) ?? features[0];
   const Demo = DEMOS[feature.id];
+  const { mark } = useDelight();
+  const mounted = useRef(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // A module counts as tried once it is picked or touched.
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    mark(`m-${active}`, tabRefs.current[features.findIndex((f) => f.id === active)]);
+  }, [active]);
 
   // Other sections can open a tab here ("Try it in the playground").
   useEffect(() => {
@@ -79,6 +93,11 @@ export function Playground() {
           Everything you need. <b>Right where you need it.</b>
         </SectionHeading>
 
+        <div className="relative">
+          <GuideNote arrow="down-left" rotate={-4} className="absolute -top-[58px] right-2 hidden lg:flex">
+            pick any. they all work.
+          </GuideNote>
+        </div>
         <div role="tablist" aria-label="TopShelf features" className="no-scrollbar mt-11 flex gap-1.5 overflow-x-auto px-0.5 py-1">
           {features.map((f, i) => {
             const selected = f.id === feature.id;
@@ -111,6 +130,8 @@ export function Playground() {
 
         <div
           id="feature-panel"
+          ref={panelRef}
+          onPointerDown={() => mark(`m-${feature.id}`, tabRefs.current[features.findIndex((f) => f.id === feature.id)])}
           role="tabpanel"
           aria-labelledby={`tab-${feature.id}`}
           className="mt-[18px] grid items-center gap-6 rounded-[32px] bg-white p-4 shadow-[inset_0_0_0_1px_var(--color-line)] sm:p-[clamp(16px,2.6vw,36px)] md:gap-[clamp(24px,4vw,56px)] min-[901px]:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]"

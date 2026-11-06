@@ -5,7 +5,8 @@ import { Nav } from "@/components/sections/nav";
 import { Hero } from "@/components/sections/hero";
 import { Concept } from "@/components/sections/concept";
 import { Playground } from "@/components/playground/playground";
-import { Story } from "@/components/sections/story";
+import { Tour } from "@/components/sections/tour";
+import { DelightProvider } from "@/components/delight/delight-provider";
 import { BuiltForMac } from "@/components/sections/built-for-mac";
 import { Details } from "@/components/sections/details";
 import { Customiser } from "@/components/sections/customiser";
@@ -46,15 +47,16 @@ export default function HomePage() {
     <MotionProvider>
       <DemoProvider>
         <AppProvider>
+        <DelightProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Nav />
         <main id="main">
           <Hero />
           <Concept />
+          <Tour />
           <Playground />
           <Breaks />
           <NewIn11 />
-          <Story />
           <BuiltForMac />
           <Details />
           <Customiser />
@@ -64,6 +66,7 @@ export default function HomePage() {
           <FinalCta />
         </main>
         <Footer />
+        </DelightProvider>
         </AppProvider>
       </DemoProvider>
     </MotionProvider>
