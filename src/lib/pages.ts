@@ -6,7 +6,7 @@ import { FEATURE_META } from "./feature-meta";
 export const BREAKS_PAGE = {
   slug: "break-reminders",
   label: "Break reminders",
-  kicker: "Break reminders",
+  kicker: "Break reminders · in the 1.1 preview",
   title: "Work in a healthy rhythm. Rest on time.",
   seo: "Break reminders for Mac that wait for your calls",
   body: "By default, 20 minutes of work, then a 20-second break, and a 5-minute long break every third time. All adjustable, and only active time counts.",
@@ -25,7 +25,7 @@ export const BREAKS_PAGE = {
 export const CELEBRATION_PAGE = {
   slug: "celebration-alerts",
   label: "Celebration alerts",
-  kicker: "New in 1.1",
+  kicker: "New in 1.1 · in the preview",
   title: "Time's up? Make it an entrance.",
   seo: "Broadcast-style celebration alerts for timers, meetings and goals",
   body: "When an alarm, timer, meeting, reminder, goal or new message arrives, TopShelf plays a short broadcast-style stinger, then folds back into a small pill with the details. All in 1.9 seconds.",
@@ -33,6 +33,7 @@ export const CELEBRATION_PAGE = {
     { h: "A 1.9-second stinger", p: "The pill drops below the camera into a wide banner, a colour panel wipes across, the icon drives in, a bold headline slams down with a few sparkles and a scoreboard chip rolls in its value." },
     { h: "Alarms punch twice", p: "Timers, meetings and reminders punch the headline twice. Routine events like a file added, something copied, a new track or a device connecting stay quiet." },
     { h: "Your choice of style", p: "Choose Celebration, Colour flash or None in Settings › Appearance › Alert animation. Reduce Motion turns it into a short fade." },
+    { h: "Quiet by default", p: "Alerts can play a soft wooden tick-tick instead of a chime, or stay silent. Pick Silent, Tick-tick or tick plus chime." },
     { h: "Honest chips", p: "The chip only ever shows a value the alert itself contains. No value, no chip." },
   ],
 };
@@ -75,6 +76,71 @@ export const SENSE_PAGE = {
   disclaimer: "Sense is a wellness companion, not a medical device. It does not diagnose, treat or monitor any health condition, and the experimental pulse estimate is not a heart-rate monitor. If you have a health concern, talk to a professional.",
 };
 
+export const CLIPBOARD_PAGE = {
+  slug: "clipboard-history",
+  label: "Clipboard",
+  kicker: "Clipboard · upgraded in 1.1",
+  title: "Everything you copied, nothing you shouldn't keep.",
+  seo: "Clipboard history for Mac with favourites, rich text, short-lived codes and AI actions, that never records passwords",
+  body: "Text and image history that skips passwords, password-manager copies and anything that looks like a key, token or card number. Off until you turn it on, and local only.",
+  points: [
+    { h: "Favourites and filters", p: "Star the items you keep coming back to and filter the history down to text, images or favourites." },
+    { h: "Rich text, your way", p: "Formatted text is kept as it was copied. Copy it back as plain text when you need it clean." },
+    { h: "Codes that vanish", p: "Verification codes are deleted two minutes after they are copied. You can also choose never to record them." },
+    { h: "Keyboard first", p: "Move with ↑ and ↓, paste with ↩, or drag an item straight out of TopShelf into any app." },
+    { h: "AI actions on text", p: "Rewrite, summarise or translate a clipping with the optional Assistant. Nothing is sent until you choose an action and confirm the preview." },
+    { h: "Never your secrets", p: "Items that password managers mark as concealed, copies from apps on the ignored list, and text that looks like a card number, private key, API token or JWT are skipped automatically." },
+  ],
+};
+
+export const THEMES_PAGE = {
+  slug: "themes",
+  label: "Themes",
+  kicker: "Seven finishes · in the 1.1 preview",
+  title: "Seven finishes. Tuned to the pixel.",
+  seo: "Seven TopShelf themes for Mac: Classic Black, Glass, Chrome, Aurora, Midnight, Neon and Luxe Gold",
+  body: "Pick the finish that suits your desk: Classic Black, Glass, Chrome, Aurora, Midnight, Neon and Luxe Gold. Then set the accent, corner radius, width and hover delay to taste.",
+  points: [
+    { h: "Classic Black", p: "The original. A deep black bar that disappears into the top of the screen." },
+    { h: "Glass", p: "Blurs and refracts what is behind it. On macOS 26 and later it uses Apple's Liquid Glass." },
+    { h: "Chrome", p: "A brushed, metallic finish with a soft highlight along the top edge." },
+    { h: "Aurora", p: "A slow drift of colour across the bar. Animated themes only move while TopShelf is open." },
+    { h: "Midnight", p: "A deep blue-black for late evenings and dark wallpapers." },
+    { h: "Neon", p: "A glowing outline in the colour you choose from the Neon picker." },
+    { h: "Luxe Gold", p: "A warm gold edge on black." },
+    { h: "Pin what you use", p: "Pin up to eight modules to the tab bar. Everything else lives in All, a grid of colourful tiles with one-tap quick actions." },
+  ],
+};
+
+export const WELLNESS_PAGE = {
+  slug: "wellness",
+  label: "Wellness reminders",
+  kicker: "Wellness reminders",
+  title: "Small nudges, all day.",
+  seo: "Posture, water, eye-rest, stretch, stand, breathe, medicine and blink reminders for Mac, plus your own",
+  body: "Nine reminders: posture, drink water with an 8-glass tracker, eye rest (20-20-20), blink, stretch, stand up, breathe, medicine and your own custom reminder. Each has an interval, active hours and a weekdays-only switch, and TopShelf blinks until you tap Done or Snooze.",
+  points: [
+    { h: "Posture", p: "Sit tall. A reminder to reset your back and shoulders." },
+    { h: "Water", p: "Drink water, with an 8-glass tracker that logs each glass for the day." },
+    { h: "Eye rest", p: "The 20-20-20 rule: every 20 minutes, look 20 feet away for 20 seconds." },
+    { h: "Blink", p: "A reminder to blink; long stares at a screen dry your eyes." },
+    { h: "Stretch and stand up", p: "Two reminders to move: a quick stretch, or get up and walk." },
+    { h: "Breathe", p: "A short breathing pause." },
+    { h: "Medicine", p: "A reminder at the times you set." },
+    { h: "Your own", p: "A custom reminder with its own text and interval." },
+  ],
+  /** Shipped later than the 1.1 preview build. */
+  next: "A new line-icon design for all nine reminders, replacing the glossy 3D icons.",
+};
+
+/** 1.1 work that is committed but not in the 1.1 preview DMG (build 93c9bdf). */
+export const NEXT_UPDATE = [
+  { h: "TopShelf Sense (opt-in)", p: "Blink awareness, screen-break reminders, head-position insights, wellness check-ins, charts and an experimental pulse estimate, processed on your Mac. Not a medical device.", href: "/features/sense" },
+  { h: "Calendar: Recent Apps", p: "The Calendar view shows the three apps you used most recently as cards. Click one to switch back to it.", href: "/features/calendar" },
+  { h: "Wellness: line icons", p: "A new line-icon design for all nine wellness reminders.", href: "/features/wellness" },
+  { h: "iCloud sync of preferences and notes", p: "Built, but it needs a build signed for iCloud, so it is off in the preview. Consents never sync.", href: "/changelog" },
+];
+
 export const RELEASES = [
   {
     version: "1.1 preview",
@@ -82,11 +148,20 @@ export const RELEASES = [
     file: siteConfig.links.dmg,
     size: siteConfig.release.size,
     items: [
-      { h: "Celebration alerts", p: "Alarms, timers, meetings, reminders, goals and new messages arrive with a 1.9-second broadcast-style stinger. Choose Celebration, Colour flash or None." },
-      { h: "Opens on your Shelf", p: "TopShelf now opens on the File Shelf by default. Hold ⌘ while you drag a file anywhere and it flies onto the shelf. Folders and apps drag back out too." },
+      { h: "Celebration alerts", p: "Alarms, timers, meetings, reminders, goals and new mail arrive with a 1.9-second broadcast-style stinger. Choose Celebration, Colour flash or None, and a soft tick instead of a chime." },
+      { h: "Opens on your Shelf", p: "TopShelf now opens on the File Shelf by default. Hold ⌘ while you drag a file anywhere and it lands on the shelf. Folders and apps drag back out too." },
       { h: "Stays open while you use it", p: "If the pointer slips out after you've clicked, scrolled or dragged, TopShelf waits (3 seconds by default, adjustable from 0 to 10) before closing." },
       { h: "Install and start at login", p: "Opened from a download or the disk image, TopShelf offers to move itself into Applications, and it starts at login by default." },
-      { h: "Clipboard upgrades", p: "Favourites and filters, rich text with copy as plain text, verification codes deleted after two minutes, ↑↓ ↩ and drag out, and AI actions on text." },
+      { h: "Clipboard upgrades", p: "Favourites and filters, rich text with copy as plain text, verification codes deleted after two minutes, ↑↓ ↩ and drag out, and AI actions on text with the opt-in Assistant." },
+      { h: "Inbox: unread counts only", p: "Inbox reads only Mail's unread count for each account, about once a minute, so Mail never freezes on a big mailbox." },
+      { h: "Breaks", p: "Gentle heads-up, floating countdown, full-screen pause on every display, Smart Pause, office hours, Casual/Balanced/Hardcore, daily stats, a Screen Score, a menu-bar timer and shortcuts." },
+    ],
+    /** Committed after build 93c9bdf; ships in the next DMG. */
+    pending: [
+      { h: "TopShelf Sense (opt-in)", p: "Blink awareness, screen-break reminders, head-position insights, wellness check-ins, historical charts and an experimental pulse estimate. Camera off by default, processed on-device, no video recorded, no uploads, no face recognition. Not a medical device; the pulse estimate is experimental and not a heart-rate monitor." },
+      { h: "Calendar: Recent Apps", p: "The Calendar view shows the three most recently used apps as cards; click one to switch back." },
+      { h: "Wellness: line icons", p: "A new line-icon design for all nine reminders." },
+      { h: "iCloud sync", p: "Preferences and quick notes sync through iCloud; privacy consents never do. Needs a build signed for iCloud, so it is off in the preview." },
     ],
   },
   {
@@ -102,6 +177,8 @@ export const RELEASES = [
 
 export interface FeaturePage {
   slug: string;
+  /** Long-form "How it works" cards, for pages that have them. */
+  points?: { h: string; p: string }[];
   id?: FeatureId;
   label: string;
   kicker: string;
@@ -124,14 +201,16 @@ export function featurePages(): FeaturePage[] {
     title: f.title,
     body: f.body,
     seo: FEATURE_META[f.id].seo,
-    next: f.next,
+    next: f.id === "wellness" ? WELLNESS_PAGE.next : f.next,
     stage: f.stage,
     experimental: f.experimental,
+    points: f.id === "clipboard" ? CLIPBOARD_PAGE.points : f.id === "wellness" ? WELLNESS_PAGE.points : undefined,
   }));
   return [
     { ...BREAKS_PAGE, stage: "bg-mint" },
     { ...CELEBRATION_PAGE, stage: "bg-lavender" },
     { slug: SENSE_PAGE.slug, label: SENSE_PAGE.label, kicker: SENSE_PAGE.kicker, title: SENSE_PAGE.title, body: SENSE_PAGE.body, seo: SENSE_PAGE.seo, stage: "bg-[#EAF4FB]", upcoming: true },
+    { ...THEMES_PAGE, stage: "bg-sand" },
     ...modules,
   ];
 }

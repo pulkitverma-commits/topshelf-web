@@ -24,7 +24,7 @@ export default function FeaturesPage() {
           itemListElement: pages.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.label, url: `${siteConfig.url}/features/${p.slug}` })),
         }}
       />
-      <PageHead kicker={`${pages.length} features · one quiet bar`} title={<>Everything you need. <b>Right where you need it.</b></>} lead="Every feature below works in TopShelf today, except the one marked as coming in the next update. Open any of them to read more and try a working demo.">
+      <PageHead kicker={`${pages.length} features · one quiet bar`} title={<>Everything you need. <b>Right where you need it.</b></>} lead="Every feature below is in the 1.1 preview you can download today, except the one marked as coming in the next update. Open any of them to read more and try a working demo.">
         <div>
           <DownloadButton />
         </div>

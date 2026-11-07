@@ -5,7 +5,9 @@ import { GuideNote, Tilt } from "@/components/delight/interactive";
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowUpRight, Bell, Command, Download, MousePointer2, Timer } from "lucide-react";
+import { ArrowUpRight, Bell, Clock, Command, Download, MousePointer2, Timer } from "lucide-react";
+import { NEXT_UPDATE } from "@/lib/pages";
+import { EXTRA_PAGES, FEATURE_META } from "@/lib/feature-meta";
 import { useApp, type AlertStyle } from "@/components/app-provider";
 import { MenuBar, Wallpaper } from "@/components/mac/macbook";
 import { STINGER_ICONS, Stinger } from "@/components/topshelf/stinger";
@@ -345,7 +347,66 @@ export function NewIn11() {
           <InstallCard />
           <ClipboardCard />
         </div>
+        <AlsoInPreview />
+        <NextUpdate />
       </div>
     </section>
+  );
+}
+
+
+const ALSO = [
+  { label: "Breaks", href: "/features/break-reminders", meta: EXTRA_PAGES.breaks, p: "Heads-up, floating countdown, full-screen pause on every display, Smart Pause, office hours, Casual/Balanced/Hardcore, daily stats and a Screen Score." },
+  { label: "Seven finishes", href: "/features/themes", meta: EXTRA_PAGES.themes, p: "Classic Black, Glass, Chrome, Aurora, Midnight, Neon and Luxe Gold." },
+  { label: "Pin what you use", href: "/features/quick-actions", meta: FEATURE_META.all, p: "Pinned module tabs in the header; everything else in the All grid." },
+  { label: "Wellness reminders", href: "/features/wellness", meta: FEATURE_META.wellness, p: "Nine reminders with intervals, active hours and a water log." },
+  { label: "Calculator with a tape", href: "/features/calculator", meta: FEATURE_META.calc, p: "Rolling digits, a live result and a history tape." },
+  { label: "Inbox and Live Scores (opt-in)", href: "/features/inbox", meta: FEATURE_META.inbox, p: "Mail unread counts per account and the WhatsApp badge; scores for the competitions you follow." },
+];
+
+/** The rest of what the 1.1 preview contains, each linking to its page. */
+function AlsoInPreview() {
+  return (
+    <div className="mt-10">
+      <p className="m-0 text-[13px] uppercase tracking-[.08em] text-muted">Also in the 1.1 preview</p>
+      <ul className="m-0 mt-3 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
+        {ALSO.map((a) => (
+          <li key={a.href}>
+            <a href={a.href} className="group flex h-full gap-3.5 rounded-[22px] bg-white p-4 shadow-[inset_0_0_0_1px_var(--color-line)] transition-[transform,box-shadow] duration-300 ease-spring hover:-translate-y-0.5 hover:shadow-[inset_0_0_0_1px_var(--color-line),0_24px_40px_-28px_rgba(23,23,23,.3)]">
+              <span className="grid size-10 flex-none place-items-center rounded-xl transition-transform duration-300 ease-spring group-hover:rotate-[-8deg] group-hover:scale-110" style={{ background: a.meta.bg, color: a.meta.fg }}>
+                <a.meta.Icon className="size-5" strokeWidth={1.8} aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <b className="block font-display text-[16px] font-semibold tracking-[-.015em]">{a.label}</b>
+                <span className="text-[14px] text-muted">{a.p}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** Built after the preview was cut: honest about what the download does not contain yet. */
+function NextUpdate() {
+  return (
+    <Reveal className="mt-8 rounded-[26px] bg-peach p-5 text-[#5a2a0c] sm:p-6">
+      <p className="m-0 flex items-center gap-2 font-display text-[17px] font-semibold">
+        <Clock className="size-4" strokeWidth={1.8} aria-hidden="true" />
+        Coming in the next update
+      </p>
+      <p className="m-0 mt-1 text-[14px] text-[#8A3D12]">Built since the preview was made, so not in today&apos;s download.</p>
+      <ul className="m-0 mt-4 grid list-none gap-2.5 p-0 sm:grid-cols-2">
+        {NEXT_UPDATE.map((n) => (
+          <li key={n.h}>
+            <a href={n.href} className="flex h-full flex-col gap-1 rounded-[18px] bg-white/70 p-4 transition-colors hover:bg-white">
+              <b className="font-display text-[15px] font-semibold">{n.h}</b>
+              <span className="text-[13.5px] text-[#6b4a32]">{n.p}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
   );
 }

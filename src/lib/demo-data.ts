@@ -89,6 +89,7 @@ export const FEATURES: Feature[] = [
     title: "Your next meeting, minus the searching.",
     body: "A live countdown to your next event, with one-click join for Zoom, Meet, Teams, Webex and FaceTime. Read-only.",
     stage: "bg-peach",
+    next: "Recent Apps: the Calendar view shows the three apps you used most recently as cards. Click one to switch back. Built after the 1.1 preview, so it arrives in the next update.",
   },
   {
     id: "focus",
@@ -275,6 +276,18 @@ export const FAQS: Faq[] = [
   {
     q: "What's the keyboard shortcut to open TopShelf?",
     a: "Control-Option-N (⌃⌥N) opens and closes it. ⌃⌥V opens clipboard history, ⌃⌥T starts a quick note and ⌃⌥D opens the dashboard. You can change any of them in Settings.",
+  },
+  {
+    q: "When is 1.1 out?",
+    a: "A 1.1 preview is the download on this site today, with Celebration alerts, opening on the Shelf, staying open while you use it, install and start at login, clipboard upgrades and Breaks. A few things built since then (Sense, Recent Apps in Calendar, the wellness line icons and iCloud sync) are not in it yet and will arrive in the next disk image. There is no date for that yet.",
+  },
+  {
+    q: "Does Sense record me?",
+    a: "No. Sense is off by default and asks for camera access only after you enable the module, agree to its explanation and press Start. Frames are analysed in memory on your Mac and discarded: no video is recorded, nothing is uploaded, and there is no face recognition. Only numbers are kept (blink and head-orientation summaries per minute, check-ins, reminders), in a plain JSON file you can export or delete at any time. The camera light stays on for the whole session, and Sense is not in the current preview build.",
+  },
+  {
+    q: "Is the Sense pulse reading medical?",
+    a: "No. TopShelf is wellness software, not a medical device. The pulse estimate is experimental: it reads tiny colour changes in the skin through the webcam, fails with movement, poor lighting and some cameras, has not been validated against reference instruments, and is not a heart-rate monitor. It is labelled experimental and shows nothing rather than a guess when the signal is poor.",
   },
   {
     q: "How do I install it?",

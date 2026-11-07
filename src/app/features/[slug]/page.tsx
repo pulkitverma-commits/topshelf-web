@@ -6,7 +6,7 @@ import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
 import { DownloadButton } from "@/components/delight/download";
 import { FeatureDemo } from "@/components/site/feature-demo";
 import { MacBook } from "@/components/mac/macbook";
-import { BREAKS_PAGE, CELEBRATION_PAGE, SENSE_PAGE, featurePages } from "@/lib/pages";
+import { BREAKS_PAGE, CELEBRATION_PAGE, SENSE_PAGE, THEMES_PAGE, featurePages } from "@/lib/pages";
 import { FEATURE_META, extraPageMeta } from "@/lib/feature-meta";
 import { ALL_STINGERS, shade, tintHex } from "@/lib/stinger";
 
@@ -38,7 +38,12 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
   if (i < 0) notFound();
   const p = pages[i];
   const related = [pages[(i + 1) % pages.length], pages[(i + 2) % pages.length], pages[(i + 3) % pages.length]];
-  const extra = slug === BREAKS_PAGE.slug ? BREAKS_PAGE.points : slug === CELEBRATION_PAGE.slug ? CELEBRATION_PAGE.points : slug === SENSE_PAGE.slug ? SENSE_PAGE.points : null;
+  const extra =
+    slug === BREAKS_PAGE.slug ? BREAKS_PAGE.points
+    : slug === CELEBRATION_PAGE.slug ? CELEBRATION_PAGE.points
+    : slug === SENSE_PAGE.slug ? SENSE_PAGE.points
+    : slug === THEMES_PAGE.slug ? THEMES_PAGE.points
+    : p.points ?? null;
   const isSense = slug === SENSE_PAGE.slug;
 
   return (
@@ -130,6 +135,12 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
             See them play on the <a className="underline underline-offset-4" href="/#new">home page</a>.
           </p>
         </section>
+      ) : slug === THEMES_PAGE.slug ? (
+        <p className="m-0 pb-6 text-[17px]">
+          <a className="inline-flex items-center gap-1.5 underline underline-offset-4" href="/#customise">
+            Try every finish in the live customiser <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </p>
       ) : (
         <p className="m-0 pb-6 text-[17px]">
           <a className="inline-flex items-center gap-1.5 underline underline-offset-4" href="/#breaks">
@@ -143,6 +154,12 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
           <h2 id="details" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">
             {extra ? (isSense ? "What Sense will do" : "How it works") : "New in 1.1"}
           </h2>
+          {extra && p.next ? (
+            <p className="mt-4 flex max-w-[720px] gap-2.5 rounded-[22px] bg-peach p-5 text-[16px] text-[#5a2a0c]">
+              <Clock className="mt-1 size-4 flex-none" aria-hidden="true" />
+              <span><b className="font-display font-semibold">Coming in the next update: </b>{p.next}</span>
+            </p>
+          ) : null}
           {extra ? (
             <ul className="m-0 mt-6 grid list-none gap-3 p-0 sm:grid-cols-2">
               {extra.map((x) => (
