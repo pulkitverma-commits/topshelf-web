@@ -1,29 +1,11 @@
 {
   "version": "1.1 preview",
-  "build": "19ff2c0",
-  "file": "/downloads/TopShelf-1.1-preview-19ff2c0.dmg",
-  "size": "5.1 MB",
-  "sha256": "fa7ef3151770dddc3944b893baa774207a41b86a1a10587bcc7a3ace9a38da51",
+  "build": "d7fd0a6",
+  "file": "/downloads/TopShelf-1.1-preview-d7fd0a6.dmg",
+  "size": "7.3 MB",
+  "sha256": "53f7fb7ea53246a139fea38f1e6442b453c8a354f364bf898ad65e80efce561a",
   "date": "2026-11-10",
   "changes": [
-    "Publish every build to the website",
-    "Shelf: ZIP of a single file no longer contains the internal storage folder",
-    "Shelf: suggest recent files and glanceable cards while the shelf is empty",
-    "Docs: Sense hardware smoke run on an M4 iMac (single user, single device)",
-    "Sense: measure pitch, hold the configured frame rate, let Start ask for access",
-    "Sense: close sessions left open by a crash or force-quit",
-    "Sense: fix crash when an accessibility client reads Live Monitoring",
-    "Calendar: don't crash on recurring events that share an id",
-    "Fix build: Shelf rename wrote ShelfManager's private thumbnail cache",
-    "Shelf: full right-click menu for every shelf item",
-    "Branding: script to generate every logo asset from master artwork",
-    "Now playing: scroll song and artist in the collapsed notch",
-    "Shelf: say why a file couldn't be added",
-    "Fix NotchCore build and tests on Swift 6.0",
-    "Docs: prompt for updating the live site with the 1.1 features",
-    "Sense: opt-in camera wellness module (blink, head pose, check-ins, experimental pulse)",
-    "Calendar: show the three most recently used apps",
-    "Build TopShelf with only the Command Line Tools",
-    "Wellness: line-icon redesign for all nine reminders"
+    "Branding: add the master logos and generate every asset from them"
   ]
 }
