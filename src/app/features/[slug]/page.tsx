@@ -97,8 +97,8 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
                 <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#EAF4FB", color: "#245E8C" }}>
                   <ScanFace className="size-6" strokeWidth={1.8} aria-hidden="true" />
                 </span>
-                <b className="font-display text-[clamp(16px,1.8vw,22px)] font-semibold tracking-[-.02em]">Screenshots arrive with the update</b>
-                <span className="text-[clamp(11px,1.2vw,14px)] text-muted">Sense is still being built. We&apos;ll show the real thing here, not a mock-up.</span>
+                <b className="font-display text-[clamp(16px,1.8vw,22px)] font-semibold tracking-[-.02em]">Real screenshots coming soon</b>
+                <span className="text-[clamp(11px,1.2vw,14px)] text-muted">Sense is in today&apos;s download. We&apos;ll show the real thing here, not a mock-up.</span>
               </div>
             </div>
           </MacBook>
@@ -152,7 +152,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
       {(extra || p.next) && (
         <section aria-labelledby="details" className="py-12">
           <h2 id="details" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">
-            {extra ? (isSense ? "What Sense will do" : "How it works") : "New in 1.1"}
+            {extra ? (isSense ? "What Sense does" : "How it works") : "New in 1.1"}
           </h2>
           {extra && p.next ? (
             <p className="mt-4 flex max-w-[720px] gap-2.5 rounded-[22px] bg-peach p-5 text-[16px] text-[#5a2a0c]">

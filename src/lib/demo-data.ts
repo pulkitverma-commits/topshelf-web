@@ -89,7 +89,6 @@ export const FEATURES: Feature[] = [
     title: "Your next meeting, minus the searching.",
     body: "A live countdown to your next event, with one-click join for Zoom, Meet, Teams, Webex and FaceTime. Read-only.",
     stage: "bg-peach",
-    next: "Recent Apps: the Calendar view shows the three apps you used most recently as cards. Click one to switch back. Built after the 1.1 preview, so it arrives in the next update.",
   },
   {
     id: "focus",

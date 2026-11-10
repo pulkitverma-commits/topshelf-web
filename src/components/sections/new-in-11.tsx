@@ -348,7 +348,7 @@ export function NewIn11() {
           <ClipboardCard />
         </div>
         <AlsoInPreview />
-        <NextUpdate />
+        {NEXT_UPDATE.length > 0 && <NextUpdate />}
       </div>
     </section>
   );

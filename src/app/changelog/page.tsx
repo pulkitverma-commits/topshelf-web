@@ -55,6 +55,17 @@ export default function ChangelogPage() {
                   </ul>
                 </div>
               ) : null}
+              {"changes" in r && r.changes?.length ? (
+                <details className="rounded-[20px] bg-canvas p-5">
+                  <summary className="cursor-pointer font-display text-lg font-semibold">In build {r.build}</summary>
+                  <p className="m-0 mt-1 text-[14px] text-muted">Every change since the previous download, as committed.</p>
+                  <ul className="m-0 mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[15px]">
+                    {r.changes.map((c) => (
+                      <li key={c}>{c}</li>
+                    ))}
+                  </ul>
+                </details>
+              ) : null}
             </div>
           </li>
         ))}

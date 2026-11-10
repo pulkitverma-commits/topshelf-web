@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { latestBuild, siteConfig } from "@/config/site";
 import { FEATURES, type Feature, type FeatureId } from "./demo-data";
 import { FEATURE_META } from "./feature-meta";
 
@@ -39,25 +39,25 @@ export const CELEBRATION_PAGE = {
 };
 
 /**
- * TopShelf Sense. Announced for the next update: it is NOT in the downloadable build yet,
- * so every surface that shows it carries the "Coming in the next update" label. Keep the copy
- * free of medical or diagnostic claims; pulse tracking is experimental and is not a heart-rate monitor.
+ * TopShelf Sense. In the downloadable 1.1 preview since build 85a2505 (Nov 10, 2026), off by
+ * default. Keep the copy free of medical or diagnostic claims and of anything the app does not
+ * measure; camera numbers are unvalidated estimates and pulse is experimental, not a heart-rate monitor.
  */
 export const SENSE_PAGE = {
   slug: "sense",
   label: "Sense",
-  kicker: "Coming in the next update",
+  kicker: "New in the 1.1 preview · opt-in",
   /** Short line for the catalogue card and the home page teaser. */
   blurb: "A privacy-first wellness companion for your screen habits, eye movement and wellness trends",
   title: "Your Mac, looking out for you.",
   seo: "Blink awareness, screen-break nudges, head-position insights and wellness trends, processed privately on your Mac",
   body: "A privacy-first wellness companion that helps you understand screen habits, eye movement patterns and personal wellness trends—right from your Mac.",
   /** Where the feature stands today. Shown verbatim on the page. */
-  status: "Sense is coming in the next TopShelf update. It is not in the build you can download today, so there is nothing to switch on yet. This page describes what is being built.",
+  status: "Sense is in the 1.1 preview you can download today, switched off. Turn it on in Settings › Sense, agree to what it does, then press Start; macOS asks for camera access once. Every camera-based number is an estimate that has not been validated yet.",
   points: [
     { h: "Blink awareness", p: "A gentle sense of how often you blink while you work, so long stares at the screen don't go unnoticed." },
     { h: "Screen-break reminders", p: "Nudges to look away and rest your eyes, in step with the break reminders TopShelf already has." },
-    { h: "Head-position insights", p: "Notice when you've been leaning in or slumping for a while, and get a quiet prompt to reset." },
+    { h: "Head-position insights", p: "See how much of your time you face the screen, and get a quiet prompt to move when your head has stayed still in one position for a long stretch." },
     { h: "Personal wellness check-ins", p: "A short, optional check-in on how you feel, kept alongside your day so you can spot patterns over time." },
     { h: "Historical charts", p: "Simple charts of your own trends across days and weeks, on your Mac, for your eyes only." },
     { h: "Experimental pulse tracking", p: "An experimental estimate of rhythm from subtle changes in the camera image. It is not a medical device and not a heart-rate monitor; treat it as a curiosity, not a reading." },
@@ -134,16 +134,24 @@ export const WELLNESS_PAGE = {
 };
 
 /** 1.1 work that is committed but not in the 1.1 preview DMG (build 93c9bdf). */
-export const NEXT_UPDATE = [
-  { h: "TopShelf Sense (opt-in)", p: "Blink awareness, screen-break reminders, head-position insights, wellness check-ins, charts and an experimental pulse estimate, processed on your Mac. Not a medical device.", href: "/features/sense" },
-  { h: "Calendar: Recent Apps", p: "The Calendar view shows the three apps you used most recently as cards. Click one to switch back to it.", href: "/features/calendar" },
-  { h: "Wellness: line icons", p: "A new line-icon design for all nine wellness reminders.", href: "/features/wellness" },
-  { h: "iCloud sync of preferences and notes", p: "Built, but it needs a build signed for iCloud, so it is off in the preview. Consents never sync.", href: "/changelog" },
-];
+/** Built but not in the current download. Empty when the newest build contains everything. */
+export const NEXT_UPDATE: { h: string; p: string; href: string }[] = [];
 
-export const RELEASES = [
+export interface Release {
+  version: string;
+  build: string;
+  file: string;
+  size: string;
+  items: { h: string; p: string }[];
+  /** Built but not in this download yet. */
+  pending?: { h: string; p: string }[];
+  /** Commit subjects in this build since the previous published one. */
+  changes?: string[];
+}
+
+export const RELEASES: Release[] = [
   {
-    version: "1.1 preview",
+    version: siteConfig.release.version,
     build: siteConfig.release.build,
     file: siteConfig.links.dmg,
     size: siteConfig.release.size,
@@ -155,14 +163,17 @@ export const RELEASES = [
       { h: "Clipboard upgrades", p: "Favourites and filters, rich text with copy as plain text, verification codes deleted after two minutes, ↑↓ ↩ and drag out, and AI actions on text with the opt-in Assistant." },
       { h: "Inbox: unread counts only", p: "Inbox reads only Mail's unread count for each account, about once a minute, so Mail never freezes on a big mailbox." },
       { h: "Breaks", p: "Gentle heads-up, floating countdown, full-screen pause on every display, Smart Pause, office hours, Casual/Balanced/Hardcore, daily stats, a Screen Score, a menu-bar timer and shortcuts." },
-    ],
-    /** Committed after build 93c9bdf; ships in the next DMG. */
-    pending: [
-      { h: "TopShelf Sense (opt-in)", p: "Blink awareness, screen-break reminders, head-position insights, wellness check-ins, historical charts and an experimental pulse estimate. Camera off by default, processed on-device, no video recorded, no uploads, no face recognition. Not a medical device; the pulse estimate is experimental and not a heart-rate monitor." },
+      { h: "Shelf: a right-click menu for every file", p: "Open With, Show in Finder, Quick Look, share through AirDrop, Mail, Messages and Notes, Copy to and Move to, Rename, Create ZIP Archive, Copy Path, Add From Clipboard, and Protect Using Password for PDFs." },
+      { h: "Shelf: something useful when it's empty", p: "With nothing parked, the shelf suggests your newest downloads, what's playing and your next event. Drop a file and your files take over again." },
+      { h: "Now playing in the closed notch", p: "Song and artist sit next to the artwork and scroll when they don't fit." },
+      { h: "TopShelf Sense (opt-in)", p: "Blink awareness, screen-break reminders, head-position insights, wellness check-ins, historical charts and an experimental pulse estimate. Camera off by default, processed on-device, no video recorded, no uploads, no face recognition. Camera numbers are unvalidated estimates. Not a medical device; the pulse estimate is experimental and not a heart-rate monitor." },
       { h: "Calendar: Recent Apps", p: "The Calendar view shows the three most recently used apps as cards; click one to switch back." },
       { h: "Wellness: line icons", p: "A new line-icon design for all nine reminders." },
+      { h: "Steadier", p: "Fixes a crash when changing settings with repeating calendar events, a crash with VoiceOver on Sense's live page, and ZIP archives of single files. The shelf now says why a file couldn't be added." },
       { h: "iCloud sync", p: "Preferences and quick notes sync through iCloud; privacy consents never do. Needs a build signed for iCloud, so it is off in the preview." },
     ],
+    /** Every commit in the newest build since the previous published one (written by publish-build.sh). */
+    changes: latestBuild.changes,
   },
   {
     version: "1.0.0",
@@ -209,7 +220,7 @@ export function featurePages(): FeaturePage[] {
   return [
     { ...BREAKS_PAGE, stage: "bg-mint" },
     { ...CELEBRATION_PAGE, stage: "bg-lavender" },
-    { slug: SENSE_PAGE.slug, label: SENSE_PAGE.label, kicker: SENSE_PAGE.kicker, title: SENSE_PAGE.title, body: SENSE_PAGE.body, seo: SENSE_PAGE.seo, stage: "bg-[#EAF4FB]", upcoming: true },
+    { slug: SENSE_PAGE.slug, label: SENSE_PAGE.label, kicker: SENSE_PAGE.kicker, title: SENSE_PAGE.title, body: SENSE_PAGE.body, seo: SENSE_PAGE.seo, stage: "bg-[#EAF4FB]" },
     { ...THEMES_PAGE, stage: "bg-sand" },
     ...modules,
   ];

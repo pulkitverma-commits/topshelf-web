@@ -6,6 +6,15 @@
  * renders them with a dashed underline so they are easy to spot before launch.
  * Replace them with verified details and the styling disappears automatically.
  */
+import latestBuild from "./latest-build.json";
+
+/**
+ * The newest app build on the site. Written by `scripts/publish-build.sh` in the app repo
+ * (yuzu-store/Notch) after every build, together with the DMG in `public/downloads/`.
+ * Don't edit by hand; publish a build instead.
+ */
+export { latestBuild };
+
 export const siteConfig = {
   name: "TopShelf",
   /** Production origin, used for canonical URLs, Open Graph and the sitemap. */
@@ -17,24 +26,24 @@ export const siteConfig = {
     "TopShelf turns the top of your Mac's screen into a calm home for music, files, meetings, timers and healthy break reminders. Native, private, free to try.",
 
   links: {
-    download: "/downloads/TopShelf-1.1-preview-93c9bdf.dmg",
+    download: latestBuild.file,
     downloadPage: "/download",
-    dmg: "/downloads/TopShelf-1.1-preview-93c9bdf.dmg",
+    dmg: latestBuild.file,
     dmgStable: "/downloads/TopShelf-1.0.0.dmg",
     /** No checkout yet: buying is the same free download until a payment link exists. */
-    buy: "/downloads/TopShelf-1.1-preview-93c9bdf.dmg",
+    buy: latestBuild.file,
     support: "/support",
     privacy: "/privacy",
     terms: "/terms",
   },
 
   release: {
-    version: "1.1 preview",
-    build: "93c9bdf",
-    size: "3.8 MB",
+    version: latestBuild.version,
+    build: latestBuild.build,
+    size: latestBuild.size,
     stableVersion: "1.0.0",
     stableSize: "2.9 MB",
-    sha256: "73222ee0346b8eb1152425cbdb74546ab60c257fc8e0c4bbcf9b2a196999d269",
+    sha256: latestBuild.sha256,
     stableSha256: "8578a16d46d0b5b8aed8f7e53aee674159cd8f0aa1e44dcc61d53a4991711f8f",
   },
 

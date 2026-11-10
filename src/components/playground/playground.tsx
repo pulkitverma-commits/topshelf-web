@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, Clock, Sparkles } from "lucide-react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useDelight } from "@/components/delight/delight-provider";
 import { GuideNote } from "@/components/delight/interactive";
 import { siteConfig } from "@/config/site";
@@ -202,8 +202,8 @@ function SenseTeaser() {
       </span>
       <span className="flex min-w-0 flex-1 flex-col gap-1">
         <span className="inline-flex min-h-7 items-center gap-1.5 self-start rounded-2xl bg-peach px-3 py-1 text-[13px] text-[#8A3D12]">
-          <Clock className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
-          {SENSE_PAGE.kicker} · not in today&apos;s build
+          <Sparkles className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
+          {SENSE_PAGE.kicker}
         </span>
         <span className="font-display text-[22px] font-semibold leading-tight tracking-[-.025em]">
           {SENSE_PAGE.label}: {SENSE_PAGE.title}
