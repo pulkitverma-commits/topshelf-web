@@ -3,15 +3,17 @@ import { cn, isPlaceholder } from "@/lib/utils";
 
 type Variant = "dark" | "ghost" | "light" | "outline";
 
+// Every button uses the TopShelf logo gradient (globals.css): filled for primary actions
+// (dark, light), a gradient ring for secondary ones (ghost, outline).
 const variants: Record<Variant, string> = {
-  dark: "bg-ink text-white shadow-[0_10px_24px_-12px_rgba(23,23,23,.7)] hover:bg-black hover:-translate-y-px",
-  ghost: "text-ink shadow-[inset_0_0_0_1px_var(--color-line-strong)] hover:bg-ink/[.04]",
-  light: "bg-white text-ink hover:-translate-y-px",
-  outline: "bg-white text-ink shadow-[inset_0_0_0_1px_var(--color-line-strong)] hover:bg-[#fafafa]",
+  dark: "btn-logo",
+  ghost: "btn-logo-outline",
+  light: "btn-logo",
+  outline: "btn-logo-outline",
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full transition-[transform,background-color,box-shadow] duration-300 ease-spring active:scale-[.96] disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full active:scale-[.96] disabled:opacity-50";
 
 const sizes = {
   sm: "h-11 px-[18px] text-sm",

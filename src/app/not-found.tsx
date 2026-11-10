@@ -17,7 +17,7 @@ export default function NotFound() {
       <ul className="m-0 flex list-none flex-wrap gap-2 p-0 pb-32">
         {links.map(([href, label]) => (
           <li key={href}>
-            <a href={href} className="inline-flex h-11 items-center rounded-full bg-white px-5 text-[15px] shadow-[inset_0_0_0_1px_var(--color-line-strong)] transition-colors hover:bg-ink hover:text-white">
+            <a href={href} className="btn-logo-outline inline-flex h-11 items-center rounded-full px-5 text-[15px]">
               {label}
             </a>
           </li>
