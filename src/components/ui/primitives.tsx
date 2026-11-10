@@ -67,11 +67,8 @@ export function Kicker({ children, className }: { children: ReactNode; className
 export function Logo({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex items-center gap-2.5 font-display text-[19px] font-bold tracking-[-.02em]", className)}>
-      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-        <rect x="2" y="4" width="24" height="20" rx="6" fill="none" stroke="currentColor" strokeWidth="1.8" />
-        <path d="M10 4h8v2.6a2.4 2.4 0 0 1-2.4 2.4h-3.2A2.4 2.4 0 0 1 10 6.6z" fill="currentColor" />
-        <path d="M8 17.5h12" stroke="#5468FF" strokeWidth="2.4" strokeLinecap="round" />
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element -- tiny static brand mark */}
+      <img src="/brand/logo-mark.png" width={28} height={28} alt="" aria-hidden="true" className="size-7 object-contain" />
       TopShelf
     </span>
   );

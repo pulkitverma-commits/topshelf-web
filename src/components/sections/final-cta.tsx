@@ -15,12 +15,10 @@ import { cn, easeOut } from "@/lib/utils";
 /** The app icon used in the install demo: the TopShelf mark on a soft gradient tile. */
 export function AppIcon({ className }: { className?: string }) {
   return (
-    <span className={cn("relative grid place-items-center rounded-[24%] bg-[linear-gradient(150deg,#7E8BFF_0%,#5468FF_45%,#3A2FBF_100%)] text-white shadow-[0_14px_28px_-12px_rgba(84,104,255,.8),inset_0_1px_0_rgba(255,255,255,.4)]", className)}>
-      <svg viewBox="0 0 28 28" className="size-[58%]" aria-hidden="true">
-        <rect x="2" y="4" width="24" height="20" rx="6" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path d="M10 4h8v2.6a2.4 2.4 0 0 1-2.4 2.4h-3.2A2.4 2.4 0 0 1 10 6.6z" fill="currentColor" />
-        <path d="M8 17.5h12" stroke="#FFD36E" strokeWidth="2.6" strokeLinecap="round" />
-      </svg>
+    <span className={cn("relative grid place-items-center", className)}>
+      {/* The real app icon (macOS grid: the tile fills ~80 % of the square, so scale it up to match the old flush tile). */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- static brand asset */}
+      <img src="/brand/app-icon.png" alt="" aria-hidden="true" className="size-[124%] max-w-none object-contain" />
     </span>
   );
 }
