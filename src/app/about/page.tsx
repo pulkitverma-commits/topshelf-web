@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Compass, Feather, Lock, Map as MapIcon, MapPin, Monitor, Pill, Scale, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, CalendarCheck, Compass, Feather, Lock, Map as MapIcon, MapPin, Monitor, Pill, Scale, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
 import { Value } from "@/components/ui/primitives";
 import { siteConfig } from "@/config/site";
 import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
@@ -28,6 +28,7 @@ const PRODUCTS: { name: string; href: string; domain: string; tagline: string; p
   { name: "TopShelf", href: "/", domain: "gettopshelf.co", tagline: "A calm home for the top of your Mac.", p: "Music, files, meetings, timers, break reminders and secure sharing, in one quiet bar at the top of the screen.", current: true },
   { name: "OnePeek", href: "https://onepeek.io", domain: "onepeek.io", tagline: "Send secrets that disappear.", p: "Zero-knowledge one-time secret sharing: encrypted in your browser, deleted after it’s viewed. It also powers Send Securely in TopShelf.", Icon: ShieldCheck },
   { name: "Journeo", href: "https://www.journeo.life", domain: "journeo.life", tagline: "Every place has a story.", p: "Journeo turns photographs, maps and memory into an interactive visual travel story — a journey a reader moves through, not a feed they scroll past.", Icon: MapIcon },
+  { name: "Sociomatix", href: "https://www.sociomatix.com", domain: "sociomatix.com", tagline: "Your AI social media manager.", p: "Sociomatix plans your content calendar, writes and designs posts, publishes to Instagram, LinkedIn and 7 more networks, and replies to comments.", Icon: CalendarCheck },
   { name: "Pill-Pair", href: "https://pillpair.app", domain: "pillpair.app", tagline: "A MacLily app.", p: "Learn more at pillpair.app.", Icon: Pill },   // TODO: replace with Pill-Pair's own one-liner
 ];
 
@@ -71,7 +72,7 @@ export default function AboutPage() {
       <PageHead
         kicker={`About ${siteConfig.name}`}
         title={<>A calm home for <b>the top of your Mac.</b></>}
-        lead={<>{siteConfig.name} is a product of <b className="font-semibold text-ink">{siteConfig.company}</b>, a software company founded in San Francisco in 2025 that also makes OnePeek, Journeo and Pill-Pair.</>}
+        lead={<>{siteConfig.name} is a product of <b className="font-semibold text-ink">{siteConfig.company}</b>, a software company founded in San Francisco in 2025 that also makes OnePeek, Journeo, Sociomatix and Pill-Pair.</>}
       />
       <p className="-mt-2 mb-14 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[14px] text-muted shadow-[inset_0_0_0_1px_var(--color-line)]">
         <MapPin className="size-4 text-[#9e5cff]" strokeWidth={1.9} aria-hidden="true" />
