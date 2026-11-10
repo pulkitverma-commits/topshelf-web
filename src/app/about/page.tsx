@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Feather, Lock, Monitor, Scale } from "lucide-react";
+import { Compass, Feather, Lock, MapPin, Monitor, Scale, Sparkles } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
 import { DownloadButton } from "@/components/delight/download";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `TopShelf is made by ${siteConfig.company}, backed by investors including Pulkit Verma, Yash Ganeriwala and Stuart Paz.`,
+  description: `TopShelf is made by ${siteConfig.company}, a San Francisco software company founded in 2025 and backed by investors including Pulkit Verma, Yash Ganeriwala and Stuart Paz.`,
   alternates: { canonical: "/about" },
 };
 
@@ -18,6 +18,22 @@ const PRINCIPLES = [
   { Icon: Lock, h: "Private by default", p: "Features that touch your data stay off until you turn them on, and Send Securely encrypts on your Mac before anything leaves it." },
   { Icon: Feather, h: "Calm, not noisy", p: "Music, files, meetings, timers and break reminders in one quiet place, out of the way until you need them." },
   { Icon: Scale, h: "Fair pricing", p: `Free for ${siteConfig.offers.trial.length}, then ${siteConfig.offers.lifetime.price} once, with ${siteConfig.offers.updateTerms}. No subscription.` },
+];
+
+const CONTACT_EMAIL = "info@maclily.com";
+
+/** Real dates only. */
+const MILESTONES = [
+  { when: "2025", h: "MacLily Inc is founded in San Francisco", p: "With one idea: the most valuable space on a Mac is the strip at the very top of the screen, and almost nobody uses it well." },
+  { when: "November 2026", h: "TopShelf 1.0", p: "Music, files, meetings, timers, notes, wellness reminders and more, in one calm bar at the top of the Mac." },
+  { when: "November 2026", h: "TopShelf 1.1 preview", p: "Break reminders, Celebration alerts, Sense, and Send Securely: end-to-end encrypted sharing, secured by OnePeek." },
+];
+
+/** Direction, stated as intent rather than achievement. */
+const AHEAD = [
+  { Icon: Compass, h: "Calm computing", p: "We want the Mac to feel quieter: fewer windows to juggle, fewer apps to switch between, less noise competing for your attention." },
+  { Icon: Lock, h: "Privacy as a default, not a setting", p: "Every feature we build starts from the same question: how little do we need to know? The answer is usually nothing at all." },
+  { Icon: Sparkles, h: "Craft in the details", p: "Small things done carefully — an animation that eases instead of jumps, a reminder that waits for a better moment — are what make software feel like it belongs on a Mac." },
 ];
 
 const initials = (name: string) => name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
@@ -34,6 +50,10 @@ export default function AboutPage() {
             "@type": "Organization",
             name: siteConfig.company,
             url: siteConfig.url,
+            foundingDate: "2025",
+            foundingLocation: { "@type": "Place", name: "San Francisco, California" },
+            address: { "@type": "PostalAddress", addressLocality: "San Francisco", addressRegion: "CA", addressCountry: "US" },
+            email: CONTACT_EMAIL,
             funder: INVESTORS.map((name) => ({ "@type": "Person", name })),
             brand: { "@type": "Brand", name: siteConfig.name },
           },
@@ -42,8 +62,45 @@ export default function AboutPage() {
       <PageHead
         kicker={`About ${siteConfig.name}`}
         title={<>A calm home for <b>the top of your Mac.</b></>}
-        lead={<>{siteConfig.name} is a product of <b className="font-semibold text-ink">{siteConfig.company}</b>.</>}
+        lead={<>{siteConfig.name} is a product of <b className="font-semibold text-ink">{siteConfig.company}</b>, a software company founded in San Francisco in 2025.</>}
       />
+      <p className="-mt-2 mb-14 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[14px] text-muted shadow-[inset_0_0_0_1px_var(--color-line)]">
+        <MapPin className="size-4 text-[#9e5cff]" strokeWidth={1.9} aria-hidden="true" />
+        San Francisco, California · Founded 2025
+      </p>
+
+      <section aria-labelledby="story" className="pb-14">
+        <h2 id="story" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">Our story</h2>
+        <div className="mt-4 grid max-w-[880px] gap-4 text-[17px] leading-relaxed text-muted">
+          <p className="m-0">
+            {siteConfig.company} started in San Francisco in 2025 with a simple observation: the top of a Mac&apos;s screen is the one place your eyes
+            return to all day, and it was doing almost nothing. A clock, a few icons, and on newer MacBooks, a notch.
+          </p>
+          <p className="m-0">
+            We set out to turn that strip into something useful without making it loud. The result is {siteConfig.name}: a quiet home for the things you
+            reach for constantly — what&apos;s playing, the file you&apos;re about to send, your next meeting, a timer, a reminder to look away from the
+            screen — that stays out of the way until you need it.
+          </p>
+          <p className="m-0">
+            We build for people who care how their tools feel. That means native Mac software, careful design, private by default, and a price you pay
+            once.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="milestones" className="pb-14">
+        <h2 id="milestones" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">Milestones</h2>
+        <ol className="relative m-0 mt-8 grid max-w-[880px] list-none gap-6 p-0 pl-8 before:absolute before:bottom-2 before:left-[11px] before:top-2 before:w-0.5 before:rounded-full before:bg-[linear-gradient(#3dd1ff,#5478ff,#9e5cff,#ff54cc,#ff9e66)]">
+          {MILESTONES.map((m) => (
+            <li key={m.h} className="relative">
+              <span aria-hidden="true" className="badge-icon absolute -left-8 top-1 size-6 rounded-full ring-4 ring-[var(--color-canvas,#f8f8f6)]" />
+              <span className="font-display text-[13px] font-semibold uppercase tracking-[.08em] text-[#7a5cff]">{m.when}</span>
+              <b className="mt-1 block font-display text-xl font-semibold tracking-[-.02em]">{m.h}</b>
+              <span className="mt-1 block text-[16px] text-muted">{m.p}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
 
       <section aria-labelledby="what" className="pb-14">
         <h2 id="what" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">What we make</h2>
@@ -83,13 +140,28 @@ export default function AboutPage() {
         </ul>
       </section>
 
+      <section aria-labelledby="ahead" className="pb-14">
+        <h2 id="ahead" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">Where we&apos;re headed</h2>
+        <ul className="m-0 mt-8 grid list-none gap-3 p-0 sm:grid-cols-3">
+          {AHEAD.map(({ Icon, h, p }) => (
+            <li key={h} className="flex flex-col gap-3 rounded-[24px] bg-[#1C1C1E] p-6 text-white">
+              <span className="badge-icon grid size-11 place-items-center rounded-2xl text-white">
+                <Icon className="size-5" strokeWidth={1.9} aria-hidden="true" />
+              </span>
+              <b className="font-display text-lg font-semibold tracking-[-.01em]">{h}</b>
+              <span className="text-[15px] text-white/65">{p}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section aria-labelledby="contact" className="pb-24">
         <div className="flex flex-col items-start gap-5 rounded-[30px] bg-white p-8 shadow-[inset_0_0_0_1px_var(--color-line)] sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 id="contact" className="m-0 font-display text-2xl font-semibold tracking-[-.02em]">Get in touch</h2>
             <p className="m-0 mt-1 text-[16px] text-muted">
               Questions for {siteConfig.company}? Email{" "}
-              <a className="text-ink underline underline-offset-4" href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.
+              <a className="text-ink underline underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
             </p>
           </div>
           <DownloadButton size="md" />
