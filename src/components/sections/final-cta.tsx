@@ -225,8 +225,9 @@ export function Footer() {
       ],
     },
     {
-      title: "Legal",
+      title: "Company",
       links: [
+        { href: "/about", label: "About" },
         { href: siteConfig.links.privacy, label: "Privacy policy" },
         { href: siteConfig.links.terms, label: "Terms & licence" },
       ],

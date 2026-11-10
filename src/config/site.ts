@@ -19,7 +19,7 @@ export const siteConfig = {
   name: "TopShelf",
   /** Production origin, used for canonical URLs, Open Graph and the sitemap. */
   url: "https://gettopshelf.co",
-  company: "TopShelf Inc",
+  company: "MacLily Inc",
   email: "pulkit.verma@foxnetglobal.com",
   tagline: "A little space. A lot more magic.",
   description:

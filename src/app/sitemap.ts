@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/changelog", 0.6, "weekly"),
     page("/faq", 0.6),
     page("/support", 0.5),
+    page("/about", 0.5),
     page("/privacy", 0.3, "yearly"),
     page("/terms", 0.3, "yearly"),
   ];
