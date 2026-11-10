@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ArrowRight, Clock, Download, ExternalLink, KeyRound, ScanFace, ShieldCheck, Sparkles, UploadCloud, Link2 } from "lucide-react";
+import { ArrowRight, Clock, Download, ExternalLink, KeyRound, ShieldCheck, Sparkles, UploadCloud, Link2 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
 import { DownloadButton } from "@/components/delight/download";
 import { FeatureDemo } from "@/components/site/feature-demo";
-import { MacBook } from "@/components/mac/macbook";
+import { SenseDemo } from "@/components/sense/sense-demo";
 import { BREAKS_PAGE, CELEBRATION_PAGE, SENSE_PAGE, SEND_PAGE, THEMES_PAGE, featurePages } from "@/lib/pages";
 import { FEATURE_META, extraPageMeta } from "@/lib/feature-meta";
 import { ALL_STINGERS, shade, tintHex } from "@/lib/stinger";
@@ -116,22 +116,7 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
         </section>
       ) : isSense ? (
         <section aria-label="Sense preview" className="pb-6">
-          {/*
-            TODO(sense): replace this neutral device frame with real Sense screenshots once the build exists.
-            Nothing here depicts actual Sense UI on purpose: the feature is not shipped yet, so we show the
-            generic MacBook frame and a plain label rather than invent an interface.
-          */}
-          <MacBook className="max-w-[760px]">
-            <div className="absolute inset-0 z-30 grid place-items-center">
-              <div className="flex max-w-[70%] flex-col items-center gap-3 rounded-[22px] bg-white/80 px-6 py-5 text-center backdrop-blur-md sm:px-8 sm:py-6">
-                <span className="grid size-12 place-items-center rounded-2xl" style={{ background: "#EAF4FB", color: "#245E8C" }}>
-                  <ScanFace className="size-6" strokeWidth={1.8} aria-hidden="true" />
-                </span>
-                <b className="font-display text-[clamp(16px,1.8vw,22px)] font-semibold tracking-[-.02em]">Real screenshots coming soon</b>
-                <span className="text-[clamp(11px,1.2vw,14px)] text-muted">Sense is in today&apos;s download. We&apos;ll show the real thing here, not a mock-up.</span>
-              </div>
-            </div>
-          </MacBook>
+          <SenseDemo />
           <p className="mt-8 flex max-w-[720px] gap-2.5 rounded-[22px] bg-peach p-5 text-[16px] text-[#5a2a0c]">
             <Clock className="mt-1 size-4 flex-none" aria-hidden="true" />
             {SENSE_PAGE.status}
