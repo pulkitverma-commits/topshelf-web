@@ -14,11 +14,12 @@ export const metadata: Metadata = {
 /** Investors as stated by the company. Only names and role; no invented titles or bios. */
 const INVESTORS = ["Pulkit Verma", "Yash Ganeriwala", "Stuart Paz"];
 
+/** Company-wide principles, each backed by something a MacLily product actually does. */
 const PRINCIPLES = [
-  { Icon: Monitor, h: "Native to the Mac", p: "TopShelf is a native macOS app for Apple silicon and Intel, built to sit quietly at the top of your screen." },
-  { Icon: Lock, h: "Private by default", p: "Features that touch your data stay off until you turn them on, and Send Securely encrypts on your Mac before anything leaves it." },
-  { Icon: Feather, h: "Calm, not noisy", p: "Music, files, meetings, timers and break reminders in one quiet place, out of the way until you need them." },
-  { Icon: Scale, h: "Fair pricing", p: `Free for ${siteConfig.offers.trial.length}, then ${siteConfig.offers.lifetime.price} once, with ${siteConfig.offers.updateTerms}. No subscription.` },
+  { Icon: Lock, h: "Private by design", p: "OnePeek encrypts in your browser and deletes what it delivered; TopShelf keeps anything that touches your data off until you switch it on." },
+  { Icon: Monitor, h: "Native where it matters", p: "TopShelf is a native macOS app for Apple silicon and Intel; our web products run in any modern browser, with nothing to install." },
+  { Icon: Feather, h: "Calm, not noisy", p: "Software that does its job and gets out of the way, from a quiet bar at the top of the Mac to a share link that disappears once it’s read." },
+  { Icon: Scale, h: "Fair to use", p: `TopShelf is free for ${siteConfig.offers.trial.length}, then ${siteConfig.offers.lifetime.price} once; Sociomatix has a free plan. No dark patterns, no surprise charges.` },
 ];
 
 /** The one contact address for the whole site (siteConfig.email). */
@@ -38,6 +39,8 @@ const MILESTONES = [
   { when: "2025", h: "MacLily Inc is founded in San Francisco", p: "With one idea: the most valuable space on a Mac is the strip at the very top of the screen, and almost nobody uses it well." },
   { when: "November 2026", h: "TopShelf 1.0", p: "Music, files, meetings, timers, notes, wellness reminders and more, in one calm bar at the top of the Mac." },
   { when: "November 2026", h: "TopShelf 1.1 preview", p: "Break reminders, Celebration alerts, Sense, and Send Securely: end-to-end encrypted sharing, secured by OnePeek." },
+  { when: "November 2026", h: "TopShelf and OnePeek, working together", p: "Send Securely brings OnePeek’s zero-knowledge sharing into TopShelf: the first time two MacLily products share a feature." },
+  { when: "Today", h: "Five products, one studio", p: "TopShelf, OnePeek, Journeo, Sociomatix and Pill-Pair — for your Mac, your secrets, your stories and your social presence." },
 ];
 
 /** Direction, stated as intent rather than achievement. */
@@ -104,7 +107,10 @@ export default function AboutPage() {
       </section>
 
       <section aria-labelledby="products" className="pb-14">
-        <h2 id="products" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">Products by {siteConfig.company}</h2>
+        <h2 id="products" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">What we make</h2>
+        <p className="m-0 mt-3 max-w-[720px] text-[17px] text-muted">
+          {siteConfig.company} builds a small family of products: a calmer Mac, private sharing, travel stories, effortless social media and more.
+        </p>
         <ul className="m-0 mt-8 grid list-none gap-3 p-0 sm:grid-cols-2">
           {PRODUCTS.map(({ name, href, domain, tagline, p, Icon, current }) => (
             <li key={name}>
@@ -151,8 +157,8 @@ export default function AboutPage() {
       </section>
 
       <section aria-labelledby="what" className="pb-14">
-        <h2 id="what" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">What we make</h2>
-        <p className="m-0 mt-3 max-w-[720px] text-[17px] text-muted">{siteConfig.description}</p>
+        <h2 id="what" className="m-0 font-display text-[clamp(28px,3vw,40px)] font-semibold tracking-[-.035em]">How we build</h2>
+        <p className="m-0 mt-3 max-w-[720px] text-[17px] text-muted">The same four ideas run through everything {siteConfig.company} makes.</p>
         <ul className="m-0 mt-8 grid list-none gap-3 p-0 sm:grid-cols-2">
           {PRINCIPLES.map(({ Icon, h, p }) => (
             <li key={h} className="flex gap-4 rounded-[24px] bg-white p-6 shadow-[inset_0_0_0_1px_var(--color-line)]">
