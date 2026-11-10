@@ -18,7 +18,7 @@ export { latestBuild };
 export const siteConfig = {
   name: "TopShelf",
   /** Production origin, used for canonical URLs, Open Graph and the sitemap. */
-  url: "https://topshelf-web-eight.vercel.app",
+  url: "https://gettopshelf.co",
   company: "TopShelf Inc",
   email: "pulkit.verma@foxnetglobal.com",
   tagline: "A little space. A lot more magic.",
