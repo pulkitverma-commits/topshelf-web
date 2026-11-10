@@ -1,11 +1,11 @@
 {
   "version": "1.1 preview",
-  "build": "9885c40",
-  "file": "/downloads/TopShelf-1.1-preview-9885c40.dmg",
+  "build": "b12bdd0",
+  "file": "/downloads/TopShelf-1.1-preview-b12bdd0.dmg",
   "size": "7.8 MB",
-  "sha256": "24ff4a9083afc1d1634b4a95418540804043d377f770fd0c078b6c57cc4fccc9",
+  "sha256": "987ba171c022b3f8b0cc792e01d6dc42f2dd42af45468faeba3d9dcef77f4be4",
   "date": "2026-11-10",
   "changes": [
-    "Shelf menu: \"Send Securely…\" highlighted in the logo gradient"
+    "Notch header: larger pinned tab icons"
   ]
 }
