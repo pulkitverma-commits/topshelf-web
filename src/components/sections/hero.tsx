@@ -53,15 +53,29 @@ export function Hero() {
       </div>
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-6 px-4 sm:px-8">
         <motion.span
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 12, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          whileHover={reduce ? undefined : { y: -2 }}
           transition={{ duration: 0.6, ease: easeOut }}
-          className="inline-flex h-[34px] items-center gap-2 rounded-full bg-white pl-1.5 pr-3.5 text-sm text-[#3a3a3a] shadow-[inset_0_0_0_1px_var(--color-line)]"
+          className="badge-wrap relative inline-flex"
         >
-          <span className="grid size-6 place-items-center rounded-full bg-lavender text-accent">
-            <Sparkles className="size-3.5" strokeWidth={2} aria-hidden="true" />
+          {/* Soft halo in the logo colours, slowly turning */}
+          <span aria-hidden="true" className="badge-halo pointer-events-none absolute -inset-1 rounded-full" />
+          <span className="relative inline-flex h-[38px] items-center gap-2.5 overflow-hidden rounded-full bg-white/90 pl-1.5 pr-4 text-[15px] text-[#3a3a3a] shadow-[0_8px_24px_-14px_rgba(84,104,255,.55)] backdrop-blur">
+            {/* Rotating gradient ring and a light sweep */}
+            <span aria-hidden="true" className="badge-ring pointer-events-none absolute inset-0 rounded-full" />
+            <span aria-hidden="true" className="badge-sweep pointer-events-none absolute inset-0 rounded-full" />
+            <motion.span
+              className="badge-icon relative grid size-[26px] place-items-center rounded-full text-white shadow-[inset_0_1px_0_rgba(255,255,255,.35)]"
+              animate={reduce ? undefined : { rotate: [0, -8, 8, 0], scale: [1, 1.08, 1] }}
+              transition={reduce ? undefined : { duration: 2.4, ease: "easeInOut", repeat: Infinity, repeatDelay: 2.2 }}
+            >
+              <Sparkles className="size-[15px]" strokeWidth={2.2} aria-hidden="true" />
+            </motion.span>
+            <span className="relative">
+              Made for the <span className="text-logo font-semibold">top of your Mac</span>
+            </span>
           </span>
-          Made for the top of your Mac
         </motion.span>
         <motion.h1
           id="hero-title"

@@ -456,3 +456,43 @@
   .btn-logo, .btn-logo-outline { transition: none; }
   .btn-logo:hover, .btn-logo-outline:hover { transform: none; }
 }
+
+/* Hero badge: logo-gradient ring that slowly rotates, halo, light sweep, gradient text. */
+@property --badge-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@layer components {
+  .badge-ring,
+  .badge-halo {
+    background: conic-gradient(from var(--badge-angle), #3dd1ff, #5478ff, #9e5cff, #ff54cc, #ff9e66, #3dd1ff);
+    animation: badge-spin 7s linear infinite;
+  }
+  /* Only the 1.5px border shows: the middle is masked out. */
+  .badge-ring {
+    padding: 1.5px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  .badge-halo { filter: blur(12px); opacity: 0.35; transition: opacity .4s ease; }
+  .badge-wrap:hover .badge-halo { opacity: 0.6; }
+  .badge-sweep {
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.85) 50%, transparent 65%);
+    transform: translateX(-120%);
+    animation: badge-sweep 4.5s cubic-bezier(.4,0,.2,1) 1.2s infinite;
+  }
+  .badge-icon { background: linear-gradient(135deg, #3dd1ff, #5478ff 35%, #9e5cff 62%, #ff54cc 86%, #ff9e66); }
+  .text-logo {
+    background: linear-gradient(90deg, #3a8dff, #6a5cff, #b04cf0, #ff4fae, #ff8f5a, #3a8dff);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: text-logo-pan 8s linear infinite;
+  }
+}
+@keyframes badge-spin { to { --badge-angle: 360deg; } }
+@keyframes badge-sweep { 0% { transform: translateX(-120%); } 45%, 100% { transform: translateX(120%); } }
+@keyframes text-logo-pan { to { background-position: 200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .badge-ring, .badge-halo, .badge-sweep, .text-logo { animation: none; }
+  .badge-sweep { display: none; }
+}
