@@ -1,11 +1,12 @@
 {
   "version": "1.1 preview",
-  "build": "897eb1c",
-  "file": "/downloads/TopShelf-1.1-preview-897eb1c.dmg",
+  "build": "2b4774b",
+  "file": "/downloads/TopShelf-1.1-preview-2b4774b.dmg",
   "size": "7.8 MB",
-  "sha256": "70cfd4618091b7282272a54925be7aae634650ee1c164eb52ee343777e676641",
+  "sha256": "1bdf36f373c0e873769e51c9a18d3e9e751adaec6c478241a695882ad9bcaa54",
   "date": "2026-11-10",
   "changes": [
-    "Send Securely: share files, text, screenshots and clipboard through OnePeek"
+    "Send Securely: \"Secured by OnePeek\" links to onepeek.io",
+    "Docs: Send Securely overview and pointers to the OnePeek docs"
   ]
 }
