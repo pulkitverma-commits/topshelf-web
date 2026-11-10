@@ -21,7 +21,8 @@ const PRINCIPLES = [
   { Icon: Scale, h: "Fair pricing", p: `Free for ${siteConfig.offers.trial.length}, then ${siteConfig.offers.lifetime.price} once, with ${siteConfig.offers.updateTerms}. No subscription.` },
 ];
 
-const CONTACT_EMAIL = "info@maclily.com";
+/** The one contact address for the whole site (siteConfig.email). */
+const CONTACT_EMAIL = siteConfig.email;
 
 /** MacLily's products. Descriptions are each product's own wording from its website. */
 const PRODUCTS: { name: string; href: string; domain: string; tagline: string; p: string; Icon?: LucideIcon; current?: boolean }[] = [

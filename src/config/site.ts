@@ -20,7 +20,7 @@ export const siteConfig = {
   /** Production origin, used for canonical URLs, Open Graph and the sitemap. */
   url: "https://gettopshelf.co",
   company: "MacLily Inc",
-  email: "pulkit.verma@foxnetglobal.com",
+  email: "vibe@gettopshelf.co",
   tagline: "A little space. A lot more magic.",
   description:
     "TopShelf turns the top of your Mac's screen into a calm home for music, files, meetings, timers and healthy break reminders. Native, private, free to try.",
