@@ -1,11 +1,11 @@
 {
   "version": "1.1 preview",
-  "build": "d7fd0a6",
-  "file": "/downloads/TopShelf-1.1-preview-d7fd0a6.dmg",
-  "size": "7.3 MB",
-  "sha256": "53f7fb7ea53246a139fea38f1e6442b453c8a354f364bf898ad65e80efce561a",
+  "build": "897eb1c",
+  "file": "/downloads/TopShelf-1.1-preview-897eb1c.dmg",
+  "size": "7.8 MB",
+  "sha256": "70cfd4618091b7282272a54925be7aae634650ee1c164eb52ee343777e676641",
   "date": "2026-11-10",
   "changes": [
-    "Branding: add the master logos and generate every asset from them"
+    "Send Securely: share files, text, screenshots and clipboard through OnePeek"
   ]
 }
