@@ -356,6 +356,7 @@ export function NewIn11() {
 
 
 const ALSO = [
+  { label: "Send Securely", href: "/features/send-securely", meta: EXTRA_PAGES.send, p: "Share files, text and screenshots end-to-end encrypted through OnePeek, with expiry, view limits and a passphrase." },
   { label: "Breaks", href: "/features/break-reminders", meta: EXTRA_PAGES.breaks, p: "Heads-up, floating countdown, full-screen pause on every display, Smart Pause, office hours, Casual/Balanced/Hardcore, daily stats and a Screen Score." },
   { label: "Seven finishes", href: "/features/themes", meta: EXTRA_PAGES.themes, p: "Classic Black, Glass, Chrome, Aurora, Midnight, Neon and Luxe Gold." },
   { label: "Pin what you use", href: "/features/quick-actions", meta: FEATURE_META.all, p: "Pinned module tabs in the header; everything else in the All grid." },

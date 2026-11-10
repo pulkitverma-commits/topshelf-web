@@ -1,4 +1,4 @@
-import { Calculator, Palette, CalendarDays, ClipboardList, Cpu, Droplet, Inbox, LayoutGrid, Music, PartyPopper, Radio, ScanFace, Sparkles, StickyNote, Timer, Trophy, type LucideIcon } from "lucide-react";
+import { Calculator, Palette, ShieldCheck, CalendarDays, ClipboardList, Cpu, Droplet, Inbox, LayoutGrid, Music, PartyPopper, Radio, ScanFace, Sparkles, StickyNote, Timer, Trophy, type LucideIcon } from "lucide-react";
 import type { FeatureId } from "./demo-data";
 
 /** Icon, pastel and page slug for each module, shared by the marquee, cards and feature pages. */
@@ -20,10 +20,12 @@ export const FEATURE_META: Record<FeatureId, { Icon: LucideIcon; bg: string; fg:
 };
 
 /** Icon and pastel for the long-form pages that live outside the module playground (see `pages.ts`). */
-export const EXTRA_PAGES: Record<"breaks" | "celebration" | "sense" | "themes", { slug: string; Icon: LucideIcon; bg: string; fg: string }> = {
+export const EXTRA_PAGES: Record<"breaks" | "celebration" | "sense" | "send" | "themes", { slug: string; Icon: LucideIcon; bg: string; fg: string }> = {
   breaks: { slug: "break-reminders", Icon: Timer, bg: "#E1F3EA", fg: "#1D7F5F" },
   celebration: { slug: "celebration-alerts", Icon: PartyPopper, bg: "#ECEBFF", fg: "#4357EE" },
-  /** TopShelf Sense: announced for the next update, not in the downloadable build yet. */
+  /** Send Securely: end-to-end encrypted sharing through OnePeek. */
+  send: { slug: "send-securely", Icon: ShieldCheck, bg: "#E4F4F7", fg: "#0E6A7E" },
+  /** TopShelf Sense (opt-in camera wellness). */
   sense: { slug: "sense", Icon: ScanFace, bg: "#EAF4FB", fg: "#245E8C" },
   themes: { slug: "themes", Icon: Palette, bg: "#F3F0E8", fg: "#6B5A2E" },
 };

@@ -208,6 +208,7 @@ export function Footer() {
         { href: "/features", label: "Features" },
         { href: "/#tour", label: "Product tour" },
         { href: "/features/break-reminders", label: "Break reminders" },
+        { href: "/features/send-securely", label: "Send Securely" },
         { href: "/features/sense", label: "Sense" },
         { href: "/changelog", label: "What's new" },
         { href: "/#pricing", label: "Pricing" },

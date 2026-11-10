@@ -76,6 +76,38 @@ export const SENSE_PAGE = {
   disclaimer: "Sense is a wellness companion, not a medical device. It does not diagnose, treat or monitor any health condition, and the experimental pulse estimate is not a heart-rate monitor. If you have a health concern, talk to a professional.",
 };
 
+/**
+ * Send Securely. In the 1.1 preview since build 897eb1c. Every claim here matches the app and
+ * OnePeek's code (grokpass docs/send-securely/SECURITY.md); keep it that way — in particular,
+ * never promise screenshot prevention, malware scanning or recall of opened content.
+ */
+export const SEND_PAGE = {
+  slug: "send-securely",
+  label: "Send Securely",
+  kicker: "New in 1.1 · Secured by OnePeek",
+  title: "Anything you need to share. Only for as long as you want.",
+  body: "Send files, text, screenshots and sensitive information through OnePeek, without leaving TopShelf. Share privately. Stay in control.",
+  seo: "End-to-end encrypted sharing of files, text, screenshots and clipboard content from the top of your Mac, with expiry, view limits, passphrases and revoke",
+  steps: [
+    { h: "Encrypted on your Mac", p: "TopShelf encrypts with AES-256-GCM before anything leaves your Mac. The key is part of the link and never reaches a server." },
+    { h: "Stored by OnePeek", p: "OnePeek keeps only ciphertext it can’t read, and enforces your expiry, view limit and passphrase." },
+    { h: "Opened by your recipient", p: "They open the link in any browser, with no account. Once it expires, runs out of views or you revoke it, it’s gone." },
+  ],
+  points: [
+    { h: "Files, text, screenshots, clipboard", p: "Drag in files (several go as one ZIP), type or paste a note, capture an area or window, or send what’s on your clipboard. Up to 50 MB per share." },
+    { h: "Blur or redact first", p: "Hide parts of a screenshot before it’s sent. The covered pixels are replaced in the image itself, not just hidden behind a box." },
+    { h: "Expiry and view limits", p: "5 minutes to 7 days, or a custom time. View once, a few times, or any number of times until it expires." },
+    { h: "Passphrase protection", p: "Add a passphrase and the link alone won’t open it. OnePeek never learns the passphrase and allows 5 wrong tries before deleting the share." },
+    { h: "My Shares and revoke", p: "See every share’s status (active, viewed, expired, revoked) and how often it was opened. Revoke any time, from the notch or Settings." },
+    { h: "Right where you are", p: "From the notch, Quick Actions, the shelf’s right-click menu, or ⌃⌥S. Copy the link or a ready-made invitation in one click." },
+  ],
+  privacy: [
+    { h: "OnePeek can’t read it", p: "Contents, file names and the key never reach OnePeek in a readable form. It stores ciphertext and when and how often a share is opened." },
+    { h: "No account, no tracking", p: "Recipients don’t need an account. Send Securely sends no analytics, and names of what you shared stay on your Mac." },
+    { h: "Honest limits", p: "Revoking stops future access but can’t recall what someone already opened or saved, and no app can stop a screenshot on their side. Encrypted files can’t be scanned for malware, so open files only from people you trust." },
+  ],
+};
+
 export const CLIPBOARD_PAGE = {
   slug: "clipboard-history",
   label: "Clipboard",
@@ -163,6 +195,7 @@ export const RELEASES: Release[] = [
       { h: "Clipboard upgrades", p: "Favourites and filters, rich text with copy as plain text, verification codes deleted after two minutes, ↑↓ ↩ and drag out, and AI actions on text with the opt-in Assistant." },
       { h: "Inbox: unread counts only", p: "Inbox reads only Mail's unread count for each account, about once a minute, so Mail never freezes on a big mailbox." },
       { h: "Breaks", p: "Gentle heads-up, floating countdown, full-screen pause on every display, Smart Pause, office hours, Casual/Balanced/Hardcore, daily stats, a Screen Score, a menu-bar timer and shortcuts." },
+      { h: "Send Securely, secured by OnePeek", p: "Share files, text, screenshots and clipboard content end-to-end encrypted, with expiry, view limits, an optional passphrase, My Shares and revoke. From the notch, Quick Actions, the shelf menu or ⌃⌥S." },
       { h: "Shelf: a right-click menu for every file", p: "Open With, Show in Finder, Quick Look, share through AirDrop, Mail, Messages and Notes, Copy to and Move to, Rename, Create ZIP Archive, Copy Path, Add From Clipboard, and Protect Using Password for PDFs." },
       { h: "Shelf: something useful when it's empty", p: "With nothing parked, the shelf suggests your newest downloads, what's playing and your next event. Drop a file and your files take over again." },
       { h: "Now playing in the closed notch", p: "Song and artist sit next to the artwork and scroll when they don't fit." },
@@ -218,6 +251,7 @@ export function featurePages(): FeaturePage[] {
     points: f.id === "clipboard" ? CLIPBOARD_PAGE.points : f.id === "wellness" ? WELLNESS_PAGE.points : undefined,
   }));
   return [
+    { slug: SEND_PAGE.slug, label: SEND_PAGE.label, kicker: SEND_PAGE.kicker, title: SEND_PAGE.title, body: SEND_PAGE.body, seo: SEND_PAGE.seo, stage: "bg-[#E4F4F7]" },
     { ...BREAKS_PAGE, stage: "bg-mint" },
     { ...CELEBRATION_PAGE, stage: "bg-lavender" },
     { slug: SENSE_PAGE.slug, label: SENSE_PAGE.label, kicker: SENSE_PAGE.kicker, title: SENSE_PAGE.title, body: SENSE_PAGE.body, seo: SENSE_PAGE.seo, stage: "bg-[#EAF4FB]" },

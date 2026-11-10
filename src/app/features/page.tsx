@@ -8,7 +8,7 @@ import { FEATURE_META, extraPageMeta } from "@/lib/feature-meta";
 
 export const metadata: Metadata = {
   title: "Features: everything TopShelf puts at the top of your Mac",
-  description: "Music, File Shelf, Calendar, timers, notes, break reminders, Celebration alerts, clipboard history, live scores and more, in one calm bar at the top of your Mac. Plus Sense, the opt-in wellness companion.",
+  description: "Music, File Shelf, Calendar, timers, notes, break reminders, Celebration alerts, clipboard history, live scores and more, in one calm bar at the top of your Mac. Plus Send Securely, end-to-end encrypted sharing through OnePeek, and Sense, the opt-in wellness companion.",
   alternates: { canonical: "/features" },
 };
 
