@@ -60,3 +60,19 @@ src/
 - Album artwork, file icons, wallpaper and illustrations are original CSS/SVG, so there are no image assets to
   license or optimise. The menu bar uses a neutral glyph, not Apple's logo.
 - Fonts: Instrument Sans (display), Questrial (body), Caveat (hand-drawn notes), self-hosted via `next/font`.
+
+## Device Health accounts (optional, beta)
+
+The signed-in dashboard (`/account`), the Mac link page (`/link`) and `src/app/api/device-health/*`
+need a Supabase project. Without these variables the site builds and runs as before, and the
+account pages say accounts aren't set up yet.
+
+1. Apply `supabase/migrations/20261112000000_device_health.sql` to the project.
+2. Set on Vercel (Production and Preview): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+   and the server-only `SUPABASE_SERVICE_ROLE_KEY` (never exposed to browsers).
+3. In Supabase Auth: allow `https://gettopshelf.co/auth/confirm` (and preview URLs) as redirect URLs,
+   and configure custom SMTP — the built-in mailer only sends to project members.
+
+Backend tests (in-memory store, simulated telemetry): `npm run test:device-health`.
+`siteConfig.flags.deviceHealthInBuild` switches the site from "coming in the next update" to
+"in the preview" once a build containing Device Health is published.
