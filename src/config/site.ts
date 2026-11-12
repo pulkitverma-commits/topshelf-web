@@ -72,6 +72,8 @@ export const siteConfig = {
      * Set to true when a build that contains it is published, and the site stops saying "next update".
      */
     deviceHealthInBuild: false as boolean,
+    /** Inbox's latest-emails list (Full Disk Access). Same rule: true once a build with it is published. */
+    inboxLatestInBuild: false as boolean,
   },
 
   /** The app's default "Expand / collapse" shortcut (KeyCombo.defaults in the app source). */

@@ -134,8 +134,10 @@ export const FEATURES: Feature[] = [
     id: "inbox",
     label: "Inbox",
     kicker: "Inbox · opt-in",
-    title: "Only the counts that matter.",
-    body: "Your Mail unread count for each account, from any account added to Mail, plus your WhatsApp unread count. When a count goes up, TopShelf tells you.",
+    title: siteConfig.flags.inboxLatestInBuild ? "Your latest mail, at a glance." : "Only the counts that matter.",
+    body: siteConfig.flags.inboxLatestInBuild
+      ? "Your newest emails, sender, subject and time, from any account added to Mail, plus your WhatsApp unread count. Click one to open it in Mail. Reading Mail's index needs Full Disk Access; without it you get unread counts."
+      : "Your Mail unread count for each account, from any account added to Mail, plus your WhatsApp unread count. When a count goes up, TopShelf tells you.",
     stage: "bg-[#EAF1FF]",
   },
   {
@@ -234,7 +236,9 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Does Inbox read my email?",
-    a: "No. Inbox is off until you turn it on. When it's on, it reads only Mail's unread count for each account and announces new mail when a count goes up. It never reads messages, senders or subjects.",
+    a: siteConfig.flags.inboxLatestInBuild
+      ? "Only what it shows. Inbox is off until you turn it on. It reads Mail's unread counts, and, if you allow Full Disk Access, the sender, subject and time of your newest inbox messages from Mail's own index on your Mac. It never reads message bodies and never sends anything anywhere."
+      : "No. Inbox is off until you turn it on. When it's on, it reads only Mail's unread count for each account and announces new mail when a count goes up. It never reads messages, senders or subjects.",
   },
   {
     q: "Will TopShelf slow down Mail?",

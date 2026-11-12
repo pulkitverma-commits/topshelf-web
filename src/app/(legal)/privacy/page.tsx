@@ -47,7 +47,7 @@ export default function PrivacyPage() {
 
         <h2>Features that read other apps</h2>
         <ul>
-          <li><strong>Mail (Inbox):</strong> off until you turn it on. TopShelf reads only the unread count for each account, about once a minute while Mail is running. It never reads messages, senders or subjects, and never opens Mail.</li>
+          <li><strong>Mail (Inbox):</strong> off until you turn it on. TopShelf reads the unread count for each account, about once a minute while Mail is running, and never opens Mail.{siteConfig.flags.inboxLatestInBuild ? " If you also allow Full Disk Access, it reads the sender, subject, time and read state of your newest inbox messages from Mail's index on your Mac to list them. It never reads message bodies, and none of this leaves your Mac." : " It never reads messages, senders or subjects."}</li>
           <li><strong>WhatsApp:</strong> only the unread count.</li>
           <li><strong>Calendar:</strong> read-only, to show your next event.</li>
           <li><strong>Clipboard:</strong> off until you turn it on. It never records passwords, password-manager copies, or anything that looks like a key, token or card number. From 1.1, one-time codes are deleted after two minutes, or you can choose never to record them.</li>
