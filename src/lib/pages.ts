@@ -33,7 +33,7 @@ export const CELEBRATION_PAGE = {
     { h: "A 1.9-second stinger", p: "The pill drops below the camera into a wide banner, a colour panel wipes across, the icon drives in, a bold headline slams down with a few sparkles and a scoreboard chip rolls in its value." },
     { h: "Alarms punch twice", p: "Timers, meetings and reminders punch the headline twice. Routine events like a file added, something copied, a new track or a device connecting stay quiet." },
     { h: "Your choice of style", p: "Choose Celebration, Colour flash or None in Settings › Appearance › Alert animation. Reduce Motion turns it into a short fade." },
-    { h: "Quiet by default", p: "Alerts can play a soft wooden tick-tick instead of a chime, or stay silent. Pick Silent, Tick-tick or tick plus chime." },
+    { h: "Quiet by default", p: "Alerts can play a soft wooden tick-tick instead of a chime, or stay silent. Pick Soft tick, System sound, both, or Silent." },
     { h: "Honest chips", p: "The chip only ever shows a value the alert itself contains. No value, no chip." },
   ],
 };
@@ -68,7 +68,7 @@ export const SENSE_PAGE = {
   privacy: [
     { h: "Off by default", p: "Sense does nothing until you turn it on, and asks for camera access only then. Turn it off and it stops." },
     { h: "Processed on your Mac", p: "The camera image is analysed on the device, in real time. It is never sent anywhere." },
-    { h: "No video recorded", p: "Sense keeps numbers, not pictures. No frames, clips or photos are saved." },
+    { h: "No video recorded", p: "Sense keeps numbers, not video. Still photos are saved only if you turn on the optional appearance journal, and they stay on your Mac." },
     { h: "No face recognition", p: "Sense does not identify who is in front of the Mac, build a face profile or compare faces." },
     { h: "No uploads", p: "There is no account, no sync and no telemetry. Nothing leaves your Mac." },
     { h: "Your data, your retention", p: "Export everything as CSV or JSON, delete it at any time, and set how long history is kept." },
@@ -116,7 +116,7 @@ export const CLIPBOARD_PAGE = {
   seo: "Clipboard history for Mac with favourites, rich text, short-lived codes and AI actions, that never records passwords",
   body: "Text and image history that skips passwords, password-manager copies and anything that looks like a key, token or card number. Off until you turn it on, and local only.",
   points: [
-    { h: "Favourites and filters", p: "Star the items you keep coming back to and filter the history down to text, images or favourites." },
+    { h: "Favourites and filters", p: "Star the items you keep coming back to and filter the history down to pinned items or favourites." },
     { h: "Rich text, your way", p: "Formatted text is kept as it was copied. Copy it back as plain text when you need it clean." },
     { h: "Codes that vanish", p: "Verification codes are deleted two minutes after they are copied. You can also choose never to record them." },
     { h: "Keyboard first", p: "Move with ↑ and ↓, paste with ↩, or drag an item straight out of TopShelf into any app." },
@@ -140,7 +140,7 @@ export const THEMES_PAGE = {
     { h: "Midnight", p: "A deep blue-black for late evenings and dark wallpapers." },
     { h: "Neon", p: "A glowing outline in the colour you choose from the Neon picker." },
     { h: "Luxe Gold", p: "A warm gold edge on black." },
-    { h: "Pin what you use", p: "Pin up to eight modules to the tab bar. Everything else lives in All, a grid of colourful tiles with one-tap quick actions." },
+    { h: "Pin what you use", p: "Pin the modules you use most to the tab bar (eight are pinned to start). Everything else lives in All, a grid of colourful tiles with one-tap quick actions." },
   ],
 };
 
@@ -161,13 +161,68 @@ export const WELLNESS_PAGE = {
     { h: "Medicine", p: "A reminder at the times you set." },
     { h: "Your own", p: "A custom reminder with its own text and interval." },
   ],
-  /** Shipped later than the 1.1 preview build. */
-  next: "A new line-icon design for all nine reminders, replacing the glossy 3D icons.",
 };
 
-/** 1.1 work that is committed but not in the 1.1 preview DMG (build 93c9bdf). */
+/**
+ * Device Health. Built in the app (yuzu-store branch claude/device-health) with simulated-telemetry
+ * tests; not yet checked on every kind of accessory, so it's labelled beta. Every claim below must
+ * match what macOS exposes through public APIs — in particular, never promise AirPods or Apple
+ * Magic accessory battery levels, cycle counts, "left behind" detection or time-to-empty predictions.
+ */
+export const DEVICE_HEALTH_PAGE = {
+  slug: "device-health",
+  label: "Device Health",
+  kicker: siteConfig.flags.deviceHealthInBuild ? "Beta · in the 1.1 preview" : "Beta · coming in the next update",
+  title: "Know before a battery runs out.",
+  seo: "Low-battery alerts for your Mac, keyboard, mouse and headphones, plus storage warnings and an optional web dashboard",
+  body: "TopShelf keeps an eye on your Mac's battery and storage and on the Bluetooth accessories you use every day. When something needs attention it tells you once, not every minute, and then gets out of the way.",
+  status: siteConfig.flags.deviceHealthInBuild
+    ? "Device Health is in the 1.1 preview and labelled beta: it has been tested with simulated readings, and not yet on every kind of accessory."
+    : "Device Health is built and arrives in the next preview build. It isn't in the download on this site yet. It's labelled beta: it has been tested with simulated readings, and not yet on every kind of accessory.",
+  points: [
+    { h: "Low, critical and urgent", p: "Alerts at 20% and 10% by default, with an optional urgent alert at 5%. Change them for everything or for one device. Each fires once as the battery drops, and only the most urgent one if a reading jumps past several." },
+    { h: "No nagging", p: "An alert can come back only after the battery recovers 5 points above it, so a level hovering around 20% alerts once. Nothing fires while a device is charging. Plugged in but not charging still counts." },
+    { h: "Needs attention first", p: "Devices that need you are listed first, then your favourites. Rename, favourite, hide or forget any device from the notch or Settings." },
+    { h: "Snooze, quiet hours, Focus", p: "Snooze from the notification for 30 minutes, an hour or until tomorrow. Set quiet hours and choose which kinds of device may alert. macOS Focus and Do Not Disturb apply as you've set them." },
+    { h: "Charged and disconnected", p: "Optional reminders when a device reaches 80–100%, off by default. For devices you mark, an alert if one stays disconnected, ignoring blips and your Mac sleeping or waking. It can't tell whether a device was left behind or simply switched off, so it doesn't claim to." },
+    { h: "Storage and before meetings", p: "A warning when your startup disk drops below 20 GB free, and again below 5 GB. With the Calendar module on, an optional check of the devices you choose a few minutes before a meeting." },
+    { h: "Honest readings", p: "An unknown level shows as —, never 0%. Old readings are marked out of date. Estimates appear only when recent readings are steady, and are always labelled." },
+    { h: "On the web, if you want", p: "Link a Mac to a TopShelf account to see its readings and change alert settings from a browser. Each alert is shown in one place you choose. Unlinking deletes everything that Mac reported." },
+  ],
+  /** What each kind of device can report through public macOS APIs. */
+  readings: [
+    { what: "This Mac", has: "Battery level; charging, on battery, charged, or plugged in but not charging; macOS's own time-remaining estimate and battery condition (Good, Fair, Poor or Check Battery).", not: "Cycle count and maximum capacity aren't available to apps; see System Settings › Battery." },
+    { what: "Storage", has: "Free space on the startup disk.", not: "Other volumes aren't checked yet." },
+    { what: "Temperature", has: "macOS's thermal state: normal, elevated, high or critical.", not: "Not a temperature in degrees." },
+    { what: "Bluetooth accessories", has: "Connection state and when each was last seen, for paired accessories. Battery level for accessories that report it through the standard Bluetooth battery service, which many keyboards, mice and game controllers do.", not: "AirPods, Beats and Apple's Magic Keyboard, Mouse and Trackpad don't make their levels available to other apps, so TopShelf shows their connection only. It never scans for nearby devices." },
+    { what: "iPhone, iPad and other computers", has: "Not supported yet.", not: "" },
+  ],
+  privacy: [
+    { h: "Needs no account", p: "Everything works on your Mac without signing in. Bluetooth permission is asked for only if you include accessories." },
+    { h: "No hardware identifiers", p: "A linked Mac sends device names, readings and alerts. Bluetooth addresses and serial numbers never leave it; devices are identified by a code that's different on every Mac." },
+    { h: "Your choice to keep history", p: "Battery history stays on your Mac for 7 days. Uploading it to your account is a separate switch, off by default, kept 30 days." },
+  ],
+};
+
+/** Launcher & Links (the "launcher" module). Plain utility, on by default. */
+export const LAUNCHER_PAGE = {
+  slug: "launcher-and-links",
+  label: "Launcher & Links",
+  kicker: "Launcher & Links",
+  title: "Your apps and links, one hover away.",
+  seo: "Favourite apps, favourite links and a screenshot shortcut at the top of your Mac",
+  body: "Keep the apps and web pages you open all day at the top of the screen. One click opens them; the app you were in stays put until you choose.",
+  points: [
+    { h: "Favourite apps", p: "Add apps from your Applications folder and launch them with one click. Remove them just as easily." },
+    { h: "Favourite links", p: "Save the pages you open all day, with a name, and open them in your default browser." },
+    { h: "Screenshot to clipboard", p: "Uses the same capture tool as ⌘⇧4, then tucks TopShelf away so it isn't in the shot. The image goes to your clipboard. Add a global shortcut in Settings." },
+  ],
+};
+
 /** Built but not in the current download. Empty when the newest build contains everything. */
-export const NEXT_UPDATE: { h: string; p: string; href: string }[] = [];
+export const NEXT_UPDATE: { h: string; p: string; href: string }[] = siteConfig.flags.deviceHealthInBuild ? [] : [
+  { h: "Device Health (beta)", p: "Low-battery, storage and disconnection alerts for your Mac and Bluetooth accessories, with an optional web dashboard.", href: `/features/${DEVICE_HEALTH_PAGE.slug}` },
+];
 
 export interface Release {
   version: string;
@@ -245,7 +300,7 @@ export function featurePages(): FeaturePage[] {
     title: f.title,
     body: f.body,
     seo: FEATURE_META[f.id].seo,
-    next: f.id === "wellness" ? WELLNESS_PAGE.next : f.next,
+    next: f.next,
     stage: f.stage,
     experimental: f.experimental,
     points: f.id === "clipboard" ? CLIPBOARD_PAGE.points : f.id === "wellness" ? WELLNESS_PAGE.points : undefined,
@@ -254,8 +309,11 @@ export function featurePages(): FeaturePage[] {
     { slug: SEND_PAGE.slug, label: SEND_PAGE.label, kicker: SEND_PAGE.kicker, title: SEND_PAGE.title, body: SEND_PAGE.body, seo: SEND_PAGE.seo, stage: "bg-[#E4F4F7]" },
     { ...BREAKS_PAGE, stage: "bg-mint" },
     { ...CELEBRATION_PAGE, stage: "bg-lavender" },
+    { slug: DEVICE_HEALTH_PAGE.slug, label: DEVICE_HEALTH_PAGE.label, kicker: DEVICE_HEALTH_PAGE.kicker, title: DEVICE_HEALTH_PAGE.title,
+      body: DEVICE_HEALTH_PAGE.body, seo: DEVICE_HEALTH_PAGE.seo, stage: "bg-mint", upcoming: !siteConfig.flags.deviceHealthInBuild },
     { slug: SENSE_PAGE.slug, label: SENSE_PAGE.label, kicker: SENSE_PAGE.kicker, title: SENSE_PAGE.title, body: SENSE_PAGE.body, seo: SENSE_PAGE.seo, stage: "bg-[#EAF4FB]" },
     { ...THEMES_PAGE, stage: "bg-sand" },
     ...modules,
+    { ...LAUNCHER_PAGE, stage: "bg-[#FFE9E3]" },
   ];
 }

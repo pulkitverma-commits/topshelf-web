@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView, useReducedMotion } from "motion/react";
 import { Check, Download } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import { MODULE_COUNT, siteConfig } from "@/config/site";
 import { SectionHeading } from "@/components/ui/motion-primitives";
 import { DownloadButton } from "@/components/delight/download";
 import { Magnetic, Tilt } from "@/components/delight/interactive";
@@ -100,7 +100,7 @@ export function Pricing() {
               <small className="font-sans text-base font-normal tracking-normal opacity-70">for {offers.trial.length}</small>
             </div>
             <p className="m-0 opacity-75">Every feature on your own Mac, from the first minute. No card, no sign-up.</p>
-            <Features items={["Music, Shelf, Calendar, Timers and Breaks", "All 14 modules and Celebration alerts", "Every theme, accent and size setting"]} />
+            <Features items={["Music, Shelf, Calendar, Timers and Breaks", `All ${MODULE_COUNT} modules and Celebration alerts`, "Every theme, accent and size setting"]} />
             <Magnetic className="mt-auto" strength={0.18}>
               <DownloadButton variant="ghost" className="w-full">
                 <Download className="size-[18px]" strokeWidth={1.8} aria-hidden="true" />

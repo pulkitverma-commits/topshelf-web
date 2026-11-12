@@ -6,7 +6,8 @@ import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
 import { DownloadButton } from "@/components/delight/download";
 import { FeatureDemo } from "@/components/site/feature-demo";
 import { SenseDemo } from "@/components/sense/sense-demo";
-import { BREAKS_PAGE, CELEBRATION_PAGE, SENSE_PAGE, SEND_PAGE, THEMES_PAGE, featurePages } from "@/lib/pages";
+import { BREAKS_PAGE, CELEBRATION_PAGE, DEVICE_HEALTH_PAGE, LAUNCHER_PAGE, SENSE_PAGE, SEND_PAGE, THEMES_PAGE, featurePages } from "@/lib/pages";
+import { DeviceHealthPreview } from "@/components/site/device-health-preview";
 import { FEATURE_META, extraPageMeta } from "@/lib/feature-meta";
 import { ALL_STINGERS, shade, tintHex } from "@/lib/stinger";
 
@@ -44,7 +45,10 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
     : slug === SENSE_PAGE.slug ? SENSE_PAGE.points
     : slug === SEND_PAGE.slug ? SEND_PAGE.points
     : slug === THEMES_PAGE.slug ? THEMES_PAGE.points
+    : slug === DEVICE_HEALTH_PAGE.slug ? DEVICE_HEALTH_PAGE.points
+    : slug === LAUNCHER_PAGE.slug ? LAUNCHER_PAGE.points
     : p.points ?? null;
+  const isHealth = slug === DEVICE_HEALTH_PAGE.slug;
   const isSense = slug === SENSE_PAGE.slug;
   const isSend = slug === SEND_PAGE.slug;
   const stepIcons = [KeyRound, UploadCloud, Link2];
@@ -112,6 +116,42 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
               <ExternalLink className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
             </a>
             {" "}· End-to-end encrypted · No account needed to open
+          </p>
+        </section>
+      ) : isHealth ? (
+        <section aria-label="Device Health preview" className="pb-6">
+          <DeviceHealthPreview />
+          <p className="mx-auto mt-8 flex max-w-[720px] gap-2.5 rounded-[22px] bg-peach p-5 text-[16px] text-[#5a2a0c]">
+            <Clock className="mt-1 size-4 flex-none" aria-hidden="true" />
+            {DEVICE_HEALTH_PAGE.status}
+          </p>
+          <h2 className="mb-4 mt-14 font-display text-[28px] font-semibold tracking-[-.03em]">What it can read</h2>
+          <p className="mt-0 max-w-[720px] text-[16px] text-muted">Device Health uses only what macOS makes available to apps, on macOS 14 Sonoma or later. Where a reading isn&apos;t available, TopShelf says so rather than guessing.</p>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[620px] border-collapse text-left text-[15px]">
+              <thead>
+                <tr className="border-b border-line-strong text-[13px] uppercase tracking-[.06em] text-muted">
+                  <th className="py-2 pr-4 font-medium">Device</th><th className="py-2 pr-4 font-medium">Shown</th><th className="py-2 font-medium">Not available</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DEVICE_HEALTH_PAGE.readings.map((r) => (
+                  <tr key={r.what} className="border-b border-line align-top">
+                    <th scope="row" className="py-3 pr-4 font-semibold">{r.what}</th>
+                    <td className="py-3 pr-4">{r.has}</td>
+                    <td className="py-3 text-muted">{r.not || "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <ul className="mt-10 grid list-none gap-3 p-0 sm:grid-cols-3">
+            {DEVICE_HEALTH_PAGE.privacy.map((x) => (
+              <li key={x.h} className="rounded-[22px] bg-mint p-5"><b className="block font-display text-[18px]">{x.h}</b><span className="text-[15px] text-ink/70">{x.p}</span></li>
+            ))}
+          </ul>
+          <p className="mt-6 text-[15px] text-muted">
+            Already linked a Mac? <a className="text-ink underline underline-offset-4" href="/account">See your devices</a>. The web dashboard is in beta and needs a free TopShelf account; TopShelf itself doesn&apos;t.
           </p>
         </section>
       ) : isSense ? (

@@ -198,7 +198,7 @@ function DeviceCard({ d, now, data, save }: { d: Device; now: number; data: Dash
             </h3>
           )}
           <p className="m-0 text-[13.5px] text-muted">
-            {d.computerName}{d.key === "host" ? " (this Mac)" : ""} · {d.connection === "disconnected" ? `disconnected, last seen ${ago(d.lastSeen, now)}` : `reported ${ago(d.reportedAt, now)}`}
+            {d.computerName}{d.key === "host" ? " (the Mac itself)" : ""} · {d.connection === "disconnected" ? `disconnected, last seen ${ago(d.lastSeen, now)}` : `reported ${ago(d.reportedAt, now)}`}
             {computer && !computer.online ? " · Mac offline" : ""}
           </p>
         </div>

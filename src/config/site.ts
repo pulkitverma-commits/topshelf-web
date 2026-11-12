@@ -67,6 +67,11 @@ export const siteConfig = {
     aiWorkspace: true,
     /** Which hero headline to use: "favourite" or "uptop". */
     heroVariant: "favourite" as "favourite" | "uptop",
+    /**
+     * Device Health is built (app branch claude/device-health) but not in the published download.
+     * Set to true when a build that contains it is published, and the site stops saying "next update".
+     */
+    deviceHealthInBuild: false as boolean,
   },
 
   /** The app's default "Expand / collapse" shortcut (KeyCombo.defaults in the app source). */
@@ -74,3 +79,10 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+/**
+ * Modules in the app (NotchCore/Support/NotchModule.swift): Now Playing, File Shelf, Calendar,
+ * Timers & Focus, System, Clipboard, Quick Notes, Launcher & Links, Assistant, Calculator,
+ * Wellness, Inbox, Live Scores, Breaks, Sense, Send Securely — plus Device Health once it ships.
+ */
+export const MODULE_COUNT = siteConfig.flags.deviceHealthInBuild ? 17 : 16;

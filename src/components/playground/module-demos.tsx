@@ -698,14 +698,13 @@ const QUICK: [string, LucideIcon, string][] = [
 export function AllDemo() {
   const app = useApp();
   const [pins, setPins] = useState(["breaks", "music", "shelf", "calendar", "timers", "calc", "wellness", "inbox"]);
-  const [toast, setToast] = useState({ id: 0, text: "Pin up to 8 modules to the tab bar" });
+  const [toast, setToast] = useState({ id: 0, text: "Pin the modules you use to the tab bar" });
   const say = (text: string) => setToast((t) => ({ id: t.id + 1, text }));
   const toggle = (id: string, label: string) => {
     if (pins.includes(id)) {
       setPins((p) => p.filter((x) => x !== id));
       say(`${label} unpinned`);
-    } else if (pins.length >= 8) say("The tab bar is full. Unpin one first.");
-    else {
+    } else {
       setPins((p) => [...p, id]);
       say(`${label} pinned`);
     }

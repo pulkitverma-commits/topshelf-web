@@ -1,4 +1,4 @@
-import { Calculator, Palette, ShieldCheck, CalendarDays, ClipboardList, Cpu, Droplet, Inbox, LayoutGrid, Music, PartyPopper, Radio, ScanFace, Sparkles, StickyNote, Timer, Trophy, type LucideIcon } from "lucide-react";
+import { AppWindow, BatteryMedium, Calculator, Palette, ShieldCheck, CalendarDays, ClipboardList, Cpu, Droplet, Inbox, LayoutGrid, Music, PartyPopper, Radio, ScanFace, Sparkles, StickyNote, Timer, Trophy, type LucideIcon } from "lucide-react";
 import type { FeatureId } from "./demo-data";
 
 /** Icon, pastel and page slug for each module, shared by the marquee, cards and feature pages. */
@@ -8,7 +8,7 @@ export const FEATURE_META: Record<FeatureId, { Icon: LucideIcon; bg: string; fg:
   calendar: { Icon: CalendarDays, bg: "#FCE7D8", fg: "#B85A1E", slug: "calendar", seo: "A countdown to your next meeting with one-click join" },
   focus: { Icon: Timer, bg: "#E1F3EA", fg: "#1D7F5F", slug: "focus-timer", seo: "Focus and Pomodoro timers for Mac" },
   notes: { Icon: StickyNote, bg: "#FFF0CF", fg: "#9A6A00", slug: "quick-notes", seo: "Quick notes you can jot without leaving your app" },
-  live: { Icon: Radio, bg: "#E6F1FF", fg: "#2368C4", slug: "live-activities", seo: "Battery, connected devices and background tasks, shown quietly" },
+  live: { Icon: Radio, bg: "#E6F1FF", fg: "#2368C4", slug: "live-activities", seo: "Battery, connected devices, new files and track changes, shown quietly" },
   wellness: { Icon: Droplet, bg: "#DFF4F7", fg: "#16808F", slug: "wellness", seo: "Water, posture and eye-rest nudges for Mac" },
   calc: { Icon: Calculator, bg: "#F3F0E8", fg: "#6B5A2E", slug: "calculator", seo: "A calculator with live results and a tiny friend called Digit" },
   inbox: { Icon: Inbox, bg: "#E8EEFF", fg: "#3651C9", slug: "inbox", seo: "Mail and WhatsApp unread counts, without reading your messages" },
@@ -16,11 +16,11 @@ export const FEATURE_META: Record<FeatureId, { Icon: LucideIcon; bg: string; fg:
   clipboard: { Icon: ClipboardList, bg: "#F1E9FF", fg: "#7A3FD1", slug: "clipboard-history", seo: "Clipboard history for Mac that skips passwords" },
   system: { Icon: Cpu, bg: "#ECEDEF", fg: "#3D4350", slug: "system-stats", seo: "Battery, CPU, memory, network and Bluetooth at a glance" },
   all: { Icon: LayoutGrid, bg: "#FFE9E3", fg: "#C2452D", slug: "quick-actions", seo: "Every module and your quick actions in one view" },
-  assistant: { Icon: Sparkles, bg: "#EAE8FF", fg: "#5146D9", slug: "assistant", seo: "An experimental assistant: Claude, OpenAI-compatible or Ollama" },
+  assistant: { Icon: Sparkles, bg: "#EAE8FF", fg: "#5146D9", slug: "assistant", seo: "An optional assistant: Claude, OpenAI-compatible or a local Ollama model" },
 };
 
 /** Icon and pastel for the long-form pages that live outside the module playground (see `pages.ts`). */
-export const EXTRA_PAGES: Record<"breaks" | "celebration" | "sense" | "send" | "themes", { slug: string; Icon: LucideIcon; bg: string; fg: string }> = {
+export const EXTRA_PAGES: Record<"breaks" | "celebration" | "sense" | "send" | "themes" | "health" | "launcher", { slug: string; Icon: LucideIcon; bg: string; fg: string }> = {
   breaks: { slug: "break-reminders", Icon: Timer, bg: "#E1F3EA", fg: "#1D7F5F" },
   celebration: { slug: "celebration-alerts", Icon: PartyPopper, bg: "#ECEBFF", fg: "#4357EE" },
   /** Send Securely: end-to-end encrypted sharing through OnePeek. */
@@ -28,6 +28,9 @@ export const EXTRA_PAGES: Record<"breaks" | "celebration" | "sense" | "send" | "
   /** TopShelf Sense (opt-in camera wellness). */
   sense: { slug: "sense", Icon: ScanFace, bg: "#EAF4FB", fg: "#245E8C" },
   themes: { slug: "themes", Icon: Palette, bg: "#F3F0E8", fg: "#6B5A2E" },
+  /** Device Health (battery, storage and accessory alerts). */
+  health: { slug: "device-health", Icon: BatteryMedium, bg: "#E1F3EA", fg: "#1D7F5F" },
+  launcher: { slug: "launcher-and-links", Icon: AppWindow, bg: "#FFE9E3", fg: "#C2452D" },
 };
 
 /** Look up an extra page's icon and pastel by slug. */

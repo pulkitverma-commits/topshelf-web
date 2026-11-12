@@ -111,7 +111,7 @@ export const FEATURES: Feature[] = [
     label: "Live activities",
     kicker: "Live activities",
     title: "Stay in the know without switching windows.",
-    body: "Battery, connected devices and background tasks show up quietly, queued so they never overlap, then step aside.",
+    body: "Battery, connected devices, files landing on the shelf and track changes show up quietly, queued so they never overlap, then step aside.",
     stage: "bg-[#1C1C1E]",
   },
   {
@@ -119,7 +119,7 @@ export const FEATURES: Feature[] = [
     label: "Wellness",
     kicker: "Wellness reminders",
     title: "Gentle nudges, beautifully animated.",
-    body: "Posture, drink water with an 8-glass tracker, eye rest (20-20-20), blink, stretch, stand up, breathe, medicine and your own reminders, with intervals, active hours and weekdays only. Each has a glossy 3D icon that comes alive, and TopShelf blinks until you tap Done or Snooze.",
+    body: "Posture, drink water with an 8-glass tracker, eye rest (20-20-20), blink, stretch, stand up, breathe, medicine and your own reminders, with intervals, active hours and weekdays only. Each has its own animated line icon, and TopShelf blinks until you tap Done or Snooze.",
     stage: "bg-[#FDEFF4]",
   },
   {
@@ -168,7 +168,7 @@ export const FEATURES: Feature[] = [
     label: "All & quick actions",
     kicker: "Pinned modules",
     title: "Pin what you use. Find everything else.",
-    body: "Pin up to eight modules to the tab bar. Everything else lives in All, a grid of colourful tiles, with one-tap quick actions: take a break, a 25-minute focus timer, log water, screenshot, new note and settings.",
+    body: "Pin the modules you use most to the tab bar; eight are pinned to start. Everything else lives in All, a grid of colourful tiles, with one-tap quick actions: Send Securely, take a break, a 25-minute focus timer, log water, screenshot, new note and settings.",
     stage: "bg-sand",
   },
   {
@@ -188,7 +188,7 @@ export const MAC_HIGHLIGHTS = [
   { title: "Never steals focus", body: "Hover to expand after 0.18 s; the app you're in stays active." },
   { title: "Springs, not slides", body: "Physical motion that respects Reduce Motion." },
   { title: "Hides in full screen", body: "Full-screen apps get the whole display." },
-  { title: "A 3.8 MB download", body: "A universal binary for Apple silicon and Intel." },
+  { title: `A ${siteConfig.release.size} download`, body: "A universal binary for Apple silicon and Intel." },
   { title: "macOS 14 Sonoma or later", body: "Liquid Glass on macOS 26 and later." },
 ];
 
@@ -210,7 +210,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "Which versions of macOS are supported?",
-    a: "macOS 14 Sonoma or later, on Apple silicon or Intel. The 1.1 preview download is a 3.8 MB universal disk image. The Glass theme uses Liquid Glass on macOS 26 and later.",
+    a: `macOS 14 Sonoma or later, on Apple silicon or Intel. The 1.1 preview download is a ${siteConfig.release.size} universal disk image. The Glass theme uses Liquid Glass on macOS 26 and later.`,
   },
   {
     q: "Which music players work?",
@@ -274,19 +274,33 @@ export const FAQS: Faq[] = [
   },
   {
     q: "What's the keyboard shortcut to open TopShelf?",
-    a: "Control-Option-N (⌃⌥N) opens and closes it. ⌃⌥V opens clipboard history, ⌃⌥T starts a quick note and ⌃⌥D opens the dashboard. You can change any of them in Settings.",
+    a: "Control-Option-N (⌃⌥N) opens and closes it. ⌃⌥V opens clipboard history, ⌃⌥T starts a quick note, ⌃⌥D opens the dashboard, ⌃⌥A opens the Assistant and ⌃⌥S opens Send Securely. You can change any of them, and add shortcuts for a focus timer, a screenshot or a break, in Settings.",
   },
   {
     q: "When is 1.1 out?",
-    a: "A 1.1 preview is the download on this site today, with Celebration alerts, opening on the Shelf, staying open while you use it, install and start at login, clipboard upgrades and Breaks. A few things built since then (Sense, Recent Apps in Calendar, the wellness line icons and iCloud sync) are not in it yet and will arrive in the next disk image. There is no date for that yet.",
+    a: siteConfig.flags.deviceHealthInBuild
+      ? "The 1.1 preview is the download on this site today. It includes Celebration alerts, Breaks, Send Securely, Sense, Device Health, clipboard upgrades, Recent Apps in Calendar and the wellness line icons. There is no date for the final 1.1 yet."
+      : "The 1.1 preview is the download on this site today. It includes Celebration alerts, Breaks, Send Securely, Sense, clipboard upgrades, Recent Apps in Calendar and the wellness line icons. Device Health is built and arrives in the next preview build. There is no date for the final 1.1 yet.",
   },
   {
     q: "Does Sense record me?",
-    a: "No. Sense is off by default and asks for camera access only after you enable the module, agree to its explanation and press Start. Frames are analysed in memory on your Mac and discarded: no video is recorded, nothing is uploaded, and there is no face recognition. Only numbers are kept (blink and head-orientation summaries per minute, check-ins, reminders), in a plain JSON file you can export or delete at any time. The camera light stays on for the whole session, and Sense is not in the current preview build.",
+    a: "No. Sense is off by default and asks for camera access only after you enable the module, agree to its explanation and press Start. Frames are analysed in memory on your Mac and discarded: no video is recorded, nothing is uploaded, and there is no face recognition. Numbers are kept (blink and head-orientation summaries per minute, check-ins, reminders) in a plain JSON file you can export or delete at any time. The optional appearance journal is the one exception: if you turn it on, it saves still photos on your Mac, never anywhere else. The camera light stays on for the whole session.",
   },
   {
     q: "Is the Sense pulse reading medical?",
     a: "No. TopShelf is wellness software, not a medical device. The pulse estimate is experimental: it reads tiny colour changes in the skin through the webcam, fails with movement, poor lighting and some cameras, has not been validated against reference instruments, and is not a heart-rate monitor. It is labelled experimental and shows nothing rather than a guess when the signal is poor.",
+  },
+  {
+    q: "Which devices does Device Health cover?",
+    a: (siteConfig.flags.deviceHealthInBuild ? "" : "Device Health (beta) arrives in the next preview build. ") + "It covers your Mac's own battery, storage and temperature state, and Bluetooth accessories paired with it. Battery levels appear for accessories that report them through the standard Bluetooth battery service, which many keyboards, mice and game controllers do. AirPods, Beats and Apple's Magic Keyboard, Mouse and Trackpad don't make their levels available to other apps on macOS, so TopShelf shows only whether they're connected. iPhone and iPad aren't supported.",
+  },
+  {
+    q: "Will Device Health keep nagging me?",
+    a: "No. Each battery alert fires once as the level drops (20% and 10% by default, 5% if you turn it on), only the most urgent one if a reading jumps, and never while the device is charging. It can come back only after the battery recovers 5 points. You can snooze from the notification, set quiet hours, and macOS Focus applies as usual.",
+  },
+  {
+    q: "Do I need an account for Device Health?",
+    a: "No. It works entirely on your Mac. An account is optional and only lets you see your linked Macs' readings and change alert settings from a browser. Bluetooth addresses and serial numbers are never sent, and unlinking a Mac deletes everything it reported.",
   },
   {
     q: "How do I install it?",

@@ -4,11 +4,15 @@ import { ZodError, type ZodType } from "zod";
 import { HttpError } from "./service";
 import { SupabaseHealthStore } from "./supabase-store";
 import { adminClient } from "../supabase/admin";
+import { accountsEnabled } from "../supabase/env";
 import { siteConfig } from "@/config/site";
 
 export const MAX_BODY_BYTES = 512 * 1024;
 
 export function store() {
+  if (!accountsEnabled || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new HttpError(503, "accounts_disabled", "TopShelf accounts aren't set up on this site yet.");
+  }
   return new SupabaseHealthStore(adminClient());
 }
 

@@ -2,9 +2,9 @@ import { Ban, HardDrive, Lock, MailCheck, ToggleLeft } from "lucide-react";
 import { Reveal, SectionHeading } from "@/components/ui/motion-primitives";
 
 const PROMISES = [
-  { Icon: Ban, title: "No accounts, no tracking", body: "No accounts, analytics, telemetry or crash reporting. Permissions are asked for only when you turn on a feature that needs them." },
-  { Icon: Lock, title: "Only three kinds of network request", body: "Album artwork, Assistant requests you start (including clipboard AI actions you pick), and live scores if you turn them on, for only the competitions you follow." },
-  { Icon: ToggleLeft, title: "Off until you choose", body: "Inbox, Live Scores, Clipboard and Assistant stay off until you turn them on. Break reminders and watched folders are off until you set them up." },
+  { Icon: Ban, title: "No account needed, no tracking", body: "TopShelf works without signing up. No analytics, telemetry or crash reporting. Permissions are asked for only when you turn on a feature that needs them." },
+  { Icon: Lock, title: "Network only for what you use", body: "Album artwork; Assistant requests you start; live scores if you turn them on; Send Securely shares you create (encrypted on your Mac first); settings sync through your own iCloud, in builds signed for it; and Device Health readings only if you link a Mac to an account." },
+  { Icon: ToggleLeft, title: "Off until you choose", body: "Inbox, Live Scores, Clipboard, Assistant and Sense stay off until you turn them on. Break reminders and watched folders are off until you set them up. Nothing is ever linked to an account unless you link it." },
   { Icon: HardDrive, title: "Stays on your Mac", body: "Clipboard history, shelf files, notes, break stats and wellness history stay on the Mac. API keys live in the macOS Keychain." },
   { Icon: MailCheck, title: "Reads only what's needed", body: "From Mail, only unread counts are read, never messages, senders or subjects. TopShelf never opens Mail; it checks about once a minute while Mail is running. Calendar is read-only." },
 ];
@@ -16,7 +16,7 @@ export function Privacy() {
         <Reveal className="flex flex-col gap-[18px]">
           <p className="m-0 text-[13px] uppercase tracking-[.08em] text-white/55">Private by design</p>
           <h2 id="privacy-title" className="m-0 text-balance font-display text-[clamp(34px,4.8vw,64px)] font-medium leading-[1.03] tracking-[-.04em]">
-            No accounts. <b className="font-bold">No tracking.</b>
+            No account needed. <b className="font-bold">No tracking.</b>
           </h2>
           <p className="m-0 max-w-[420px] text-[17px] text-white/65">TopShelf is native Swift with no third-party code, and almost everything it does happens on your Mac.</p>
         </Reveal>

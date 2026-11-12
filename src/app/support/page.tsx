@@ -35,7 +35,7 @@ export default function SupportPage() {
         <p>From 1.1, TopShelf starts at login by default. Turn it off in Settings › General or System Settings › Login Items, and it stays off.</p>
 
         <h2>Features that are off until you turn them on</h2>
-        <p>Inbox, Live Scores, Clipboard and Assistant stay off until you turn them on. Break reminders and watched folders are off until you set them up. If one of these seems missing, check its switch in Settings first.</p>
+        <p>Inbox, Live Scores, Clipboard, Assistant and Sense stay off until you turn them on. Break reminders and watched folders are off until you set them up. If one of these seems missing, check its switch in Settings first.</p>
 
         <h2>Celebration alerts</h2>
         <p>Prefer something calmer? Choose Colour flash or None in Settings › Appearance › Alert animation. With Reduce Motion on, alerts become a short fade.</p>

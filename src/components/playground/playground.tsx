@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useDelight } from "@/components/delight/delight-provider";
 import { GuideNote } from "@/components/delight/interactive";
-import { siteConfig } from "@/config/site";
+import { MODULE_COUNT, siteConfig } from "@/config/site";
 import { FEATURES, type FeatureId } from "@/lib/demo-data";
 import { EXTRA_PAGES } from "@/lib/feature-meta";
 import { SENSE_PAGE } from "@/lib/pages";
@@ -91,7 +91,7 @@ export function Playground() {
   return (
     <section id="features" aria-labelledby="features-title" className="py-24 sm:pb-[140px] sm:pt-20">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-8">
-        <SectionHeading id="features-title" kicker="Feature playground · 14 modules">
+        <SectionHeading id="features-title" kicker={`Feature playground · ${MODULE_COUNT} modules`}>
           Everything you need. <b>Right where you need it.</b>
         </SectionHeading>
 

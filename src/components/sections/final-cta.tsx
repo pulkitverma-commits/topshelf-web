@@ -210,6 +210,7 @@ export function Footer() {
         { href: "/features/break-reminders", label: "Break reminders" },
         { href: "/features/send-securely", label: "Send Securely" },
         { href: "/features/sense", label: "Sense" },
+        { href: "/features/device-health", label: "Device Health" },
         { href: "/changelog", label: "What's new" },
         { href: "/#pricing", label: "Pricing" },
         { href: siteConfig.links.downloadPage, label: "Download" },

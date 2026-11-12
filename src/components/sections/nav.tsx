@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/ui/primitives";
 import { DownloadButton } from "@/components/delight/download";
 import { cn, easeOut } from "@/lib/utils";
+import { accountsEnabled } from "@/lib/supabase/env";
 
 const LINKS = [
   { href: "/#tour", label: "Tour" },
@@ -16,6 +17,7 @@ const LINKS = [
   { href: "/#privacy", label: "Privacy" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#faq", label: "FAQs" },
+  ...(accountsEnabled ? [{ href: "/account", label: "Your devices" }] : []),
 ];
 
 export function Nav() {
