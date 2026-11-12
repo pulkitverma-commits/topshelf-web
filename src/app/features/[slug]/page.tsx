@@ -46,6 +46,22 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
     : slug === THEMES_PAGE.slug ? THEMES_PAGE.points
     : p.points ?? null;
   const isSense = slug === SENSE_PAGE.slug;
+  const goodToKnow = [
+    {
+      q: `Is ${p.label} included in the free trial?`,
+      a: p.upcoming
+        ? `${p.label} arrives in the next update. Everything in the current build is yours to try free for ${siteConfig.offers.trial.length}, with no card and no sign-up.`
+        : `Yes. Every TopShelf feature, ${p.label} included, is free for ${siteConfig.offers.trial.length} with no card and no sign-up.`,
+    },
+    {
+      q: "What does TopShelf cost?",
+      a: `${siteConfig.offers.lifetime.price} once after the trial (US dollars). One licence covers ${siteConfig.offers.licenceDevices}, with ${siteConfig.offers.updateTerms}. No subscription.`,
+    },
+    {
+      q: "Which Macs does it run on?",
+      a: `${siteConfig.requirements.systemRequirementsLabel}. TopShelf is a native Mac app and a single ${siteConfig.release.size} download.`,
+    },
+  ];
   const isSend = slug === SEND_PAGE.slug;
   const stepIcons = [KeyRound, UploadCloud, Link2];
 
@@ -58,7 +74,8 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
           name: `${p.label} for Mac · TopShelf`,
           description: p.seo,
           url: `${siteConfig.url}/features/${slug}`,
-          about: { "@type": "SoftwareApplication", name: "TopShelf", operatingSystem: "macOS", applicationCategory: "ProductivityApplication" },
+          about: { "@id": `${siteConfig.url}/#app` },
+          isPartOf: { "@id": `${siteConfig.url}/#site` },
         }}
       />
       <PageHead kicker={p.kicker} title={p.title} lead={p.body}>
@@ -239,6 +256,20 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
           </ul>
         </section>
       )}
+
+      <section aria-labelledby="good-to-know" className="pb-12 pt-6">
+        <h2 id="good-to-know" className="m-0 font-display text-[28px] font-semibold tracking-[-.03em]">
+          Good to know
+        </h2>
+        <dl className="m-0 mt-5 grid gap-3 sm:grid-cols-3">
+          {goodToKnow.map((x) => (
+            <div key={x.q} className="rounded-[22px] bg-white p-5 shadow-[inset_0_0_0_1px_var(--color-line)]">
+              <dt className="font-display text-lg font-semibold tracking-[-.015em]">{x.q}</dt>
+              <dd className="m-0 mt-1.5 text-[15px] text-muted">{x.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       <section aria-labelledby="more" className="pb-24 pt-6">
         <h2 id="more" className="m-0 font-display text-[28px] font-semibold tracking-[-.03em]">

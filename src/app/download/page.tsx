@@ -3,7 +3,6 @@ import { Download } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { JsonLd, PageHead, Subpage } from "@/components/site/subpage";
 import { DownloadButton } from "@/components/delight/download";
-import { softwareApplication } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: { absolute: `Download TopShelf for Mac: free for ${siteConfig.offers.trial.length}` },
@@ -29,7 +28,16 @@ export default function DownloadPage() {
   ];
   return (
     <Subpage crumbs={[{ name: "Download", path: "/download" }]}>
-      <JsonLd data={softwareApplication()} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Download TopShelf for Mac",
+          url: `${siteConfig.url}/download`,
+          isPartOf: { "@id": `${siteConfig.url}/#site` },
+          mainEntity: { "@id": `${siteConfig.url}/#app` },
+        }}
+      />
       <PageHead kicker={`TopShelf ${siteConfig.release.version}`} title={<>Download TopShelf <b>for Mac.</b></>} lead={`A ${siteConfig.release.size} universal download for Apple silicon and Intel. Free for ${siteConfig.offers.trial.length}, no card and no sign-up.`}>
         <div className="flex flex-wrap items-center gap-3">
           <DownloadButton size="lg">

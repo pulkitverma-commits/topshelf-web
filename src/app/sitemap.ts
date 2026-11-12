@@ -5,7 +5,7 @@ import { featurePages } from "@/lib/pages";
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const page = (path: string, priority: number, changeFrequency: "weekly" | "monthly" | "yearly" = "monthly") => ({
-    url: `${siteConfig.url}${path}`,
+    url: `${siteConfig.url}${path || "/"}`,
     lastModified: now,
     changeFrequency,
     priority,

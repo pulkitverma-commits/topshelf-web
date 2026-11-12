@@ -9,6 +9,7 @@ export function softwareApplication() {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
+    "@id": `${siteConfig.url}/#app`,
     name: siteConfig.name,
     applicationCategory: "ProductivityApplication",
     operatingSystem: `macOS ${siteConfig.requirements.minMacOS} or later`,
