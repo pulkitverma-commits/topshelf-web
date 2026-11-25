@@ -14,6 +14,8 @@ export type Computer = {
   appVersion: string | null;
   tokenHash: string;
   lastSequence: number;
+  /** Account settings version this Mac reported it has applied. */
+  settingsVersionApplied: number;
   createdAt: string;
   lastSeenAt: string | null;
 };
@@ -67,14 +69,16 @@ export interface HealthStore {
   findLinkByDeviceCodeHash(hash: string): Promise<LinkRequest | null>;
   findLinkByUserCode(code: string): Promise<LinkRequest | null>;
   updateLink(id: string, patch: Partial<Pick<LinkRequest, "approvedBy" | "denied" | "consumedAt">>): Promise<void>;
+  /** Records the approve/deny decision only if the request is still undecided and unused. True if this call decided it. */
+  decideLinkOnce(id: string, decision: { approvedBy: string } | { denied: true }): Promise<boolean>;
   /** Marks a link consumed only if it wasn't already; returns false if another poll won the race. */
   consumeLink(id: string, at: string): Promise<boolean>;
 
   // Computers
-  createComputer(c: Omit<Computer, "id" | "lastSequence" | "lastSeenAt">): Promise<Computer>;
+  createComputer(c: Omit<Computer, "id" | "lastSequence" | "lastSeenAt" | "settingsVersionApplied">): Promise<Computer>;
   findComputerByTokenHash(hash: string): Promise<Computer | null>;
   listComputers(userId: string): Promise<Computer[]>;
-  touchComputer(id: string, patch: { lastSeenAt: string; lastSequence?: number; name?: string; osVersion?: string; appVersion?: string }): Promise<void>;
+  touchComputer(id: string, patch: { lastSeenAt: string; lastSequence?: number; settingsVersionApplied?: number; name?: string; osVersion?: string; appVersion?: string }): Promise<void>;
   /** Deletes the computer and (by cascade) everything it reported. Scoped to the owner. */
   deleteComputer(userId: string, computerId: string): Promise<boolean>;
 

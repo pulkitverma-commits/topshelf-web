@@ -91,7 +91,10 @@ export async function decideLink(store: HealthStore, userId: string, rawCode: st
   const link = await store.findLinkByUserCode(code);
   if (!link || link.consumedAt || Date.parse(link.expiresAt) <= now.getTime()) throw new HttpError(410, "expired", "This code has expired. Start linking again on your Mac.");
   if (link.approvedBy || link.denied) throw new HttpError(409, "already_decided", "This code was already used.");
-  await store.updateLink(link.id, approve ? { approvedBy: userId } : { denied: true });
+  // Conditional update: two tabs (or two people) deciding the same code can't both win.
+  if (!(await store.decideLinkOnce(link.id, approve ? { approvedBy: userId } : { denied: true }))) {
+    throw new HttpError(409, "already_decided", "This code was already used.");
+  }
   return { ok: true as const, computerName: link.computerName };
 }
 
@@ -121,7 +124,7 @@ export async function handleReport(store: HealthStore, computer: Computer, repor
     }
     await store.touchComputer(computer.id, {
       lastSeenAt: iso(now),
-      ...(newer ? { lastSequence: report.sequence } : {}),
+      ...(newer ? { lastSequence: report.sequence, settingsVersionApplied: report.settingsVersionApplied } : {}),
       name: report.computer.name,
       osVersion: report.computer.osVersion,
       appVersion: report.computer.appVersion,
@@ -273,7 +276,9 @@ export async function dashboard(store: HealthStore, userId: string, now: Date, o
         customName,
         hidden: o.hidden ?? d.hidden, favourite: o.favourite ?? d.favourite,
         notify: o.notify ?? null, thresholds: o.thresholds ?? null, important: o.important ?? false, meetingCheck: o.meetingCheck ?? false,
-        pendingSync: !!settings && !!overrides[d.key] && settings.updatedBy === "web",
+        // A website change this device's Mac hasn't applied yet (it reports the version it has).
+        pendingSync: !!settings && !!overrides[d.key] && settings.updatedBy === "web"
+          && (computer?.settingsVersionApplied ?? 0) < settings.version,
         connection: d.connection, lastSeen: d.lastSeen ?? null, reportedAt: d.reportedAt,
         battery: presentReading(d.battery, now), batteryHealth: presentReading(d.batteryHealth, now),
         storage: presentReading(d.storage, now), thermal: presentReading(d.thermal, now),

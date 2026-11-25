@@ -15,8 +15,10 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function LinkPage({ searchParams }: { searchParams: Promise<{ code?: string }> }) {
-  const { code = "" } = await searchParams;
+export default async function LinkPage({ searchParams }: { searchParams: Promise<{ code?: string | string[] }> }) {
+  // ?code=a&code=b arrives as an array; take the first, and cap the length.
+  const raw = (await searchParams).code;
+  const code = (Array.isArray(raw) ? raw[0] ?? "" : raw ?? "").slice(0, 32);
   const crumbs = [{ name: "Your devices", path: "/account" }, { name: "Link your Mac", path: "/link" }];
   const head = <PageHead kicker="Device Health" title={<>Link <b>your Mac.</b></>} />;
 

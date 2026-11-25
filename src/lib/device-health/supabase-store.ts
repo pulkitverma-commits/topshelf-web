@@ -24,7 +24,7 @@ const toLink = (r: Row): LinkRequest => ({
 const toComputer = (r: Row): Computer => ({
   id: r.id as string, userId: r.user_id as string, name: r.name as string, platform: r.platform as string,
   osVersion: (r.os_version as string) ?? null, appVersion: (r.app_version as string) ?? null, tokenHash: r.token_hash as string,
-  lastSequence: Number(r.last_sequence ?? 0), createdAt: r.created_at as string, lastSeenAt: (r.last_seen_at as string) ?? null,
+  lastSequence: Number(r.last_sequence ?? 0), settingsVersionApplied: Number(r.settings_version_applied ?? 0), createdAt: r.created_at as string, lastSeenAt: (r.last_seen_at as string) ?? null,
 });
 
 const toDevice = (r: Row): DeviceRecord => ({
@@ -77,12 +77,18 @@ export class SupabaseHealthStore implements HealthStore {
     if (patch.consumedAt !== undefined) row.consumed_at = patch.consumedAt;
     check(await this.db.from("dh_link_requests").update(row).eq("id", id));
   }
+  async decideLinkOnce(id: string, decision: { approvedBy: string } | { denied: true }) {
+    const row: Row = "approvedBy" in decision ? { approved_by: decision.approvedBy } : { denied: true };
+    const rows = check(await this.db.from("dh_link_requests").update(row).eq("id", id)
+      .is("approved_by", null).eq("denied", false).is("consumed_at", null).select("id"));
+    return (rows as Row[]).length === 1;
+  }
   async consumeLink(id: string, at: string) {
     const rows = check(await this.db.from("dh_link_requests").update({ consumed_at: at }).eq("id", id).is("consumed_at", null).select("id"));
     return (rows as Row[]).length === 1;
   }
 
-  async createComputer(c: Omit<Computer, "id" | "lastSequence" | "lastSeenAt">) {
+  async createComputer(c: Omit<Computer, "id" | "lastSequence" | "lastSeenAt" | "settingsVersionApplied">) {
     const row = check(await this.db.from("dh_computers").insert({
       user_id: c.userId, name: c.name, platform: c.platform, os_version: c.osVersion, app_version: c.appVersion,
       token_hash: c.tokenHash, created_at: c.createdAt,
@@ -96,9 +102,10 @@ export class SupabaseHealthStore implements HealthStore {
   async listComputers(userId: string) {
     return (check(await this.db.from("dh_computers").select().eq("user_id", userId).order("created_at")) as Row[]).map(toComputer);
   }
-  async touchComputer(id: string, p: { lastSeenAt: string; lastSequence?: number; name?: string; osVersion?: string; appVersion?: string }) {
+  async touchComputer(id: string, p: { lastSeenAt: string; lastSequence?: number; settingsVersionApplied?: number; name?: string; osVersion?: string; appVersion?: string }) {
     const row: Row = { last_seen_at: p.lastSeenAt };
     if (p.lastSequence !== undefined) row.last_sequence = p.lastSequence;
+    if (p.settingsVersionApplied !== undefined) row.settings_version_applied = p.settingsVersionApplied;
     if (p.name) row.name = p.name.slice(0, 80);
     if (p.osVersion) row.os_version = p.osVersion;
     if (p.appVersion) row.app_version = p.appVersion;
@@ -142,7 +149,7 @@ export class SupabaseHealthStore implements HealthStore {
       user_id: a.userId, computer_id: a.computerId, dedupe_key: a.dedupeKey, kind: a.kind, device_key: a.deviceKey, level: a.level,
       title: a.title, body: a.body, created_at: a.createdAt, received_at: a.receivedAt, delivered_natively: a.deliveredNatively,
       route_to: a.routeTo,
-    })), { onConflict: "user_id,dedupe_key", ignoreDuplicates: true }).select("id"));
+    })), { onConflict: "user_id,computer_id,dedupe_key", ignoreDuplicates: true }).select("id"));
     return (rows as Row[] | null)?.length ?? 0;
   }
   async listAlerts(userId: string, since: string, limit: number) {

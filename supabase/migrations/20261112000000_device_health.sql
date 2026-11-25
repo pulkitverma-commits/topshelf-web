@@ -21,6 +21,8 @@ create table if not exists public.dh_computers (
   app_version   text check (char_length(app_version) <= 40),
   token_hash    text not null unique,
   last_sequence bigint not null default 0,
+  -- Account settings version this Mac last applied (from its reports).
+  settings_version_applied integer not null default 0,
   created_at    timestamptz not null default now(),
   last_seen_at  timestamptz
 );
@@ -91,7 +93,8 @@ create table if not exists public.dh_alerts (
   delivered_natively boolean not null default false,
   route_to           uuid references public.dh_computers(id) on delete set null,
   relayed_at         timestamptz,
-  unique (user_id, dedupe_key)
+  -- Per Mac: two Macs reporting the same key must not swallow each other's alerts.
+  unique (user_id, computer_id, dedupe_key)
 );
 create index if not exists dh_alerts_user_idx on public.dh_alerts (user_id, received_at desc);
 

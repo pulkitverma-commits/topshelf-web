@@ -208,3 +208,41 @@ test("samples are deduplicated and pruned after 30 days", async () => {
   await svc.handleReport(store, computer, report(1, { samples: [s(at(-40 * 24 * 60), 90), s(at(0), 64), s(at(0), 64)] }), at(1));
   assert.equal(store.samples.length, 1);
 });
+
+test("linking: a code can only be decided once, even when two approvals race", async () => {
+  const store = new MemoryStore();
+  const s = await svc.startLink(store, { name: "Mac", platform: "macOS", osVersion: "15", appVersion: "1.2.1" }, T0, "https://x");
+  const results = await Promise.allSettled([
+    svc.decideLink(store, ALICE, s.userCode, true, at(1)),
+    svc.decideLink(store, BOB, s.userCode, true, at(1)),
+  ]);
+  assert.equal(results.filter((r) => r.status === "fulfilled").length, 1);
+  const r = await svc.pollLink(store, s.deviceCode, at(2));
+  const computer = await svc.authenticateComputer(store, `Bearer ${r.token}`);
+  assert.equal(computer.userId, results[0].status === "fulfilled" ? ALICE : BOB, "linked to whoever actually won");
+});
+
+test("alerts are deduplicated per Mac, not across Macs", async () => {
+  const store = new MemoryStore();
+  const a = await linkMac(store, ALICE, "Laptop");
+  const b = await linkMac(store, ALICE, "Desk");
+  const alert = { dedupeKey: "host|storage.warning|0", kind: "storageLow", deviceKey: "host", title: "Low", body: "x",
+                  createdAt: T0.toISOString(), deliveredNatively: true };
+  await svc.handleReport(store, a.computer, report(1, { alerts: [alert] as never }), at(1));
+  await svc.handleReport(store, b.computer, report(1, { alerts: [alert] as never }), at(1));
+  assert.equal((await svc.dashboard(store, ALICE, at(2))).alerts.length, 2);
+});
+
+test("a website change shows as pending only until that Mac reports it applied it", async () => {
+  const store = new MemoryStore();
+  const { computer } = await linkMac(store, ALICE);
+  await svc.handleReport(store, computer, report(1), at(1));
+  const key = "ble:0123456789abcdef0123456789abcdef";
+  await svc.updateDeviceFromWeb(store, ALICE, 0, key, { customName: "Desk keyboard" }, at(2));
+  const pending = (await svc.dashboard(store, ALICE, at(3))).devices.find((d) => d.key === key);
+  assert.equal(pending?.pendingSync, true);
+  const version = (await svc.dashboard(store, ALICE, at(3))).settings.version;
+  await svc.handleReport(store, computer, report(2, { settingsVersionApplied: version }), at(4));
+  const applied = (await svc.dashboard(store, ALICE, at(5))).devices.find((d) => d.key === key);
+  assert.equal(applied?.pendingSync, false);
+});

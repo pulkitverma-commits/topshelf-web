@@ -19,6 +19,12 @@ export class MemoryStore implements HealthStore {
   async findLinkByDeviceCodeHash(hash: string) { return [...this.links.values()].find((l) => l.deviceCodeHash === hash) ?? null; }
   async findLinkByUserCode(code: string) { return [...this.links.values()].find((l) => l.userCode === code) ?? null; }
   async updateLink(id: string, patch: Partial<LinkRequest>) { const l = this.links.get(id); if (l) Object.assign(l, patch); }
+  async decideLinkOnce(id: string, decision: { approvedBy: string } | { denied: true }) {
+    const l = this.links.get(id);
+    if (!l || l.approvedBy || l.denied || l.consumedAt) return false;
+    Object.assign(l, decision);
+    return true;
+  }
   async consumeLink(id: string, at: string) {
     const l = this.links.get(id);
     if (!l || l.consumedAt) return false;
@@ -26,8 +32,8 @@ export class MemoryStore implements HealthStore {
     return true;
   }
 
-  async createComputer(c: Omit<Computer, "id" | "lastSequence" | "lastSeenAt">) {
-    const computer: Computer = { ...c, id: randomUUID(), lastSequence: 0, lastSeenAt: null };
+  async createComputer(c: Omit<Computer, "id" | "lastSequence" | "lastSeenAt" | "settingsVersionApplied">) {
+    const computer: Computer = { ...c, id: randomUUID(), lastSequence: 0, settingsVersionApplied: 0, lastSeenAt: null };
     this.computers.set(computer.id, computer);
     return computer;
   }
@@ -60,7 +66,7 @@ export class MemoryStore implements HealthStore {
   async insertAlerts(alerts: AlertRecord[]) {
     let n = 0;
     for (const a of alerts) {
-      if (this.alerts.some((x) => x.userId === a.userId && x.dedupeKey === a.dedupeKey)) continue;
+      if (this.alerts.some((x) => x.userId === a.userId && x.computerId === a.computerId && x.dedupeKey === a.dedupeKey)) continue;
       this.alerts.push({ ...a }); n++;
     }
     return n;

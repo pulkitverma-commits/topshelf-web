@@ -196,13 +196,13 @@ export default async function FeaturePage({ params }: { params: Promise<{ slug: 
             Try every finish in the live customiser <ArrowRight className="size-4" aria-hidden="true" />
           </a>
         </p>
-      ) : (
+      ) : slug === BREAKS_PAGE.slug ? (
         <p className="m-0 pb-6 text-[17px]">
           <a className="inline-flex items-center gap-1.5 underline underline-offset-4" href="/#breaks">
             Try a real break on the home page <ArrowRight className="size-4" aria-hidden="true" />
           </a>
         </p>
-      )}
+      ) : null}
 
       {(extra || p.next) && (
         <section aria-labelledby="details" className="py-12">

@@ -10,12 +10,18 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
+  // Supabase's default email template (and OAuth) sends a PKCE `code` instead of token_hash.
+  const code = searchParams.get("code");
   const nextParam = searchParams.get("next") ?? "/account";
   // Only same-site relative paths.
   const next = nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/account";
   if (accountsEnabled && tokenHash && type) {
     const supabase = await sessionClient();
     const { error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash });
+    if (!error) return NextResponse.redirect(`${origin}${next}`);
+  } else if (accountsEnabled && code) {
+    const supabase = await sessionClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) return NextResponse.redirect(`${origin}${next}`);
   }
   return NextResponse.redirect(`${origin}/account?error=link`);

@@ -293,7 +293,11 @@ function PreferencesForm({ data, save }: { data: Dashboard; save: (fn: () => Pro
   const p = data.settings.preferences as Prefs;
   const t = p.thresholds ?? { low: 20, critical: 10, urgent: 5, urgentEnabled: false };
   const [draft, setDraft] = useState(t);
-  useEffect(() => setDraft(p.thresholds ?? { low: 20, critical: 10, urgent: 5, urgentEnabled: false }), [p.thresholds]);
+  // The dashboard reloads every 60 s with fresh objects; only reset the draft when the
+  // saved values actually change, or it wipes what the user is typing.
+  const savedKey = JSON.stringify(p.thresholds ?? null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setDraft(p.thresholds ?? { low: 20, critical: 10, urgent: 5, urgentEnabled: false }), [savedKey]);
   const valid = draft.critical < draft.low && (!draft.urgentEnabled || draft.urgent < draft.critical);
   const patch = (x: Prefs, ok: string) => save(() => call("/api/device-health/web/settings", "PATCH", { baseVersion: data.settings.version, patch: x }), ok);
   const routing = p.routing?.kind === "preferredMac" ? `mac:${p.routing.computerID}` : (p.routing?.kind ?? "reportingMac");
@@ -407,7 +411,11 @@ function useBrowserAlerts(data: Dashboard | null) {
     for (const a of data.alerts) {
       if (seen.current.has(a.dedupeKey)) continue;
       seen.current.add(a.dedupeKey);
-      if (enabled && routing === "browser" && !a.deliveredNatively) new Notification(a.title, { body: a.body, tag: a.dedupeKey });
+      if (enabled && routing === "browser" && !a.deliveredNatively) {
+        // Some browsers (Chrome on Android) only allow notifications from a service worker
+        // and throw here; a missed browser alert must not break the dashboard.
+        try { new Notification(a.title, { body: a.body, tag: a.dedupeKey }); } catch { /* unsupported */ }
+      }
     }
   }, [data, enabled]);
 }
